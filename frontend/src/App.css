@@ -1,0 +1,1983 @@
+/* App.css - Playza Center Expanding Black Screen Animation */
+
+:root {
+  --bg-dark: #000000;
+  --text-main: #ffffff;
+  --text-muted: #8892b0;
+  --accent-blue: #cbe6ff;
+  --accent-red: #f73131;
+  
+  --font-primary: 'Poppins', sans-serif;
+  --font-secondary: 'Outfit', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-primary);
+  overflow-x: hidden;
+}
+
+#root, .app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   Header / Navigation Bar
+   ========================================================================== */
+.playza-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem 3rem;
+  z-index: 1000;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.header-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.logo-icon {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.logo-text {
+  font-family: var(--font-secondary);
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Center Navigation Pills */
+.pill-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  padding: 0.4rem;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.pill-link {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #d1d5db;
+  text-decoration: none;
+  text-transform: lowercase;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.pill-link:hover, .pill-link.active {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.arrow-icon {
+  font-size: 0.85rem;
+}
+
+/* Right Connect Button */
+.connect-btn {
+  background: var(--accent-blue);
+  color: #050b14;
+  padding: 0.75rem 1.8rem;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  text-transform: lowercase;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.connect-btn:hover {
+  background: #ffffff;
+  transform: scale(1.03);
+}
+
+/* ==========================================================================
+   Hero Section Pinned Container & Expanding Black Curtain Layout
+   ========================================================================== */
+.hero-pinned-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #000000;
+  overflow: hidden;
+}
+
+.hero-full-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center top;
+  z-index: 5;
+}
+
+.hero-bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 30%, rgba(10, 40, 75, 0.25) 0%, rgba(3, 8, 16, 0.85) 100%);
+  pointer-events: none;
+}
+
+.hero-front-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  text-align: center;
+  padding: 0 1rem 1rem;
+  pointer-events: none;
+}
+
+.hero-mono-desc {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  color: #c0dbf2;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+.hero-giant-title {
+  font-family: var(--font-secondary);
+  font-size: 16.5vw;
+  font-weight: 900;
+  color: #d6ebfc;
+  text-transform: lowercase;
+  line-height: 0.78;
+  letter-spacing: -0.05em;
+  margin: 0;
+  padding-bottom: 0;
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.95);
+}
+
+/* EXPANDING BLACK SCREEN (Starts at 0% width in center, scales horizontally to 100% full screen) */
+.black-expanding-curtain {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0%;
+  height: 100%;
+  transform: translateX(-50%);
+  background: #000000;
+  z-index: 15;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  will-change: width;
+}
+
+.reveal-content-inner {
+  width: 100vw;
+  max-width: 1200px;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.centered-hero-image-box {
+  width: 480px;
+  height: 280px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+}
+
+.centered-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   Albums Showcase & Other Home Sections
+   ========================================================================== */
+.albums-section {
+  padding: 6rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.album-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.playza-album-card {
+  background: #11141c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: left;
+  transition: transform 0.3s ease;
+}
+
+.playza-album-card:hover {
+  transform: translateY(-8px);
+}
+
+.album-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+  color: #b0b0b0;
+}
+
+.album-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.album-header h2 {
+  font-family: var(--font-secondary);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.album-num {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.playza-album-card p {
+  color: #888;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.album-img-wrapper {
+  width: 100%;
+  height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.album-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Quote Section */
+.quote-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.quote-heading {
+  font-family: var(--font-secondary);
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #556270;
+}
+
+.highlight-text {
+  color: #ffffff;
+  font-weight: 800;
+}
+
+/* Footer */
+.footer {
+  padding: 3rem;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: #555;
+  margin-top: auto;
+}
+
+/* ==========================================================================
+   Singing Video Showcase Section
+   ========================================================================== */
+.video-showcase-section {
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+  padding: 0;
+  background: #000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Video Wrapper Frame - Full Screen Height & Width */
+.video-container-frame {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+  border: none;
+  background: #000000;
+}
+
+.singing-video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Video Controls Overlay */
+.video-overlay-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0.9) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem 3rem;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.video-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.live-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(12px);
+  padding: 0.5rem 1.4rem;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.live-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ef4444;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ef4444;
+  animation: livePulse 1.5s infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.25); }
+}
+
+.video-action-btns {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.video-icon-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.video-icon-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: scale(1.08);
+}
+
+/* Center Big Play Button */
+.center-play-button-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+.big-play-btn {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  padding-left: 4px;
+}
+
+.big-play-btn:hover {
+  background: #3b82f6;
+  border-color: #60a5fa;
+  transform: translate(-50%, -50%) scale(1.12);
+  box-shadow: 0 20px 50px rgba(59, 130, 246, 0.5);
+}
+
+/* Video Bottom Container */
+.video-bottom-container {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  pointer-events: auto;
+}
+
+/* Scroll-Driven Quote Text Block Inside Video Overlay (Transparent & Bottom Aligned) */
+.video-scroll-quote-box {
+  max-width: 1050px;
+  margin: 0 auto 0.4rem auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.scroll-quote-paragraph {
+  font-family: var(--font-secondary);
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: -0.3px;
+  text-align: center;
+}
+
+.scroll-quote-word {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.25); /* Initial dim light gray */
+  opacity: 0.35;
+  will-change: color, opacity;
+  text-shadow: 0 4px 25px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.9);
+  transition: color 0.1s ease, opacity 0.1s ease;
+  margin-right: 0.25em;
+}
+
+/* Video Bottom Bar HUD */
+.video-bottom-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: auto;
+}
+
+.hud-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.hud-track-title {
+  font-family: var(--font-secondary);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+}
+
+.hud-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #93c5fd;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Animated Sound Wave Equalizer */
+.sound-wave-box {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.wave-bar {
+  width: 4px;
+  background: #3b82f6;
+  border-radius: 4px;
+  animation: waveEqualizer 1.2s ease-in-out infinite alternate;
+}
+
+.wave-bar:nth-child(1) { height: 40%; animation-delay: 0.1s; }
+.wave-bar:nth-child(2) { height: 80%; animation-delay: 0.3s; }
+.wave-bar:nth-child(3) { height: 100%; animation-delay: 0.2s; }
+.wave-bar:nth-child(4) { height: 60%; animation-delay: 0.4s; }
+.wave-bar:nth-child(5) { height: 90%; animation-delay: 0.15s; }
+
+@keyframes waveEqualizer {
+  0% { height: 20%; }
+  100% { height: 100%; }
+}
+
+/* ==========================================================================
+   GSAP Digital Glitch & Color Shift Transition Effect
+   ========================================================================== */
+.songs-section {
+  position: relative;
+  padding: 6rem 3rem;
+  background-color: #000000;
+  will-change: background-color;
+  overflow: hidden;
+}
+
+.glitch-overlay-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.glitch-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(59, 130, 246, 0.25);
+  mix-blend-mode: color-dodge;
+}
+
+.glitch-slice {
+  position: absolute;
+  width: 100%;
+  height: 25%;
+  left: 0;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+.glitch-slice.red {
+  top: 15%;
+  background: rgba(239, 68, 68, 0.45);
+  box-shadow: 0 0 35px #ef4444;
+}
+
+.glitch-slice.blue {
+  top: 45%;
+  background: rgba(59, 130, 246, 0.45);
+  box-shadow: 0 0 35px #3b82f6;
+}
+
+.glitch-slice.cyan {
+  top: 75%;
+  background: rgba(6, 182, 212, 0.45);
+  box-shadow: 0 0 35px #06b6d4;
+}
+
+.glitch-text-flash {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 8px;
+  color: #ffffff;
+  text-shadow: -4px 0 #ef4444, 4px 0 #3b82f6;
+  white-space: nowrap;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.8rem 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   Asymmetric Songs Grid Layout matching Playza Template Screenshot
+   ========================================================================== */
+.songs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.song-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.song-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.8rem;
+  text-align: left;
+}
+
+.song-title {
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.song-date {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #a0aec0;
+  letter-spacing: 0.5px;
+}
+
+.song-img-box {
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #111;
+}
+
+.song-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.song-card:hover .song-img-box img {
+  transform: scale(1.06);
+}
+
+/* Play Overlay Icon */
+.song-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.song-card:hover .song-overlay {
+  opacity: 1;
+}
+
+.play-btn-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+}
+
+.song-card:hover .play-btn-circle {
+  transform: scale(1);
+}
+
+/* Playza Aspect Ratio Modifiers */
+.song-card.tall .song-img-box {
+  aspect-ratio: 3 / 4;
+}
+
+.song-card.square .song-img-box {
+  aspect-ratio: 1 / 1;
+}
+
+.song-card.wide .song-img-box {
+  aspect-ratio: 16 / 10;
+}
+
+@media (max-width: 1024px) {
+  .songs-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .songs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Futuristic Cyber Deck 3D Holographic Vinyl Player & Spectrum Visualizer
+   ========================================================================== */
+.futuristic-cyber-deck {
+  max-width: 1400px;
+  margin: 0 auto 6rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  position: relative;
+}
+
+.cyber-deck-header {
+  text-align: left;
+}
+
+.deck-tag-box {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.live-glitch-badge {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.12);
+  padding: 0.35rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.live-status-txt {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #10b981;
+  letter-spacing: 1px;
+}
+
+.deck-main-title {
+  font-family: var(--font-secondary);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+/* Center 3D Turntable & Visualizer Stage */
+.cyber-turntable-stage {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  background: radial-gradient(circle at center, rgba(15, 23, 42, 0.9) 0%, rgba(5, 8, 16, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), inset 0 0 50px rgba(59, 130, 246, 0.1);
+}
+
+/* Audio Spectrum Visualizer Bars */
+.cyber-spectrum-visualizer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 260px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  padding: 0 2rem;
+  pointer-events: none;
+  opacity: 0.25;
+  transition: opacity 0.5s ease;
+}
+
+.cyber-spectrum-visualizer.active-viz {
+  opacity: 0.85;
+}
+
+.spectrum-bar {
+  width: 8px;
+  height: 20%;
+  background: linear-gradient(180deg, #ec4899 0%, #a855f7 50%, #3b82f6 100%);
+  border-radius: 6px;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+}
+
+.active-viz .spectrum-bar {
+  animation: cyberSpectrumPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes cyberSpectrumPulse {
+  0% { height: 15%; }
+  50% { height: 85%; }
+  100% { height: 40%; }
+}
+
+/* Floating 3D Holographic Vinyl Record */
+.vinyl-turntable-housing {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  perspective: 1000px;
+  z-index: 10;
+}
+
+.vinyl-disc-3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1a1a1a 0%, #000000 70%, #111111 100%);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 40px rgba(59, 130, 246, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.vinyl-art-cover {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+}
+
+.vinyl-groove-rings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at center,
+    transparent,
+    transparent 8px,
+    rgba(255, 255, 255, 0.04) 9px,
+    transparent 10px
+  );
+  pointer-events: none;
+}
+
+.vinyl-center-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+  color: #3b82f6;
+  font-weight: 800;
+  pointer-events: none;
+}
+
+.vinyl-center-spindle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffffff;
+}
+
+.disc-spinning {
+  animation: continuousVinylSpin 5s linear infinite;
+}
+
+@keyframes continuousVinylSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Tone-Arm Needle */
+.cyber-tonearm-wrapper {
+  position: absolute;
+  top: -30px;
+  right: -40px;
+  width: 120px;
+  height: 180px;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.tonearm-base {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #334155;
+  border: 2px solid #64748b;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+}
+
+.tonearm-arm {
+  position: absolute;
+  top: 18px;
+  right: 36px;
+  width: 6px;
+  height: 140px;
+  background: linear-gradient(180deg, #94a3b8 0%, #475569 100%);
+  transform-origin: top center;
+  border-radius: 4px;
+  box-shadow: -2px 5px 10px rgba(0,0,0,0.5);
+  transition: transform 0.6s ease;
+}
+
+.tonearm-headshell {
+  position: absolute;
+  bottom: -10px;
+  left: -8px;
+  width: 22px;
+  height: 14px;
+  background: #3b82f6;
+  border-radius: 3px;
+  box-shadow: 0 0 12px #3b82f6;
+}
+
+/* Floating HUD Bar Overlay */
+.now-playing-glass-hud {
+  position: absolute;
+  bottom: 2rem;
+  left: 2.5rem;
+  right: 2.5rem;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 24px;
+  padding: 1.2rem 2.2rem;
+  display: grid;
+  grid-template-columns: 280px 1fr 180px;
+  align-items: center;
+  gap: 2rem;
+  z-index: 25;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+}
+
+.hud-track-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-align: left;
+}
+
+.hud-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+.hud-title {
+  font-family: var(--font-secondary);
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.hud-sub {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.hud-scrubber-wrapper {
+  width: 100%;
+}
+
+.hud-scrubber-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.hud-scrubber-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #ec4899 100%);
+  border-radius: 10px;
+  position: relative;
+}
+
+.scrubber-head-glow {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 15px #ec4899;
+}
+
+.hud-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.8rem;
+}
+
+.hud-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hud-btn:hover {
+  background: rgba(59, 130, 246, 0.3);
+  border-color: #3b82f6;
+  transform: scale(1.08);
+}
+
+.hud-play-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  border: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+  transition: all 0.2s ease;
+}
+
+.hud-play-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 30px rgba(139, 92, 246, 0.8);
+}
+
+/* Cyber Deck Track Selector Cards Carousel */
+.cyber-tracks-carousel {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.cyber-track-card {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  text-align: left;
+}
+
+.cyber-track-card:hover, .cyber-track-card.card-active {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: #3b82f6;
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(59, 130, 246, 0.25);
+}
+
+.card-thumb-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.card-thumb-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-overlay-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: #ffffff;
+  font-size: 1.3rem;
+}
+
+.cyber-track-card:hover .card-overlay-badge, .cyber-track-card.card-active .card-overlay-badge {
+  opacity: 1;
+}
+
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.card-index {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #3b82f6;
+}
+
+.card-title {
+  font-family: var(--font-secondary);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-dur {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+@media (max-width: 1024px) {
+  .now-playing-glass-hud {
+    grid-template-columns: 1fr;
+    padding: 1.2rem;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .cyber-tracks-carousel {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .cyber-tracks-carousel {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==========================================================================
+   "A Concert You'll Never Forget" Hero Banner Section (Matching Playza Template)
+   ========================================================================== */
+.forget-concert-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 650px;
+  overflow: hidden;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.forget-bg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.forget-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.forget-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.85) 100%),
+              linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.forget-content-box {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+
+.forget-giant-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-secondary);
+  font-size: 6.8rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -2.5px;
+  color: #e2e8f0;
+  text-transform: capitalize;
+  text-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 50px rgba(59, 130, 246, 0.2);
+}
+
+.forget-line {
+  display: block;
+  will-change: transform, opacity;
+}
+
+.forget-line.line-1 {
+  color: #e2e8f0;
+}
+
+.forget-line.line-2 {
+  color: #ffffff;
+}
+
+.forget-line.line-3 {
+  color: #ffffff;
+}
+
+@media (max-width: 1024px) {
+  .forget-giant-heading {
+    font-size: 4.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .forget-giant-heading {
+    font-size: 3.2rem;
+  }
+}
+
+/* ==========================================================================
+   Tours Section - Outline Lines to Solid Light Red Color Fill Animation
+   ========================================================================== */
+/* Red Cyberpunk Glitch Reveal Overlay for Tours Section */
+.tour-glitch-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.tour-glitch-slice {
+  position: absolute;
+  width: 100%;
+  height: 33.33%;
+  left: 0;
+  mix-blend-mode: screen;
+}
+
+.tour-glitch-slice.red-slice {
+  top: 0;
+  background: rgba(255, 0, 85, 0.45);
+}
+
+.tour-glitch-slice.crimson-slice {
+  top: 33.33%;
+  background: rgba(247, 49, 49, 0.6);
+}
+
+.tour-glitch-slice.neon-slice {
+  top: 66.66%;
+  background: rgba(255, 107, 107, 0.45);
+}
+
+.tour-glitch-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(255, 42, 42, 0.9) 0%, rgba(200, 0, 0, 0.5) 60%, transparent 100%);
+  opacity: 0;
+  mix-blend-mode: color-dodge;
+}
+
+.tour-glitch-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #ffffff;
+  background: #f73131;
+  padding: 1rem 2.5rem;
+  letter-spacing: 4px;
+  box-shadow: 0 0 50px rgba(247, 49, 49, 0.95);
+  text-shadow: 2px 2px 0 #000;
+}
+
+.tours-section {
+  width: 100%;
+  padding: 8rem 0;
+  background-color: #000000;
+  color: #ffffff;
+  position: relative;
+}
+
+.tours-section .section-header {
+  padding: 0 4rem;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.tours-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  margin: 3rem 0 0 0;
+  border-top: 2px solid rgba(255, 107, 107, 0.45);
+}
+
+.tour-row {
+  position: relative;
+  width: 100%;
+  border-bottom: 2px solid rgba(255, 107, 107, 0.45); /* Light red outline lines */
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Background Solid Fill Layer (Animates with GSAP scaleX 0 -> 1) */
+.tour-row-bg-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff6b6b 0%, #ff8e8e 100%); /* Full solid light red color */
+  transform: scaleX(0);
+  transform-origin: left center;
+  z-index: 1;
+  will-change: transform;
+}
+
+.tour-row-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.5rem 4rem;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 2rem;
+}
+
+.tour-img {
+  width: 140px;
+  height: 90px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.tour-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tour-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+  text-align: left;
+}
+
+.tour-text-item {
+  transition: color 0.3s ease;
+}
+
+.tour-datetime {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: #94a3b8;
+  letter-spacing: 1px;
+}
+
+.tour-name {
+  font-family: var(--font-secondary);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.tour-loc {
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+.tour-btn {
+  background: #000000;
+  color: #ffffff;
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tour-row:hover .tour-btn {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.section-subtitle.red {
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.12);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+/* ==========================================================================
+   Concert Photo Gallery Grid Section (Matching 3x3 Screenshot Layout)
+   ========================================================================== */
+.concert-gallery-section {
+  width: 100%;
+  height: 100vh;
+  min-height: 750px;
+  background-color: #000000;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.gallery-header {
+  width: 100%;
+  padding: 0 4rem;
+  margin: 0 0 2rem 0;
+  text-align: left;
+  box-sizing: border-box;
+  z-index: 10;
+  will-change: transform, opacity;
+}
+
+.gallery-title {
+  font-family: var(--font-secondary);
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin-top: 0.5rem;
+  letter-spacing: -1px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 0.8rem;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 5;
+}
+
+.gallery-item-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0d1117;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.center-gallery-card {
+  z-index: 30;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 40px rgba(59, 130, 246, 0.3);
+}
+
+.side-gallery-card {
+  z-index: 5;
+}
+
+.gallery-item-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.gallery-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.85) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-card-caption {
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  transform: translateY(10px);
+  transition: transform 0.3s ease;
+}
+
+.gallery-item-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(59, 130, 246, 0.2);
+}
+
+.gallery-item-card:hover img {
+  transform: scale(1.08);
+}
+
+.gallery-item-card:hover .gallery-card-overlay {
+  opacity: 1;
+}
+
+.gallery-item-card:hover .gallery-card-caption {
+  transform: translateY(0);
+}
+
+@media (max-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .concert-gallery-section {
+    padding: 4rem 0 6rem 0;
+  }
+  .gallery-header {
+    padding: 0 1.5rem;
+  }
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    padding: 0 0.5rem;
+  }
+  .gallery-title {
+    font-size: 2.4rem;
+  }
+}
+
+/* ==========================================================================
+   Playza Light-Blue Signature Footer (Matching Webflow Playza Template)
+   ========================================================================== */
+.playza-footer {
+  position: relative;
+  z-index: 100;
+  clear: both;
+  width: 100%;
+  background-color: #a6d6fc;
+  color: #000000;
+  padding: 6rem 4rem 5rem 4rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-top: 180px;
+}
+
+/* Mouse Cursor 5-Image Trail Layer */
+.footer-trail-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.footer-trail-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 170px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45), 0 0 25px rgba(0, 0, 0, 0.2);
+  border: 4px solid #ffffff;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.footer-content-wrapper {
+  position: relative;
+  z-index: 5;
+  max-width: 1550px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-brand-title {
+  font-family: var(--font-secondary);
+  font-size: 14vw;
+  font-weight: 900;
+  color: #000000;
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  margin: 0 0 4rem 0;
+  text-transform: lowercase;
+  user-select: none;
+}
+
+.footer-nav-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  margin-bottom: 5rem;
+}
+
+.footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.footer-nav-col a {
+  font-family: var(--font-secondary);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #000000;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.footer-nav-col a:hover {
+  opacity: 0.65;
+  transform: translateX(3px);
+}
+
+.socials-col {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.socials-col a {
+  gap: 0.5rem;
+}
+
+.arrow-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #000000;
+  color: #a6d6fc;
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+
+.socials-col a:hover .arrow-icon {
+  transform: translate(2px, -2px);
+}
+
+.footer-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 3rem;
+  padding-top: 2rem;
+}
+
+.footer-bottom-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 450px;
+}
+
+.footer-stream-tagline {
+  font-family: var(--font-secondary);
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #000000;
+  letter-spacing: -0.3px;
+}
+
+.footer-copyright-meta {
+  margin-top: 4rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: #000000;
+  opacity: 0.85;
+}
+
+.footer-bottom-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 480px;
+  text-align: left;
+}
+
+.footer-bio-mono {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: #000000;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+.footer-cta-buttons {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.btn-black-pill {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  padding: 0.75rem 1.6rem;
+  font-family: var(--font-secondary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.btn-black-pill:hover {
+  background-color: #1a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn-outline-pill {
+  background-color: transparent;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  padding: 0.75rem 1.6rem;
+  font-family: var(--font-secondary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-outline-pill:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1024px) {
+  .playza-footer {
+    padding: 4rem 2rem 3rem 2rem;
+  }
+  .footer-nav-grid {
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .socials-col {
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+  }
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3rem;
+  }
+  .footer-bottom-right {
+    align-items: flex-start;
+  }
+  .footer-cta-buttons {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-brand-title {
+    font-size: 22vw;
+    margin-bottom: 2.5rem;
+  }
+  .footer-stream-tagline {
+    font-size: 1.15rem;
+  }
+  .footer-cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn-black-pill, .btn-outline-pill {
+    width: 100%;
+    text-align: center;
+  }
+}

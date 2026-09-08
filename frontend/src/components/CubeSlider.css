@@ -1,0 +1,192 @@
+/* CubeSlider.css - Text Gliding From Far Right Over Cube to Far Left */
+
+.cube-interactive-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* Center: 3D Cube Container */
+.cube-slider-center {
+  position: relative;
+  z-index: 10;
+  margin-bottom: 2rem;
+}
+
+.slider {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  perspective: 900px;
+  -webkit-perspective: 900px;
+}
+
+.slider * {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.slider .container {
+  width: inherit;
+  height: inherit;
+  transform: rotateY(0deg) rotateX(0deg);
+  -webkit-transform: rotateY(0deg) rotateX(0deg);
+  will-change: transform;
+}
+
+.slide, .slide:after, .slide:before {
+  display: block;
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+  border-radius: 14px;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 20px 50px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.slide.x {
+  transform: rotateY(90deg);
+  -webkit-transform: rotateY(90deg);
+}
+
+.slide.x:after {
+  content: '';
+  background-image: var(--img-x-after, url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80'));
+  transform: translateZ(140px) rotateZ(-90deg);
+  -webkit-transform: translateZ(140px) rotateZ(-90deg);
+}
+
+.slide.x:before {
+  content: '';
+  background-image: var(--img-x-before, url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80'));
+  transform: translateZ(-140px) rotateZ(-90deg);
+  -webkit-transform: translateZ(-140px) rotateZ(-90deg);
+}
+
+.slide.y {
+  transform: rotateX(90deg);
+  -webkit-transform: rotateX(90deg);
+}
+
+.slide.y:after {
+  content: '';
+  background-image: var(--img-y-after, url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80'));
+  transform: translateZ(140px) scale(-1);
+  -webkit-transform: translateZ(140px) scale(-1);
+}
+
+.slide.y:before {
+  content: '';
+  background-image: var(--img-y-before, url('https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80'));
+  transform: translateZ(-140px);
+  -webkit-transform: translateZ(-140px);
+}
+
+.slide.z {
+  transform: rotateX(0);
+  -webkit-transform: rotateX(0);
+}
+
+.slide.z:after {
+  content: '';
+  background-image: var(--img-z-after, url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80'));
+  transform: translateZ(140px);
+  -webkit-transform: translateZ(140px);
+}
+
+.slide.z:before {
+  content: '';
+  background-image: var(--img-z-before, url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80'));
+  transform: translateZ(-140px);
+  -webkit-transform: translateZ(-140px);
+}
+
+/* Floor Shadow */
+.slider .shadow {
+  display: block;
+  width: 280px;
+  height: 280px;
+  background: rgba(0, 0, 0, 0.95);
+  position: absolute;
+  top: 75%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: rotateX(90deg);
+  -webkit-transform: rotateX(90deg);
+  z-index: -1;
+  filter: blur(30px);
+  -webkit-filter: blur(30px);
+}
+
+/* Overlay Text Track Container (Full Width Gliding Across Screen) */
+.cube-text-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 25;
+}
+
+.cube-text-card {
+  position: absolute;
+  width: 90%;
+  max-width: 720px;
+  text-align: center;
+  padding: 2rem 2.5rem;
+  opacity: 0;
+  will-change: transform, opacity;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), inset 0 0 30px rgba(255, 255, 255, 0.04);
+}
+
+.cube-step-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 3px;
+  color: #3b82f6;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.15);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+}
+
+.cube-album-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+}
+
+.cube-album-desc {
+  font-size: 1.15rem;
+  color: #c0dbf2;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
+}
