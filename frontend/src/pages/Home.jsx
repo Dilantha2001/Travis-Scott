@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FaArrowRight, FaSpotify, FaPlay, FaPause, FaVolumeUp, FaVolumeMute, FaStepBackward, FaStepForward, FaMusic, FaListUl, FaExpand } from 'react-icons/fa';
+import { FaArrowRight, FaSpotify, FaPlay, FaPause, FaVolumeUp, FaVolumeMute, FaStepBackward, FaStepForward, FaMusic, FaListUl, FaExpand, FaChevronLeft, FaChevronRight, FaRegHeart } from 'react-icons/fa';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CubeSlider from '../components/CubeSlider';
@@ -11,6 +11,8 @@ import stageImg from '../assets/stage.jpeg';
 import concertVideo from '../assets/0907.mp4';
 import centerStageVideo from '../assets/0908.mp4';
 import smokioDissAudio from '../assets/kuddah-reply-diss-smokio.mp3';
+import manPerformingImg from '../assets/Man_performing_on_stage_202609082107.jpeg';
+import neonGirlImg from '../assets/images/neon-girl.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -159,43 +161,54 @@ const Home = () => {
         scrollTrigger: {
           trigger: heroRef.current,
           start: 'top top',
-          end: '+=450%',
+          end: '+=800%',
           pin: true,
-          scrub: 1,
+          scrub: 1.5,
           anticipatePin: 1
         }
       });
 
-      // Step A: Letter Shatter
-      heroTl.to('.shatter-letter', {
-        x: () => (Math.random() - 0.5) * 500,
-        y: () => (Math.random() - 0.5) * 500,
-        rotation: () => (Math.random() - 0.5) * 720,
+      // Step A0: Hide navbar
+      heroTl.to('.playza-header', {
+        yPercent: -100,
         opacity: 0,
-        scale: 0.2,
-        stagger: 0.02,
-        ease: 'power2.inOut'
+        ease: 'power2.inOut',
+        duration: 0.4
       }, 0);
+
+      // Step A: Letter Shatter (Premium Sequential Drop)
+      heroTl.to('.shatter-letter', {
+        y: 400, // Drops down cleanly
+        rotation: () => (Math.random() - 0.5) * 60, // Slight realistic tilt
+        opacity: 0,
+        scale: 0.8, // Slightly scales down
+        stagger: {
+          each: 0.05,
+          from: "start" // Sequential left-to-right character by character
+        },
+        duration: 0.8,
+        ease: 'power3.in' // Smooth gravity acceleration
+      }, 0.4);
 
       // Step B: Hero desc fade out
       heroTl.to(heroContentRef.current, {
         scale: 0.85,
         opacity: 0,
         ease: 'power1.in'
-      }, 0);
+      }, 0.4);
 
       // Step C: Black Screen expands horizontally to 100%
       heroTl.fromTo(blackCurtainRef.current,
         { width: '0%' },
         { width: '100%', ease: 'power2.inOut' },
-        0
+        1.2
       );
 
       // Step D: Reveal 3D Cube container inside black curtain
       heroTl.fromTo(revealContentRef.current,
         { scale: 0.7, opacity: 0 },
         { scale: 1, opacity: 1, ease: 'power2.out' },
-        0.1
+        1.3
       );
 
       // ========================================================================
@@ -211,63 +224,85 @@ const Home = () => {
       // --- Card 1: Silver Heat ---
       heroTl.fromTo(cards[0],
         { x: '100vw', opacity: 0 },
-        { x: '0vw', opacity: 1, duration: 0.6, ease: 'power2.out' },
-        0.2
+        { x: '0vw', opacity: 1, duration: 0.6, ease: 'power2.out' }, // Enters and stops on Right
+        1.4
       );
       heroTl.to(cards[0],
-        { x: '-100vw', opacity: 0, duration: 0.6, ease: 'power2.in' },
-        0.9
+        { x: '-56vw', duration: 0.6, ease: 'power2.inOut' }, // Moves to Left and stops
+        3.0
+      );
+      heroTl.to(cards[0],
+        { x: '-100vw', opacity: 0, duration: 0.6, ease: 'power2.in' }, // Exits left
+        4.6
       );
 
-      // --- Rotate Cube to Face 2 & Card 2: Wild Spark ---
+      // --- Rotate Cube to Face 2 (Top Face) ---
       heroTl.to(cubeContainerRef.current, {
-        rotateY: -90,
-        duration: 0.8,
-        ease: 'power2.inOut'
-      }, 0.9);
+        rotateX: -90,
+        rotateY: 0,
+        duration: 1.2,
+        ease: 'expo.inOut'
+      }, 4.6);
 
+      // --- Card 2: Wild Spark ---
       heroTl.fromTo(cards[1],
         { x: '100vw', opacity: 0 },
         { x: '0vw', opacity: 1, duration: 0.6, ease: 'power2.out' },
-        1.2
+        5.4
+      );
+      heroTl.to(cards[1],
+        { x: '-56vw', duration: 0.6, ease: 'power2.inOut' },
+        7.0
       );
       heroTl.to(cards[1],
         { x: '-100vw', opacity: 0, duration: 0.6, ease: 'power2.in' },
-        1.9
+        8.6
       );
 
-      // --- Rotate Cube to Face 3 & Card 3: Static Burn ---
+      // --- Rotate Cube to Face 3 (Right Face) ---
       heroTl.to(cubeContainerRef.current, {
-        rotateY: -180,
-        duration: 0.8,
-        ease: 'power2.inOut'
-      }, 1.9);
+        rotateX: 0,
+        rotateY: -90,
+        duration: 1.2,
+        ease: 'expo.inOut'
+      }, 8.6);
 
+      // --- Card 3: Static Burn ---
       heroTl.fromTo(cards[2],
         { x: '100vw', opacity: 0 },
         { x: '0vw', opacity: 1, duration: 0.6, ease: 'power2.out' },
-        2.2
+        9.4
+      );
+      heroTl.to(cards[2],
+        { x: '-56vw', duration: 0.6, ease: 'power2.inOut' },
+        11.0
       );
       heroTl.to(cards[2],
         { x: '-100vw', opacity: 0, duration: 0.6, ease: 'power2.in' },
-        2.9
+        12.6
       );
 
-      // --- Rotate Cube to Face 4 & Card 4: Feral Glow ---
+      // --- Rotate Cube to Face 4 (Bottom Face) ---
       heroTl.to(cubeContainerRef.current, {
-        rotateY: -270,
-        duration: 0.8,
-        ease: 'power2.inOut'
-      }, 2.9);
+        rotateX: 90,
+        rotateY: 0,
+        duration: 1.2,
+        ease: 'expo.inOut'
+      }, 12.6);
 
+      // --- Card 4: Feral Glow ---
       heroTl.fromTo(cards[3],
         { x: '100vw', opacity: 0 },
         { x: '0vw', opacity: 1, duration: 0.6, ease: 'power2.out' },
-        3.2
+        13.4
+      );
+      heroTl.to(cards[3],
+        { x: '-56vw', duration: 0.6, ease: 'power2.inOut' },
+        15.0
       );
       heroTl.to(cards[3],
         { x: '-100vw', opacity: 0, duration: 0.6, ease: 'power2.in' },
-        3.9
+        16.6
       );
 
       // --- Final step: Fade/Scale out reveal content before section unpins ---
@@ -276,24 +311,42 @@ const Home = () => {
         scale: 0.9,
         duration: 0.5,
         ease: 'power2.in'
-      }, 4.5);
+      }, 17.2);
 
-      // 3. Scroll-Driven Word-by-Word Text Highlight (Light Gray -> Pure White) in Video Section
+      // 3. Pinned Video Showcase Transition (Split Screen Expand) & Text Highlight
+      const videoTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.video-showcase-section',
+          start: 'top top',
+          end: '+=250%',
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1
+        }
+      });
+
+      // Expand the video frame using clip-path for a true center split reveal
+      videoTl.fromTo('.video-container-frame',
+        { clipPath: 'inset(0 50% 0 50%)' },
+        { clipPath: 'inset(0 0% 0 0%)', ease: 'power2.inOut', duration: 1.5 }
+      );
+
+      // Fade in the video overlay controls / HUD
+      videoTl.fromTo('.video-overlay-controls',
+        { opacity: 0 },
+        { opacity: 1, ease: 'power1.out', duration: 0.5 },
+        '-=0.5'
+      );
+
+      // Scroll-Driven Word-by-Word Text Highlight (Light Gray -> Pure White)
       const quoteWords = gsap.utils.toArray('.scroll-quote-word');
       if (quoteWords.length > 0) {
-        gsap.timeline({
-          scrollTrigger: {
-            trigger: '.video-showcase-section',
-            start: 'top 70%',
-            end: 'bottom 15%',
-            scrub: 0.8
-          }
-        })
-        .to(quoteWords, {
+        videoTl.to(quoteWords, {
           color: '#ffffff',
           opacity: 1,
           stagger: 0.04,
-          ease: 'none'
+          ease: 'none',
+          duration: 2
         });
       }
 
@@ -346,22 +399,41 @@ const Home = () => {
         }, 0.25);
       }
 
-      // 5. GSAP Entrance for Audio Playlist Widget
+      // 5. GSAP Entrance for Ultra Clean Audio Player
       if (playlistWidgetRef.current) {
-        gsap.fromTo(playlistWidgetRef.current,
-          { y: 50, opacity: 0, scale: 0.96 },
-          {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: playlistWidgetRef.current,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse'
-            }
+        const audioTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: playlistWidgetRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
           }
+        });
+
+        // Album Art Smooth Scale In
+        audioTl.fromTo('.uc-album-wrapper',
+          { scale: 0.9, opacity: 0, y: 30 },
+          { scale: 1, opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }
+        );
+
+        // Header Fade In
+        audioTl.fromTo('.uc-header',
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
+          '-=0.8'
+        );
+
+        // Tracklist Items Stagger Fade In
+        audioTl.fromTo('.uc-track-item',
+          { opacity: 0, x: -20 },
+          { opacity: 1, x: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' },
+          '-=0.6'
+        );
+        
+        // Floating Player Slide Up
+        audioTl.fromTo('.uc-floating-player',
+          { y: 100, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
+          '-=0.4'
         );
       }
 
@@ -385,19 +457,34 @@ const Home = () => {
           );
         }
 
-        // Line-by-line reveal animation
-        gsap.fromTo('.forget-line',
-          { y: 80, opacity: 0, scale: 0.9 },
+        // Beautiful Smokio Phrase Reveal
+        gsap.fromTo('.smokio-beautiful-phrase',
+          { y: 50, opacity: 0, scale: 0.95 },
           {
             y: 0,
             opacity: 1,
             scale: 1,
-            stagger: 0.15,
-            duration: 0.8,
+            duration: 1.5,
+            ease: 'power4.out',
+            scrollTrigger: {
+              trigger: forgetConcertRef.current,
+              start: 'top 60%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+
+        // Marquee Reveal on Scroll
+        gsap.fromTo('.forget-marquee-container',
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.2,
             ease: 'power3.out',
             scrollTrigger: {
               trigger: forgetConcertRef.current,
-              start: 'top 65%',
+              start: 'top 45%', // Reveals slightly after the phrase when scrolling further
               toggleActions: 'play none none reverse'
             }
           }
@@ -639,219 +726,34 @@ const Home = () => {
                   ))}
                 </p>
               </div>
-
-              <div className="video-bottom-hud">
-                <div className="hud-info">
-                  <h3 className="hud-track-title">SILVER HEAT // LIVE VOCAL CUT</h3>
-                  <span className="hud-subtitle">BREAKS LIMITS TOUR 2026 • STAGE 01</span>
-                </div>
-
-                <div className="hud-right-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem', pointerEvents: 'auto' }}>
-                  {isPlaying && (
-                    <div className="sound-wave-box" title="Audio Equalizer">
-                      <div className="wave-bar"></div>
-                      <div className="wave-bar"></div>
-                      <div className="wave-bar"></div>
-                      <div className="wave-bar"></div>
-                      <div className="wave-bar"></div>
-                    </div>
-                  )}
-
-                  <button className="video-icon-btn" onClick={toggleFullScreen} title="Toggle Fullscreen" style={{ pointerEvents: 'auto', cursor: 'pointer' }}>
-                    <FaExpand />
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Spotify Integration Section */}
-      <section className="spotify-banner-section">
-        <a href="https://open.spotify.com" target="_blank" rel="noreferrer" className="spotify-banner">
-          <div className="spotify-content">
-            <h3>Make us part of your Spotify vibe!</h3>
-            <FaSpotify className="spotify-icon" />
-          </div>
-        </a>
-      </section>
 
-      {/* Songs Section with Cyberpunk Glitch & Color Shift Transition */}
-      <section className="songs-section" ref={songsSectionRef}>
-        {/* Glitch Overlay Effect Elements */}
-        <div className="glitch-overlay-wrapper" ref={glitchOverlayRef}>
-          <div className="glitch-slice red"></div>
-          <div className="glitch-slice blue"></div>
-          <div className="glitch-slice cyan"></div>
-          <div className="glitch-flash"></div>
-          <div className="glitch-text-flash">COLOR SHIFT // SYSTEM OVERRIDE</div>
-        </div>
 
-        {/* Futuristic Cyber Deck Audio Player & Visualizer (WOW Look) */}
-        <div className="futuristic-cyber-deck" ref={playlistWidgetRef}>
-          <audio
-            ref={audioRef}
-            src={currentTrack.audio}
-            onTimeUpdate={handleTimeUpdate}
-            onEnded={handleNextTrack}
-          />
-
-          <div className="cyber-deck-header">
-            <div className="deck-tag-box">
-              <span className="live-glitch-badge"><FaMusic /> CYBER AUDIO DECK // v2.0</span>
-              <span className="live-status-txt">{isAudioPlaying ? "● AUDIO STREAMING LIVE" : "○ DECK PAUSED"}</span>
-            </div>
-            <h2 className="deck-main-title">HOLOGRAPHIC VINYL STREAMER</h2>
-          </div>
-
-          {/* Center 3D Turntable & Equalizer Visualizer Stage */}
-          <div className="cyber-turntable-stage">
-            {/* Audio Spectrum Equalizer Visualizer Bars */}
-            <div className={`cyber-spectrum-visualizer ${isAudioPlaying ? 'active-viz' : ''}`}>
-              {Array.from({ length: 24 }).map((_, i) => (
-                <div key={i} className="spectrum-bar" style={{ animationDelay: `${(i % 5) * 0.15}s` }}></div>
-              ))}
-            </div>
-
-            {/* Floating 3D Holographic Vinyl Record */}
-            <div className="vinyl-turntable-housing">
-              <div className={`vinyl-disc-3d ${isAudioPlaying ? 'disc-spinning' : ''}`} ref={vinylRecordRef}>
-                <img src={currentTrack.img} alt={currentTrack.title} className="vinyl-art-cover" />
-                <div className="vinyl-groove-rings"></div>
-                <div className="vinyl-center-badge">
-                  <span>SMOKIO</span>
-                </div>
-                <div className="vinyl-center-spindle"></div>
-              </div>
-
-              {/* Interactive Tone-Arm Needle */}
-              <div className="cyber-tonearm-wrapper">
-                <div className="tonearm-base"></div>
-                <div className="tonearm-arm" ref={tonearmRef}>
-                  <div className="tonearm-headshell"></div>
-                </div>
-              </div>
-            </div>
-
-            {/* Currently Playing Track Glass Pill */}
-            <div className="now-playing-glass-hud">
-              <div className="hud-track-meta">
-                <span className="hud-badge">TRACK 0{currentTrackIndex + 1} / 0{playlist.length}</span>
-                <h3 className="hud-title">{currentTrack.title}</h3>
-                <p className="hud-sub">OFFICIAL ALBUM STREAM • {currentTrack.duration}</p>
-              </div>
-
-              {/* Timeline Scrubber */}
-              <div className="hud-scrubber-wrapper">
-                <div className="hud-scrubber-track" onClick={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  const clickX = e.clientX - rect.left;
-                  const newPercent = (clickX / rect.width);
-                  if (audioRef.current && audioRef.current.duration) {
-                    audioRef.current.currentTime = newPercent * audioRef.current.duration;
-                    setTrackProgress(newPercent * 100);
-                  }
-                }}>
-                  <div className="hud-scrubber-fill" style={{ width: `${trackProgress}%` }}>
-                    <div className="scrubber-head-glow"></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Player Control Buttons */}
-              <div className="hud-controls-row">
-                <button className="hud-btn" onClick={handlePrevTrack} title="Previous Song"><FaStepBackward /></button>
-                <button className="hud-play-btn" onClick={handleAudioPlayPause} title={isAudioPlaying ? "Pause" : "Play"}>
-                  {isAudioPlaying ? <FaPause /> : <FaPlay />}
-                </button>
-                <button className="hud-btn" onClick={handleNextTrack} title="Next Song"><FaStepForward /></button>
-              </div>
-            </div>
-          </div>
-
-          {/* Cyber Deck Track Selector Cards Carousel */}
-          <div className="cyber-tracks-carousel">
-            {playlist.map((track, idx) => (
-              <div
-                key={track.id}
-                className={`cyber-track-card ${currentTrackIndex === idx ? 'card-active' : ''}`}
-                onClick={() => handleSelectTrack(idx)}
-              >
-                <div className="card-thumb-box">
-                  <img src={track.img} alt={track.title} />
-                  <div className="card-overlay-badge">
-                    {currentTrackIndex === idx && isAudioPlaying ? <FaPause /> : <FaPlay />}
-                  </div>
-                </div>
-                <div className="card-meta">
-                  <span className="card-index">0{idx + 1}</span>
-                  <h4 className="card-title">{track.title}</h4>
-                  <span className="card-dur">{track.duration}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="section-header">
-          <div>
-            <span className="section-subtitle">Songs We're Proud Of</span>
-            <p className="section-desc">These tracks have already reached over 1.2M streams and continue gaining new listeners daily. A collection shaped by passion, sound, and growth.</p>
-          </div>
-          <div className="songs-count">(01-07)</div>
-        </div>
-
-        <div className="songs-grid">
-          {songs.map((song, idx) => (
-            <div
-              key={idx}
-              className={`song-card ${song.size}`}
-              onClick={() => handleSelectTrack(idx % playlist.length)}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="song-info">
-                <h4 className="song-title">{song.title}</h4>
-                <span className="song-date">{song.date}</span>
-              </div>
-              <div className="song-img-box">
-                <img src={song.img} alt={song.title} />
-                <div className="song-overlay">
-                  <span className="play-btn-circle"><FaArrowRight /></span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Marquee Ticker */}
-      <section className="concert-ticker-section">
-        <div className="ticker-wrapper">
-          <div className="ticker-content">
-            <span>GET YOUR TICKET NOW! • DON'T MISS THE SHOW! • GET YOUR TICKET NOW! • DON'T MISS THE SHOW! • </span>
-            <span>GET YOUR TICKET NOW! • DON'T MISS THE SHOW! • GET YOUR TICKET NOW! • DON'T MISS THE SHOW! • </span>
-          </div>
-        </div>
-      </section>
 
       {/* "A Concert You'll Never Forget" Hero Banner Section */}
       <section className="forget-concert-section" ref={forgetConcertRef}>
         <div className="forget-bg-container" ref={forgetBgRef}>
           <img
-            src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=1920&q=80"
+            src={manPerformingImg}
             alt="Concert Tunnel Silhouette"
             className="forget-bg-img"
           />
           <div className="forget-overlay"></div>
         </div>
 
-        <div className="forget-content-box">
-          <h2 className="forget-giant-heading">
-            <span className="forget-line line-1">A Concert</span>
-            <span className="forget-line line-2">You’ll Never</span>
-            <span className="forget-line line-3">Forget</span>
-          </h2>
+        <div className="smokio-phrase-container">
+          <h3 className="smokio-beautiful-phrase">"The Undisputed King of Sinhala Rap, Breaking Limits Every Single Night." - Smokio</h3>
+        </div>
+
+        <div className="forget-marquee-container">
+          <div className="forget-marquee-content">
+            <span>A Concert You'll Never Forget • A Concert You'll Never Forget • A Concert You'll Never Forget • A Concert You'll Never Forget • </span>
+            <span>A Concert You'll Never Forget • A Concert You'll Never Forget • A Concert You'll Never Forget • A Concert You'll Never Forget • </span>
+          </div>
         </div>
       </section>
 

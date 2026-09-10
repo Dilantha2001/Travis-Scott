@@ -2,6 +2,12 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 
+import cu1 from '../assets/cu1.jfif';
+import cu2 from '../assets/cu2.jfif';
+import cu3 from '../assets/cu3.jfif';
+import cu4 from '../assets/cu4.jfif';
+import cu5 from '../assets/cu5.jfif';
+
 const Footer = () => {
   const footerRef = useRef(null);
   const trailRefs = useRef([]);
@@ -9,13 +15,7 @@ const Footer = () => {
   const currentIndex = useRef(0);
   const zIndexCounter = useRef(10);
 
-  const trailImages = [
-    'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=500&q=80',
-    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=500&q=80',
-    'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=500&q=80',
-    'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=500&q=80',
-    'https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?auto=format&fit=crop&w=500&q=80'
-  ];
+  const trailImages = [cu1, cu2, cu3, cu4, cu5];
 
   const handleMouseMove = (e) => {
     if (!footerRef.current) return;
@@ -94,7 +94,11 @@ const Footer = () => {
       <div className="footer-content-wrapper">
         
         {/* Giant Smokio Brand Title */}
-        <h1 className="footer-brand-title">smokio</h1>
+        <h1 className="footer-brand-title" onMouseMove={(e) => e.stopPropagation()}>
+          {"smokio".split("").map((char, index) => (
+            <span key={index} className="footer-char">{char}</span>
+          ))}
+        </h1>
 
         {/* Navigation Grid */}
         <div className="footer-nav-grid">
