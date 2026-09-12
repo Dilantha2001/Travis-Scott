@@ -35,18 +35,18 @@ const Preloader = ({ onComplete }) => {
         duration: 0.5,
         ease: 'power2.in'
       })
-      .to('.preloader-glitch-text', {
+      .to('.loader', {
         opacity: 0,
         scale: 1.1,
         duration: 0.4,
         ease: 'power2.in'
       }, "<")
-      .to('.preloader-progress-bar-container', {
-        scaleX: 0,
+      .to('.smokio-text', {
         opacity: 0,
-        duration: 0.3,
-        ease: 'power2.inOut'
-      }, "-=0.2")
+        scale: 1.1,
+        duration: 0.4,
+        ease: 'power2.in'
+      }, "<")
       .to(containerRef.current, {
         y: '-100%',
         duration: 0.8,
@@ -58,15 +58,23 @@ const Preloader = ({ onComplete }) => {
   return (
     <div className="preloader-container" ref={containerRef}>
       <div className="preloader-content">
-        <h1 className="preloader-glitch-text" data-text="SYSTEM INITIALIZING...">
-          SYSTEM INITIALIZING...
-        </h1>
-        <div className="preloader-progress-bar-container">
-          <div 
-            className="preloader-progress-bar" 
-            style={{ width: `${progress}%` }}
-          ></div>
+        <div className="loader">
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <defs>
+              <mask id="clipping">
+                <polygon points="0,0 100,0 100,100 0,100" fill="black"></polygon>
+                <polygon points="25,25 75,25 50,75" fill="white"></polygon>
+                <polygon points="50,25 75,75 25,75" fill="white"></polygon>
+                <polygon points="35,35 65,35 50,65" fill="white"></polygon>
+                <polygon points="35,35 65,35 50,65" fill="white"></polygon>
+                <polygon points="35,35 65,35 50,65" fill="white"></polygon>
+                <polygon points="35,35 65,35 50,65" fill="white"></polygon>
+              </mask>
+            </defs>
+          </svg>
+          <div className="box"></div>
         </div>
+        <h1 className="smokio-text">SMOKIO</h1>
         <div className="preloader-percentage" ref={percentRef}>
           {Math.min(progress, 100)}%
         </div>

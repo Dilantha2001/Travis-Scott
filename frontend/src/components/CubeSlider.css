@@ -1,227 +1,113 @@
-/* CubeSlider.css - Text Gliding From Far Right Over Cube to Far Left */
-
-.cube-interactive-container {
+.about-producer-section {
+  background-color: #f2f2f2; /* Clean light grey */
+  min-height: 100vh;
   width: 100vw;
-  height: 100vh;
-  position: relative;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", "Helvetica Neue", sans-serif;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.producer-content {
+  max-width: 1100px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  z-index: 10;
-  --cube-glow: rgba(59, 130, 246, 0.1);
-  --cube-border: rgba(59, 130, 246, 0.3);
-}
-
-/* Top Title Section */
-.cube-main-header {
-  position: absolute;
-  top: 8%;
-  width: 100%;
   text-align: center;
-  z-index: 30;
 }
 
-.cube-main-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 3rem;
-  font-weight: 900;
-  color: #ffffff;
-  letter-spacing: 4px;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
-  margin-bottom: 0.5rem;
+.producer-description {
+  font-size: 26px;
+  line-height: 1.4;
+  font-weight: 400;
+  color: #444;
+  margin-bottom: 70px;
+  max-width: 900px;
 }
 
-.cube-main-subtitle {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 1rem;
-  color: #3b82f6;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+.producer-description strong {
+  font-weight: 700;
+  color: #222;
 }
 
-
-/* Center: 3D Cube Container */
-.cube-slider-center {
-  position: relative;
-  z-index: 10;
-  margin-bottom: 2rem;
-}
-
-.slider {
-  position: relative;
-  width: 360px;
-  height: 360px;
-  perspective: 900px;
-  -webkit-perspective: 900px;
-}
-
-.slider * {
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-}
-
-.slider .container {
-  width: inherit;
-  height: inherit;
-  transform: rotateY(0deg) rotateX(0deg);
-  -webkit-transform: rotateY(0deg) rotateX(0deg);
-  will-change: transform;
-}
-
-.hover-rotator {
-  width: inherit;
-  height: inherit;
-  transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.hover-rotator:hover {
-  transform: rotateY(360deg) scale(1.05);
-  cursor: pointer;
-}
-
-.cube-face {
-  display: block;
-  width: inherit;
-  height: inherit;
-  position: absolute;
-  overflow: hidden;
-  border: 2px solid var(--cube-border);
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 25px var(--cube-glow), 0 20px 50px rgba(0, 0, 0, 0.9);
-}
-
-.cube-face.front  { transform: translateZ(180px); }
-.cube-face.back   { transform: rotateY(180deg) translateZ(180px); }
-.cube-face.right  { transform: rotateY(90deg) translateZ(180px); }
-.cube-face.left   { transform: rotateY(-90deg) translateZ(180px); }
-.cube-face.top    { transform: rotateX(90deg) translateZ(180px); }
-.cube-face.bottom { transform: rotateX(-90deg) translateZ(180px); }
-
-.cube-gsap-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.05);
-}
-
-/* Floor Shadow */
-.slider .shadow {
-  display: block;
-  width: 360px;
-  height: 360px;
-  background: rgba(0, 0, 0, 0.95);
-  position: absolute;
-  top: 75%;
-  left: 0;
-  right: 0;
-  margin: auto;
-  transform: rotateX(90deg);
-  -webkit-transform: rotateX(90deg);
-  z-index: -1;
-  filter: blur(30px);
-  -webkit-filter: blur(30px);
-}
-
-/* Overlay Text Track Container (Full Width Gliding Across Screen) */
-.cube-text-track {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.producer-services {
   display: flex;
+  justify-content: center;
+  gap: 120px;
+  margin-bottom: 90px;
+}
+
+.service-item {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 25;
+  gap: 12px;
 }
 
-.cube-text-card {
-  position: absolute;
-  right: 4%;
-  width: 35%;
-  max-width: 650px;
-  text-align: center;
-  padding: 2rem 2.5rem;
-  opacity: 0;
-  will-change: transform, opacity;
-  background: transparent;
-  border: none;
-  box-shadow: none;
+.service-icon {
+  font-size: 38px;
+  color: #444;
+  stroke-width: 1;
 }
 
-.cube-step-badge {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.9rem;
-  letter-spacing: 3px;
-  color: #3b82f6;
-  text-transform: uppercase;
-  margin-bottom: 0.8rem;
-  display: inline-block;
-  background: rgba(59, 130, 246, 0.15);
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+.service-item span {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.2;
 }
 
-.cube-album-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 4.5rem;
-  font-weight: 900;
-  color: #ffffff;
-  margin-bottom: 1rem;
-  letter-spacing: -1px;
-  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
-}
-
-.cube-album-desc {
-  font-size: 1.25rem;
-  color: #e2f1ff;
-  line-height: 1.7;
-  max-width: 680px;
-  margin: 0 auto;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.95);
-  font-weight: 300;
-  letter-spacing: 0.5px;
-}
-
-/* Bottom Horizontal Marquee Text */
-.cube-marquee-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+.producer-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
   width: 100%;
-  overflow: hidden;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 12px 0;
-  z-index: 30;
-  border-top: 1px solid rgba(59, 130, 246, 0.3);
-  backdrop-filter: blur(4px);
 }
 
-.cube-marquee-content {
+.gallery-col {
   display: flex;
-  white-space: nowrap;
-  animation: cubeMarquee 25s linear infinite;
+  align-items: flex-end; /* Align bottoms if different heights */
 }
 
-.cube-marquee-content span {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.95rem;
-  color: #3b82f6;
-  letter-spacing: 4px;
-  padding-right: 2rem;
-  text-transform: uppercase;
-  text-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+.gallery-col img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
 }
 
-@keyframes cubeMarquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+.gallery-col.col-1 img {
+  aspect-ratio: 4/5;
 }
 
+.gallery-col.col-2 {
+  align-items: flex-start; /* Middle image aligned to top */
+}
 
+.gallery-col.col-2 img {
+  aspect-ratio: 4/3; /* Shorter landscape-ish image */
+}
 
+.gallery-col.col-3 img {
+  aspect-ratio: 4/5;
+}
+
+@media (max-width: 900px) {
+  .producer-description {
+    font-size: 20px;
+  }
+  .producer-services {
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .producer-gallery {
+    grid-template-columns: 1fr;
+  }
+  .gallery-col img {
+    aspect-ratio: auto !important;
+    height: 300px;
+  }
+}

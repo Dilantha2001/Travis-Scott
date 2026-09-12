@@ -15,7 +15,7 @@ import 'swiper/css/navigation';
 import './MusicPlayer.css';
 
 // Import local assets
-import sccCover from '../assets/scc.jpg';
+import sccCover from '../assets/smoke.jpg';
 import smokioDissAudio from '../assets/kuddah-reply-diss-smokio.mp3';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -107,7 +107,7 @@ export default function MusicPlayer() {
       x: -50,
       duration: 2,
       ease: "power3.out"
-    },);
+    });
     // Auto-play when scrolling into view
     ScrollTrigger.create({
       trigger: container.current,

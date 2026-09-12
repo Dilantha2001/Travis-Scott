@@ -3,6 +3,8 @@ import { FaArrowRight, FaSpotify, FaPlay, FaPause, FaVolumeUp, FaVolumeMute, FaS
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CubeSlider from '../components/CubeSlider';
+import MusicList from '../components/MusicList';
+import DiscographyPlayer from '../components/DiscographyPlayer';
 import img45 from '../assets/images (45).jpg';
 import img46 from '../assets/images (46).jpg';
 import img47 from '../assets/images (47).jpg';
@@ -13,17 +15,21 @@ import centerStageVideo from '../assets/0908.mp4';
 import smokioDissAudio from '../assets/kuddah-reply-diss-smokio.mp3';
 import manPerformingImg from '../assets/Man_performing_on_stage_202609082107.jpeg';
 import neonGirlImg from '../assets/images/neon-girl.jpg';
+import img22 from '../assets/img22.jpeg';
+import img23 from '../assets/img23.jpeg';
+import img24 from '../assets/img24.jpeg';
+import img25 from '../assets/img25.jpeg';
+import img56 from '../assets/images_(56).jpg_20260911201544.jpeg';
+import img57 from '../assets/images_(57).jpg_20260911201318.jpeg';
+import img58 from '../assets/images_(58).jpg_20260911200933.jpeg';
+import img59 from '../assets/images_(59).jpg_20260911200937.jpeg';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
   const heroRef = useRef(null);
-  const blackCurtainRef = useRef(null);
   const heroContentRef = useRef(null);
-  const revealContentRef = useRef(null);
-  
-  const cubeContainerRef = useRef(null);
-  const textCardsRef = useRef([]);
+
 
   const songsSectionRef = useRef(null);
   const glitchOverlayRef = useRef(null);
@@ -161,7 +167,7 @@ const Home = () => {
         scrollTrigger: {
           trigger: heroRef.current,
           start: 'top top',
-          end: '+=800%',
+          end: '+=150%',
           pin: true,
           scrub: 1.5,
           anticipatePin: 1
@@ -197,121 +203,7 @@ const Home = () => {
         ease: 'power1.in'
       }, 0.4);
 
-      // Step C: Black Screen expands horizontally to 100%
-      heroTl.fromTo(blackCurtainRef.current,
-        { width: '0%' },
-        { width: '100%', ease: 'power2.inOut' },
-        1.2
-      );
-
-      // Step D: Reveal 3D Cube container inside black curtain
-      heroTl.fromTo(revealContentRef.current,
-        { scale: 0.7, opacity: 0 },
-        { scale: 1, opacity: 1, ease: 'power2.out' },
-        1.3
-      );
-
-      // ========================================================================
-      // 2. Full Horizontal Stream: Right Edge (+100vw) -> Over Cube (0vw) -> Disappear Left Edge (-100vw)
-      // ========================================================================
-      const cards = textCardsRef.current.filter(Boolean);
-
-      // Initially position all cards at the far right edge (+100vw)
-      cards.forEach((card) => {
-        gsap.set(card, { x: '100vw', opacity: 0 });
-      });
-
-      // --- Card 1: Silver Heat ---
-      heroTl.fromTo(cards[0],
-        { x: '100vw', opacity: 0 },
-        { x: '0vw', opacity: 1, duration: 0.6, ease: 'power2.out' }, // Enters and stops on Right
-        1.4
-      );
-      heroTl.to(cards[0],
-        { x: '-56vw', duration: 0.6, ease: 'power2.inOut' }, // Moves to Left and stops
-        3.0
-      );
-      heroTl.to(cards[0],
-        { x: '-100vw', opacity: 0, duration: 0.6, ease: 'power2.in' }, // Exits left
-        4.6
-      );
-
-      // --- Rotate Cube to Face 2 (Top Face) ---
-      heroTl.to(cubeContainerRef.current, {
-        rotateX: -90,
-        rotateY: 0,
-        duration: 1.2,
-        ease: 'expo.inOut'
-      }, 4.6);
-
-      // --- Card 2: Wild Spark ---
-      heroTl.fromTo(cards[1],
-        { x: '100vw', opacity: 0 },
-        { x: '0vw', opacity: 1, duration: 0.6, ease: 'power2.out' },
-        5.4
-      );
-      heroTl.to(cards[1],
-        { x: '-56vw', duration: 0.6, ease: 'power2.inOut' },
-        7.0
-      );
-      heroTl.to(cards[1],
-        { x: '-100vw', opacity: 0, duration: 0.6, ease: 'power2.in' },
-        8.6
-      );
-
-      // --- Rotate Cube to Face 3 (Right Face) ---
-      heroTl.to(cubeContainerRef.current, {
-        rotateX: 0,
-        rotateY: -90,
-        duration: 1.2,
-        ease: 'expo.inOut'
-      }, 8.6);
-
-      // --- Card 3: Static Burn ---
-      heroTl.fromTo(cards[2],
-        { x: '100vw', opacity: 0 },
-        { x: '0vw', opacity: 1, duration: 0.6, ease: 'power2.out' },
-        9.4
-      );
-      heroTl.to(cards[2],
-        { x: '-56vw', duration: 0.6, ease: 'power2.inOut' },
-        11.0
-      );
-      heroTl.to(cards[2],
-        { x: '-100vw', opacity: 0, duration: 0.6, ease: 'power2.in' },
-        12.6
-      );
-
-      // --- Rotate Cube to Face 4 (Bottom Face) ---
-      heroTl.to(cubeContainerRef.current, {
-        rotateX: 90,
-        rotateY: 0,
-        duration: 1.2,
-        ease: 'expo.inOut'
-      }, 12.6);
-
-      // --- Card 4: Feral Glow ---
-      heroTl.fromTo(cards[3],
-        { x: '100vw', opacity: 0 },
-        { x: '0vw', opacity: 1, duration: 0.6, ease: 'power2.out' },
-        13.4
-      );
-      heroTl.to(cards[3],
-        { x: '-56vw', duration: 0.6, ease: 'power2.inOut' },
-        15.0
-      );
-      heroTl.to(cards[3],
-        { x: '-100vw', opacity: 0, duration: 0.6, ease: 'power2.in' },
-        16.6
-      );
-
-      // --- Final step: Fade/Scale out reveal content before section unpins ---
-      heroTl.to(revealContentRef.current, {
-        opacity: 0,
-        scale: 0.9,
-        duration: 0.5,
-        ease: 'power2.in'
-      }, 17.2);
+      // All black curtain and cube logic removed here.
 
       // 3. Pinned Video Showcase Transition (Split Screen Expand) & Text Highlight
       const videoTl = gsap.timeline({
@@ -650,15 +542,15 @@ const Home = () => {
   ];
 
   const galleryPhotos = [
-    { id: 1, title: "Live Vocals & Stage Lights", img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80" },
-    { id: 2, title: "Atmospheric Laser Beams", img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80" },
-    { id: 3, title: "Lead Guitarist Riffing", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80" },
-    { id: 4, title: "Bass Player Groove", img: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80" },
+    { id: 1, title: "Colombo Rebellion", img: img22 },
+    { id: 2, title: "Midnight Haze // Smokio & Chrish VI", img: img24 },
+    { id: 3, title: "Raw Ambition", img: img23 },
+    { id: 4, title: "Kamini // Neon Nights", img: img25 },
     { id: 5, title: "Center Stage Spotlight", video: centerStageVideo },
-    { id: 6, title: "Drum Kit Cymbal Flare", img: "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?auto=format&fit=crop&w=800&q=80" },
-    { id: 7, title: "Vintage Stage Mic", img: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&w=800&q=80" },
-    { id: 8, title: "Full Band Arena Show", img: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=800&q=80" },
-    { id: 9, title: "Vocalist Passionate Moment", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80" }
+    { id: 6, title: "Underground Drill Icon", img: img56 },
+    { id: 7, title: "Street Hustle Legacy", img: img57 },
+    { id: 8, title: "Dark Romance // Kamini", img: img58 },
+    { id: 9, title: "Pure Smoke & Energy", img: img59 }
   ];
 
   return (
@@ -686,17 +578,10 @@ const Home = () => {
           </h1>
         </div>
 
-        {/* EXPANDING BLACK CURTAIN (Contains the 3D Interactive Cube + Horizontal Stream Gliding Text) */}
-        <div className="black-expanding-curtain" ref={blackCurtainRef}>
-          <div className="reveal-content-inner" ref={revealContentRef}>
-            <CubeSlider
-              cubeContainerRef={cubeContainerRef}
-              textCardsRef={textCardsRef}
-            />
-          </div>
-        </div>
-
       </section>
+
+      {/* About Producer Section */}
+      <CubeSlider />
 
       {/* Featured Live Singing Video Showcase Section */}
       <section className="video-showcase-section">
@@ -731,8 +616,11 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Discography Player Section */}
+      <DiscographyPlayer />
 
-
+      {/* Music List Section */}
+      <MusicList />
 
       {/* "A Concert You'll Never Forget" Hero Banner Section */}
       <section className="forget-concert-section" ref={forgetConcertRef}>

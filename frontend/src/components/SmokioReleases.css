@@ -1,0 +1,198 @@
+.smokio-releases-section {
+  position: relative;
+  background-color: #000;
+  height: 100vh; /* Exactly full screen */
+  width: 100vw;
+  padding: 60px 80px; /* padding from edges */
+  display: flex;
+  justify-content: flex-end; /* Align content to the right */
+  align-items: center; /* Vertically center content */
+  overflow: hidden;
+  font-family: "Inter", "Helvetica Neue", sans-serif;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+/* Background image layer */
+.smokio-releases-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* Gradient overlay on top of the image to ensure text is readable */
+.bg-gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to left, rgba(5, 1, 10, 0.95) 0%, rgba(10, 2, 20, 0.8) 40%, rgba(60, 10, 40, 0) 100%);
+  pointer-events: none;
+}
+
+/* The neon green cross graphic */
+.neon-cross {
+  position: absolute;
+  top: 80px;
+  right: 15%;
+  width: 150px;
+  height: 150px;
+  z-index: 2;
+  opacity: 0.8;
+}
+
+.cross-line {
+  position: absolute;
+  background-color: #bdf836;
+  box-shadow: 0 0 15px rgba(189, 248, 54, 0.5);
+}
+
+.cross-line.vertical {
+  width: 4px;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%) rotate(15deg);
+}
+
+.cross-line.horizontal {
+  width: 100%;
+  height: 4px;
+  top: 50%;
+  transform: translateY(-50%) rotate(15deg);
+}
+
+.smokio-releases-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 600px; /* constrain width of text on the right */
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh; /* add scrolling to content if it overflows */
+  overflow-y: auto;
+  padding-right: 20px;
+}
+
+/* Hide scrollbar for clean look */
+.smokio-releases-content::-webkit-scrollbar {
+  width: 0px;
+}
+
+.smokio-song-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.smokio-new-badge {
+  background-color: #bdf836;
+  color: #000;
+  font-weight: 800;
+  font-size: 14px;
+  padding: 6px 16px;
+  border-radius: 6px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
+}
+
+.smokio-song-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  letter-spacing: -2px;
+  margin: 0 0 15px 0;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.smokio-song-desc {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 35px 0;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.smokio-listen-now {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.listen-label {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+.smokio-buttons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.smokio-listen-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50px;
+  padding: 12px 25px;
+  text-decoration: none;
+  color: #ffffff;
+  transition: all 0.3s ease;
+  background-color: transparent;
+}
+
+.smokio-listen-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  padding: 4px;
+}
+
+.btn-text {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.smokio-separator {
+  width: 100px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 70px 0;
+}
+
+@media (max-width: 768px) {
+  .smokio-song-title {
+    font-size: 3rem;
+  }
+  .smokio-song-desc {
+    font-size: 16px;
+  }
+  .neon-cross {
+    right: 5%;
+    width: 100px;
+    height: 100px;
+  }
+}

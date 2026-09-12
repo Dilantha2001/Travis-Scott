@@ -258,7 +258,4 @@
 .music-player-section .controls button:nth-child(2):is(:hover, :focus-visible) {
   transform: scale(1.25);
 }
-
-span{
-  color:red
-}
+
