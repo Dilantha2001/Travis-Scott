@@ -22,8 +22,17 @@ body {
   font-family: var(--font-primary);
   background-color: var(--bg-color);
   color: var(--text-color);
-  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.highlight-blue {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+  padding: 2px 8px;
+  display: inline-block;
+  text-shadow: none !important;
 }
 
 /* Global text selection color */
@@ -44,4 +53,22 @@ a {
 
 ul {
   list-style: none;
+}
+
+/* Global scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color); 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b82f6; 
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb; 
 }

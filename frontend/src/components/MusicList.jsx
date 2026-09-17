@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaRegHeart, FaPlus, FaArrowDown, FaMicrophone, FaSlidersH, FaChevronDown } from 'react-icons/fa';
+import { FaRegHeart, FaPlus, FaArrowDown, FaMicrophone, FaSlidersH, FaChevronDown, FaPlay } from 'react-icons/fa';
 import './MusicList.css';
 
 const trackData = [
@@ -60,45 +60,24 @@ const trackData = [
   }
 ];
 
-const MusicList = () => {
+const MusicList = ({ playlist = [], currentTrackIndex, onSelectTrack }) => {
   return (
     <div className="music-list-container">
-      {/* Header Section */}
-      <div className="music-list-header">
-        <div className="header-info">
-          <h1>Barbiecore</h1>
-          <p>Pretty in pink!</p>
-        </div>
-        <div className="header-image">
-          <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80" alt="Barbiecore" />
-        </div>
-      </div>
 
-      {/* Filter Bar */}
-      <div className="filter-bar">
-        <div className="filter-left">
-          <FaSlidersH className="filter-icon" />
-          <span>Genres</span>
-          <span>Moods</span>
-          <span>Vocals</span>
-          <span>Duration</span>
-          <span>BPM</span>
-        </div>
-        <div className="filter-right">
-          <span>Sort by suggested order</span>
-          <FaChevronDown className="sort-icon" />
-        </div>
-      </div>
 
       {/* Track List */}
       <div className="track-list">
-        {trackData.map((track) => (
-          <div className="track-item" key={track.id}>
+        {playlist.map((track, index) => (
+          <div 
+            className={`track-item ${index === currentTrackIndex ? 'active' : ''}`} 
+            key={track.id || index}
+            onClick={() => onSelectTrack && onSelectTrack(index)}
+          >
             <div className="track-cover-info">
-              <img src={track.cover} alt={track.title} className="track-cover" />
+              <img src={track.img || track.cover} alt={track.title} className="track-cover" />
               <div className="track-details">
                 <div className="track-title-row">
-                  <h4 className="track-title">{track.title}</h4>
+                  <h4 className="track-title highlight-blue">{track.title}</h4>
                   {track.explicit && <span className="explicit-badge">E</span>}
                 </div>
                 <p className="track-artist">{track.artist}</p>
@@ -106,7 +85,6 @@ const MusicList = () => {
             </div>
 
             <div className="track-waveform">
-              <FaMicrophone className="mic-icon" />
               {/* Placeholder for waveform graphic */}
               <div className="waveform-placeholder">
                 <div className="wave-line"></div>
@@ -139,9 +117,14 @@ const MusicList = () => {
             </div>
 
             <div className="track-actions">
-              <FaRegHeart className="action-icon" />
-              <FaPlus className="action-icon" />
-              <FaArrowDown className="action-icon" />
+              {index === currentTrackIndex ? (
+                <span className="now-playing-text">NOW PLAYING</span>
+              ) : (
+                <div className="play-track-btn">
+                  <FaPlay className="play-icon-small" />
+                  <span>PLAY</span>
+                </div>
+              )}
             </div>
           </div>
         ))}

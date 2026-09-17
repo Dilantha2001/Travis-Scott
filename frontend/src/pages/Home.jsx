@@ -13,6 +13,10 @@ import stageImg from '../assets/stage.jpeg';
 import concertVideo from '../assets/0907.mp4';
 import centerStageVideo from '../assets/0908.mp4';
 import smokioDissAudio from '../assets/kuddah-reply-diss-smokio.mp3';
+import kaminiAudio from '../assets/kamini-smokio-breezy-tee-cee.mp3';
+import mokadaWenneAudio from '../assets/mokada-wenne-reply-diss-to-sosa-smokio.mp3';
+import mudukkuwenAudio from '../assets/sinhanada.net-Mudukkuwen-Eliyata-Smokio-Ft-Iraj.mp3';
+import nidahasiAudio from '../assets/nidahasi-smokio.mp3';
 import manPerformingImg from '../assets/Man_performing_on_stage_202609082107.jpeg';
 import neonGirlImg from '../assets/images/neon-girl.jpg';
 import img22 from '../assets/img22.jpeg';
@@ -60,11 +64,11 @@ const Home = () => {
   const [showPlaylistDrawer, setShowPlaylistDrawer] = useState(true);
 
   const playlist = [
-    { id: 1, title: 'KUDDAH (REPLY DISS)', duration: '2:36', date: '07.09.26', img: img45, audio: smokioDissAudio },
-    { id: 2, title: 'GOLDEN FEVER', duration: '3:24', date: '2.12.25', img: img46, audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-    { id: 3, title: 'ELECTRIC HEARTLINE', duration: '4:02', date: '26.11.25', img: img47, audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-    { id: 4, title: 'FALLING INTO BLUE', duration: '3:45', date: '11.12.25', img: img48, audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
-    { id: 5, title: 'NEON GRAVITY', duration: '3:18', date: '15.12.25', img: img45, audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' }
+    { id: 1, title: 'MUDUKKUWEN ELIYATA', artist: 'Smokio, 44 Kalliya', duration: '3:45', date: '11.12.25', img: img48, audio: mudukkuwenAudio, bpm: '125 BPM', genre: 'Melodic Rap', mood: 'Vibes' },
+    { id: 2, title: 'NIDAHASI', artist: 'Smokio', duration: '3:18', date: '15.12.25', img: img45, audio: nidahasiAudio, bpm: '92 BPM', genre: 'Underground', mood: 'Heavy' },
+    { id: 3, title: 'KAMINI', artist: 'Smokio, Breezy, Tee Cee', duration: '3:24', date: '2.12.25', img: img46, audio: kaminiAudio, bpm: '121 BPM', genre: 'Trap, Hip-Hop', mood: 'Hype' },
+    { id: 4, title: 'KUDDAH (REPLY DISS)', artist: 'Smokio', duration: '2:36', date: '07.09.26', img: img45, audio: smokioDissAudio, bpm: '90 BPM', genre: 'Sinhala Rap', mood: 'Fierce, Aggressive' },
+    { id: 5, title: 'MOKADA WENNE', artist: 'Smokio', duration: '4:02', date: '26.11.25', img: img47, audio: mokadaWenneAudio, bpm: '95 BPM', genre: 'Rap, Drill', mood: 'Dark' }
   ];
 
   const currentTrack = playlist[currentTrackIndex];
@@ -174,27 +178,22 @@ const Home = () => {
         }
       });
 
-      // Step A0: Hide navbar
-      heroTl.to('.playza-header', {
-        yPercent: -100,
-        opacity: 0,
-        ease: 'power2.inOut',
-        duration: 0.4
-      }, 0);
 
-      // Step A: Letter Shatter (Premium Sequential Drop)
+      // Step A: Letter Crumble and Fall (kadila watenwa)
       heroTl.to('.shatter-letter', {
-        y: 400, // Drops down cleanly
-        rotation: () => (Math.random() - 0.5) * 60, // Slight realistic tilt
+        y: () => (Math.random() * 400) + 400, // Drops down heavily
+        x: () => (Math.random() - 0.5) * 300, // Tumbles sideways slightly
+        rotationZ: () => (Math.random() - 0.5) * 360, // Spins as it falls
+        rotationX: () => (Math.random() - 0.5) * 180,
         opacity: 0,
-        scale: 0.8, // Slightly scales down
+        scale: () => Math.random() * 0.8 + 0.2, // Pieces shrink as they fall away
         stagger: {
-          each: 0.05,
-          from: "start" // Sequential left-to-right character by character
+          each: 0.08, // Happens piece by piece!
+          from: "center" // Breaks from the middle outwards
         },
-        duration: 0.8,
-        ease: 'power3.in' // Smooth gravity acceleration
-      }, 0.4);
+        duration: 1.5,
+        ease: 'power2.in' // Gravity-like acceleration
+      }, 0.2);
 
       // Step B: Hero desc fade out
       heroTl.to(heroContentRef.current, {
@@ -202,6 +201,12 @@ const Home = () => {
         opacity: 0,
         ease: 'power1.in'
       }, 0.4);
+
+      // Step C: Smooth Background Image Zoom
+      heroTl.to('.hero-full-bg', {
+        scale: 1.15,
+        ease: 'none'
+      }, 0);
 
       // All black curtain and cube logic removed here.
 
@@ -488,10 +493,42 @@ const Home = () => {
           0.3
         );
       }
+
+      // (Removed GSAP ScrollTrigger for autoplay to use IntersectionObserver instead)
     });
 
     return () => ctx.revert();
   }, []);
+
+  // Scroll-based Autoplay Attempt
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          if (audioRef.current && audioRef.current.paused) {
+            audioRef.current.volume = 1;
+            audioRef.current.muted = false;
+            
+            const playPromise = audioRef.current.play();
+            if (playPromise !== undefined) {
+              playPromise.then(() => {
+                setIsAudioPlaying(true); // Only update UI if it successfully plays
+              }).catch(e => {
+                console.log("Browser blocked autoplay on scroll:", e);
+              });
+            }
+          }
+        }
+      },
+      { threshold: 0.1 } // Trigger when 10% of the section is visible
+    );
+
+    if (playlistWidgetRef.current) {
+      observer.observe(playlistWidgetRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [playlist]);
 
   const songs = [
     {
@@ -533,12 +570,12 @@ const Home = () => {
   ];
 
   const tours = [
-    { title: 'Electric Vibes', date: '19.12.2025', time: '20:00', location: '123 Broadway St, New York, NY 10007, USA', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80' },
-    { title: 'Night Beats', date: '29.12.2025', time: '21:30', location: '456 Sunset Blvd, Los Angeles, CA 90028, USA', img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80' },
-    { title: 'Golden Notes', date: '5.1.2026', time: '18:30', location: '321 Bourbon St, New Orleans, LA 70130, USA', img: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80' },
-    { title: 'Cyber Utopia Live', date: '15.1.2026', time: '21:00', location: '700 Clark Ave, St. Louis, MO 63102, USA', img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80' },
-    { title: 'Astroworld Redefine', date: '28.1.2026', time: '19:30', location: '1501 NW 3rd Ave, Miami, FL 33136, USA', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80' },
-    { title: 'Neon Overdrive', date: '12.2.2026', time: '20:30', location: '100 1st Ave N, Minneapolis, MN 55401, USA', img: 'https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?auto=format&fit=crop&w=600&q=80' }
+    { title: 'Colombo Rebellion Live', date: '15.05.2027', time: '20:00', location: 'Sugathadasa Indoor Stadium, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80' },
+    { title: 'Midnight Haze Sessions', date: '28.06.2027', time: '21:30', location: 'Viharamahadevi Open Air Theatre, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80' },
+    { title: 'Raw Ambition Tour', date: '12.08.2027', time: '18:30', location: 'Kandy City Centre Amphitheatre, Kandy, Sri Lanka', img: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80' },
+    { title: 'Kamini // Dark Romance', date: '15.09.2027', time: '21:00', location: 'Galle Face Green Open Air, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80' },
+    { title: 'Underground Drill Experience', date: '28.10.2027', time: '19:30', location: 'Nelum Pokuna Theatre, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80' },
+    { title: 'Pure Smoke & Energy Finale', date: '12.12.2027', time: '20:30', location: 'CR & FC Grounds, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?auto=format&fit=crop&w=600&q=80' }
   ];
 
   const galleryPhotos = [
@@ -616,11 +653,32 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Discography Player Section */}
-      <DiscographyPlayer />
+      {/* Global Audio Element */}
+      <audio 
+        ref={audioRef}
+        src={currentTrack?.audio}
+        preload="auto"
+        onEnded={handleNextTrack} 
+        onTimeUpdate={handleTimeUpdate}
+      />
 
-      {/* Music List Section */}
-      <MusicList />
+      {/* Discography Player Section */}
+      <div id="playlist" ref={playlistWidgetRef}>
+        <DiscographyPlayer 
+          currentTrack={currentTrack}
+          isPlaying={isAudioPlaying}
+          onPlayPause={handleAudioPlayPause}
+          onPrev={handlePrevTrack}
+          onNext={handleNextTrack}
+        />
+
+        {/* Music List Section */}
+        <MusicList 
+          playlist={playlist}
+          currentTrackIndex={currentTrackIndex}
+          onSelectTrack={handleSelectTrack}
+        />
+      </div>
 
       {/* "A Concert You'll Never Forget" Hero Banner Section */}
       <section className="forget-concert-section" ref={forgetConcertRef}>
@@ -639,8 +697,22 @@ const Home = () => {
 
         <div className="forget-marquee-container">
           <div className="forget-marquee-content">
-            <span>A Concert You'll Never Forget • A Concert You'll Never Forget • A Concert You'll Never Forget • A Concert You'll Never Forget • </span>
-            <span>A Concert You'll Never Forget • A Concert You'll Never Forget • A Concert You'll Never Forget • A Concert You'll Never Forget • </span>
+            <span>
+              A Concert You'll Never Forget <span style={{ color: '#3b82f6' }}> SMOKIO </span> 
+              Feel The Energy <span style={{ color: '#3b82f6' }}> LIVE </span> 
+              The Undisputed King of Sinhala Rap <span style={{ color: '#3b82f6' }}> SMOKIO </span> 
+              Unstoppable Vibes <span style={{ color: '#3b82f6' }}> LIVE </span> 
+              Breaking Limits <span style={{ color: '#3b82f6' }}> SMOKIO </span> 
+              Pure Smoke & Energy <span style={{ color: '#3b82f6' }}> LIVE </span>
+            </span>
+            <span>
+              A Concert You'll Never Forget <span style={{ color: '#3b82f6' }}> SMOKIO </span> 
+              Feel The Energy <span style={{ color: '#3b82f6' }}> LIVE </span> 
+              The Undisputed King of Sinhala Rap <span style={{ color: '#3b82f6' }}> SMOKIO </span> 
+              Unstoppable Vibes <span style={{ color: '#3b82f6' }}> LIVE </span> 
+              Breaking Limits <span style={{ color: '#3b82f6' }}> SMOKIO </span> 
+              Pure Smoke & Energy <span style={{ color: '#3b82f6' }}> LIVE </span>
+            </span>
           </div>
         </div>
       </section>
@@ -695,7 +767,7 @@ const Home = () => {
       </section>
 
       {/* 9-Image Concert & Band Photo Gallery Grid */}
-      <section className="concert-gallery-section" ref={gallerySectionRef}>
+      <section id="gallery" className="concert-gallery-section" ref={gallerySectionRef}>
         <div className="gallery-header">
           <span className="section-subtitle">Live Moments & Backstage</span>
           <h2 className="gallery-title">Captured On Tour</h2>

@@ -34,15 +34,15 @@ const CookieConsent = () => {
           <div className="cookie-sys-header">
             <span className="sys-blink"></span>
           </div>
-          <h3>CONNECTION ESTABLISHED</h3>
+          <h3>STAY LOCKED IN</h3>
           <p>
-            WE DEPLOY TRACKERS TO OPTIMIZE YOUR AUDIO-VISUAL EXPERIENCE. 
-            ACCEPT TO SYNCHRONIZE WITH THE SMOKIO GRID.
+            WE DROP COOKIES TO KEEP THE VIBES 100 AND MAKE SURE YOUR EXPERIENCE ON THE SITE IS LIT. 
+            ACCEPT TO KEEP RAGING WITH US.
           </p>
         </div>
         <div className="cookie-consent-actions">
-          <button className="btn-decline" onClick={handleDecline}>[ DECLINE ]</button>
-          <button className="btn-accept" onClick={handleAccept}>[ INITIALIZE ]</button>
+          <button className="btn-decline" onClick={handleDecline}>[ NAH, I'M GOOD ]</button>
+          <button className="btn-accept" onClick={handleAccept}>[ LET'S RAGE ]</button>
         </div>
       </div>
     </div>

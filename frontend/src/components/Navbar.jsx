@@ -1,42 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FiArrowUpRight, FiMusic } from 'react-icons/fi';
+import { FiArrowUpRight, FiMusic, FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
   const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  const handlePlaylistClick = () => {
+    const audio = document.querySelector('audio');
+    if(audio) {
+      audio.play().catch(()=>{});
+    }
+    closeMobileMenu();
+  };
 
   return (
     <header className="playza-header">
       <div className="header-container">
         {/* Brand Logo */}
-        <Link to="/" className="brand-logo">
+        <Link to="/" className="brand-logo" onClick={closeMobileMenu}>
           <span className="logo-icon"><FiMusic /></span>
           <span className="logo-text">SMOKIO</span>
         </Link>
 
-        {/* Center Pill Navigation */}
+        {/* Center Pill Navigation (Desktop) */}
         <nav className="pill-nav">
           <Link to="/" className={`pill-link ${location.pathname === '/' ? 'active' : ''}`}>
             home
           </Link>
           <Link to="/about" className={`pill-link ${location.pathname === '/about' ? 'active' : ''}`}>
-            about us <FiArrowUpRight className="arrow-icon" />
+            about
           </Link>
           <Link to="/tours" className={`pill-link ${location.pathname === '/tours' ? 'active' : ''}`}>
             tours
           </Link>
-          <Link to="/albums" className="pill-link">
-            albums
-          </Link>
-          <div className="pill-link dropdown-pill">
-            all pages <FiArrowUpRight className="arrow-icon" />
-          </div>
+          <a href="/#gallery" className="pill-link">
+            gallery
+          </a>
+          <a href="/#playlist" className="pill-link" onClick={handlePlaylistClick}>
+            playlist
+          </a>
         </nav>
 
-        {/* Right CTA Button */}
+        {/* Right CTA Button (Desktop) */}
         <Link to="/contact" className="connect-btn">
           let's connect
         </Link>
+
+        {/* Hamburger Menu Button (Mobile) */}
+        <button className="mobile-menu-btn" onClick={toggleMobileMenu}>
+          {isMobileMenuOpen ? <FiX /> : <FiMenu />}
+        </button>
+      </div>
+
+      {/* Mobile Navigation Overlay */}
+      <div className={`mobile-nav-overlay ${isMobileMenuOpen ? 'open' : ''}`}>
+        <nav className="mobile-nav-links">
+          <Link to="/" className="mobile-nav-link" onClick={closeMobileMenu}>Home</Link>
+          <Link to="/about" className="mobile-nav-link" onClick={closeMobileMenu}>About</Link>
+          <Link to="/tours" className="mobile-nav-link" onClick={closeMobileMenu}>Tours</Link>
+          <a href="/#gallery" className="mobile-nav-link" onClick={closeMobileMenu}>Gallery</a>
+          <a href="/#playlist" className="mobile-nav-link" onClick={handlePlaylistClick}>Playlist</a>
+          <Link to="/contact" className="mobile-nav-btn" onClick={closeMobileMenu}>Let's Connect</Link>
+        </nav>
       </div>
     </header>
   );

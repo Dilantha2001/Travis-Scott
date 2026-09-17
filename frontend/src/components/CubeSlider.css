@@ -1,5 +1,5 @@
 .about-producer-section {
-  background-color: #f2f2f2; /* Clean light grey */
+  background-color: #05010a; /* Dark background matching other sections */
   min-height: 100vh;
   width: 100vw;
   padding: 60px 20px;
@@ -8,7 +8,7 @@
   justify-content: center;
   align-items: center;
   font-family: "Inter", "Helvetica Neue", sans-serif;
-  color: #333;
+  color: #fff;
   box-sizing: border-box;
 }
 
@@ -22,17 +22,17 @@
 }
 
 .producer-description {
-  font-size: 26px;
+  font-size: 34px;
   line-height: 1.4;
   font-weight: 400;
-  color: #444;
+  color: #ccc; /* Light grey text */
   margin-bottom: 70px;
   max-width: 900px;
 }
 
 .producer-description strong {
   font-weight: 700;
-  color: #222;
+  color: #fff; /* Pure white for emphasis */
 }
 
 .producer-services {
@@ -51,13 +51,13 @@
 
 .service-icon {
   font-size: 38px;
-  color: #444;
+  color: #fff; /* White icons */
   stroke-width: 1;
 }
 
 .service-item span {
   font-size: 15px;
-  color: #666;
+  color: #aaa; /* Lighter grey for labels */
   line-height: 1.2;
 }
 
@@ -74,6 +74,7 @@
 }
 
 .gallery-col img {
+  display: block;
   width: 100%;
   border-radius: 12px;
   object-fit: cover;
@@ -110,4 +111,11 @@
     aspect-ratio: auto !important;
     height: 300px;
   }
+}
+.prod-word {
+  display: inline-block;
+  color: #444;
+  opacity: 0.2;
+  will-change: color, opacity;
+  margin-right: 0.25em; /* Ensure proper spacing */
 }
