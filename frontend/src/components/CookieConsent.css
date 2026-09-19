@@ -14,8 +14,8 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(59, 130, 246, 0.4);
-  padding: 30px;
-  width: 460px;
+  padding: 18px 24px;
+  width: 400px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(59, 130, 246, 0.15), inset 0 0 10px rgba(59, 130, 246, 0.05);
   pointer-events: auto;
   animation: glitchUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -60,9 +60,9 @@
 }
 
 .cookie-sys-header {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #3b82f6;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   letter-spacing: 2px;
   display: flex;
   align-items: center;
@@ -71,8 +71,8 @@
 
 .sys-blink {
   display: inline-block;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   background-color: #3b82f6;
   border-radius: 50%;
   animation: blink 1s infinite alternate;
@@ -85,8 +85,8 @@
 }
 
 .cookie-consent-content h3 {
-  margin: 0 0 12px 0;
-  font-size: 1.25rem;
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: 1px;
   font-family: 'Outfit', sans-serif;
@@ -96,25 +96,25 @@
 }
 
 .cookie-consent-content p {
-  margin: 0 0 28px 0;
-  font-size: 0.85rem;
-  line-height: 1.6;
+  margin: 0 0 16px 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
   color: #94a3b8;
   letter-spacing: 0.5px;
 }
 
 .cookie-consent-actions {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   justify-content: space-between;
 }
 
 .cookie-consent-actions button {
   flex: 1;
-  padding: 14px 10px;
-  font-size: 0.85rem;
+  padding: 10px 10px;
+  font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.2s ease;
   background: transparent;
@@ -150,4 +150,39 @@
   color: #000;
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
   text-shadow: none;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .cookie-consent-overlay {
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    justify-content: center;
+  }
+  
+  .cookie-consent-modal {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+  }
+  
+  .cookie-consent-content h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+  
+  .cookie-consent-content p {
+    font-size: 0.8rem;
+    margin-bottom: 20px;
+  }
+  
+  .cookie-consent-actions {
+    gap: 10px;
+  }
+  
+  .cookie-consent-actions button {
+    padding: 12px 8px;
+    font-size: 0.8rem;
+  }
 }

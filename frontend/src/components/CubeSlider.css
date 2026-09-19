@@ -119,3 +119,24 @@
   will-change: color, opacity;
   margin-right: 0.25em; /* Ensure proper spacing */
 }
+
+/* Laptop and Short Screen Optimizations */
+@media (max-width: 1440px) and (max-height: 900px), (max-height: 750px) {
+  .about-producer-section {
+    padding: 20px;
+  }
+  .producer-content {
+    max-width: 850px;
+  }
+  .producer-description {
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
+  .producer-services {
+    margin-bottom: 40px;
+    gap: 70px;
+  }
+  .service-icon {
+    font-size: 28px;
+  }
+}

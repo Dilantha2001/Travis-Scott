@@ -19,21 +19,21 @@ const CubeSlider = () => {
   useGSAP(() => {
     let mm = gsap.matchMedia();
 
-    mm.add("(min-width: 769px)", () => {
+    mm.add("(min-width: 1025px)", () => {
       // Pin the section so it stays fixed behind the upcoming video split (Desktop only)
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: "top top",
-        end: "+=250%",
+        end: "+=400%",
         pin: true,
-        pinSpacing: false
+        pinSpacing: true
       });
 
       const textTl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 50%", // Starts when section is 50% down the screen
-          end: "+=200%", // Increased scroll distance to accommodate all animations
+          end: "+=350%", // Increased scroll distance to accommodate all animations
           scrub: 1
         }
       });
@@ -68,7 +68,7 @@ const CubeSlider = () => {
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: "top 50%", 
-        end: "+=200%",
+        end: "+=350%",
         onEnter: () => gsap.to(document.querySelector('.playza-header'), { y: -100, opacity: 0, duration: 0.4, ease: 'power2.inOut' }),
         onLeave: () => gsap.to(document.querySelector('.playza-header'), { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }),
         onEnterBack: () => gsap.to(document.querySelector('.playza-header'), { y: -100, opacity: 0, duration: 0.4, ease: 'power2.inOut' }),
@@ -76,62 +76,74 @@ const CubeSlider = () => {
       });
     });
 
-    mm.add("(max-width: 768px)", () => {
-      // Mobile version: No pinning, simpler animation
-      const textTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-          end: "bottom 80%",
-          scrub: 1
-        }
-      });
-
+    mm.add("(max-width: 1024px)", () => {
       const prodWords = containerRef.current.querySelectorAll('.prod-word');
+      const mobileTl = gsap.timeline({ paused: true });
+
       if (prodWords.length > 0) {
-        textTl.to(prodWords, {
+        mobileTl.to(prodWords, {
           keyframes: {
             "0%": { opacity: 0.2, color: "#444" },
             "50%": { opacity: 1, color: "#a2cfee" },
             "100%": { opacity: 1, color: "#ffffff" }
           },
           stagger: 0.1,
-          ease: 'none',
-          duration: 1
+          duration: 1.5,
+          ease: 'none'
         });
       }
       
-      textTl.fromTo('.service-item', 
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 }, 
-        "-=0.2"
-      )
-      .fromTo('.gallery-col', 
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 }, 
-        "-=0.2"
+      mobileTl.fromTo('.service-item', 
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' },
+        "-=0.5" 
       );
+
+      // Animate each gallery image
+      const galleryItems = containerRef.current.querySelectorAll('.gallery-col');
+      if (galleryItems.length > 0) {
+        mobileTl.fromTo(galleryItems, 
+          { opacity: 0, scale: 0.95, y: 40 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.6, stagger: 0.15, ease: 'back.out(1.5)' },
+          "-=0.3"
+        );
+      }
+
+      // Use native IntersectionObserver to bypass mobile ScrollTrigger bugs
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          mobileTl.play();
+          observer.disconnect();
+        }
+      }, { threshold: 0.2 });
+
+      observer.observe(containerRef.current);
+
+      return () => observer.disconnect();
     });
 
+    return () => mm.revert();
   }, { scope: containerRef });
 
-  const handleGlitch = (e) => {
+  const handleMouseEnter = (e) => {
     const el = e.currentTarget;
-    console.log("Hovering image:", el);
-    
-    // Stop any current tweens to prevent weird states
     gsap.killTweensOf(el);
-    
     gsap.to(el, {
+      scale: 1.05,
       duration: 0.3,
-      keyframes: [
-        { x: -10, y: 5, skewX: 5, scale: 1.05 },
-        { x: 10, y: -5, skewX: -5, scale: 1.05 },
-        { x: -5, y: 10, skewX: 10, scale: 1.05 },
-        { x: 5, y: -10, skewX: -10, scale: 1.05 },
-        { x: 0, y: 0, skewX: 0, scale: 1 }
-      ],
-      ease: "none"
+      ease: "power2.out",
+      boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.5)"
+    });
+  };
+
+  const handleMouseLeave = (e) => {
+    const el = e.currentTarget;
+    gsap.killTweensOf(el);
+    gsap.to(el, {
+      scale: 1,
+      duration: 0.3,
+      ease: "power2.out",
+      boxShadow: "none"
     });
   };
 
@@ -175,13 +187,13 @@ const CubeSlider = () => {
 
         <div className="producer-gallery">
           <div className="gallery-col col-1">
-            <img src={img1} alt="Producer Work 1" onMouseEnter={handleGlitch} />
+            <img src={img1} alt="Producer Work 1" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
           </div>
           <div className="gallery-col col-2">
-            <img src={img2} alt="Producer Work 2" onMouseEnter={handleGlitch} />
+            <img src={img2} alt="Producer Work 2" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
           </div>
           <div className="gallery-col col-3">
-            <img src={img3} alt="Producer Work 3" onMouseEnter={handleGlitch} />
+            <img src={img3} alt="Producer Work 3" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
           </div>
         </div>
       </div>

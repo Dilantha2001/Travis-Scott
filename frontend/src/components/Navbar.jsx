@@ -34,19 +34,19 @@ const Navbar = () => {
         {/* Center Pill Navigation (Desktop) */}
         <nav className="pill-nav">
           <Link to="/" className={`pill-link ${location.pathname === '/' ? 'active' : ''}`}>
-            home
+            Home
           </Link>
           <Link to="/about" className={`pill-link ${location.pathname === '/about' ? 'active' : ''}`}>
-            about
+            About
           </Link>
           <Link to="/tours" className={`pill-link ${location.pathname === '/tours' ? 'active' : ''}`}>
-            tours
+            Tours
           </Link>
           <a href="/#gallery" className="pill-link">
-            gallery
+            Gallery
           </a>
           <a href="/#playlist" className="pill-link" onClick={handlePlaylistClick}>
-            playlist
+            Playlist
           </a>
         </nav>
 

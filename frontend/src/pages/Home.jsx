@@ -10,8 +10,7 @@ import img46 from '../assets/images (46).jpg';
 import img47 from '../assets/images (47).jpg';
 import img48 from '../assets/images (48).jpg';
 import stageImg from '../assets/stage.jpeg';
-import concertVideo from '../assets/0907.mp4';
-import centerStageVideo from '../assets/0908.mp4';
+
 import smokioDissAudio from '../assets/kuddah-reply-diss-smokio.mp3';
 import kaminiAudio from '../assets/kamini-smokio-breezy-tee-cee.mp3';
 import mokadaWenneAudio from '../assets/mokada-wenne-reply-diss-to-sosa-smokio.mp3';
@@ -460,38 +459,81 @@ const Home = () => {
 
       // 8. GSAP Pinned Zoom-Out Center Image Grid Reveal for Captured On Tour
       if (gallerySectionRef.current) {
-        const galleryTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: gallerySectionRef.current,
-            start: 'top top',
-            end: '+=400%',
-            pin: true,
-            pinSpacing: true,
-            scrub: 1,
-            anticipatePin: 1
-          }
+        let mm = gsap.matchMedia();
+
+        mm.add("(min-width: 1025px)", () => {
+          const galleryTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: gallerySectionRef.current,
+              start: 'top top',
+              end: '+=400%',
+              pin: true,
+              pinSpacing: true,
+              scrub: 1,
+              anticipatePin: 1
+            }
+          });
+
+          // Add a delay to keep it full screen initially
+          galleryTl.to({}, { duration: 0.8 }); // Stays full screen for first 0.8s of scroll
+
+          // Step A: Center image zooms out from full screen (scale 6) to grid cell size (scale 1)
+          galleryTl.fromTo('.center-gallery-card',
+            { scale: 6, zIndex: 30 },
+            { scale: 1, zIndex: 1, ease: 'power1.inOut', duration: 1.5 }
+          );
+
+          // Step B: Surrounding 8 images reveal & scale into grid positions
+          galleryTl.fromTo('.side-gallery-card',
+            { scale: 0.4, opacity: 0 },
+            { scale: 1, opacity: 1, stagger: 0.05, ease: 'power1.out', duration: 1 },
+            "-=0.8" // Start revealing side images as center shrinks
+          );
+
+          // Step C: Gallery Section Header fades in
+          galleryTl.fromTo('.gallery-header',
+            { opacity: 0, y: -30 },
+            { opacity: 1, y: 0, ease: 'power1.out', duration: 0.5 },
+            "-=1"
+          );
         });
 
-        // Step A: Center image zooms out from full screen (scale 3.5) to grid cell size (scale 1)
-        galleryTl.fromTo('.center-gallery-card',
-          { scale: 3.5, zIndex: 30 },
-          { scale: 1, zIndex: 1, ease: 'power1.inOut' },
-          0
-        );
+        mm.add("(max-width: 1024px)", () => {
+          // Animate header
+          gsap.fromTo('.gallery-header',
+            { opacity: 0, y: -20 },
+            { 
+              opacity: 1, 
+              y: 0, 
+              ease: 'power1.out',
+              duration: 0.8,
+              scrollTrigger: {
+                trigger: gallerySectionRef.current,
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
 
-        // Step B: Surrounding 8 images reveal & scale into grid positions
-        galleryTl.fromTo('.side-gallery-card',
-          { scale: 0.4, opacity: 0 },
-          { scale: 1, opacity: 1, stagger: 0.04, ease: 'power1.out' },
-          0.15
-        );
-
-        // Step C: Gallery Section Header fades in
-        galleryTl.fromTo('.gallery-header',
-          { opacity: 0, y: -30 },
-          { opacity: 1, y: 0, ease: 'power1.out' },
-          0.3
-        );
+          // Animate each card individually as it scrolls into view
+          gsap.utils.toArray('.gallery-item-card').forEach((card) => {
+            gsap.fromTo(card,
+              { opacity: 0, scale: 0.9, y: 30 },
+              {
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                duration: 0.6,
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: card,
+                  start: 'top 85%',
+                  toggleActions: 'play none none reverse'
+                }
+              }
+            );
+          });
+        });
       }
 
       // (Removed GSAP ScrollTrigger for autoplay to use IntersectionObserver instead)
@@ -583,7 +625,7 @@ const Home = () => {
     { id: 2, title: "Midnight Haze // Smokio & Chrish VI", img: img24 },
     { id: 3, title: "Raw Ambition", img: img23 },
     { id: 4, title: "Kamini // Neon Nights", img: img25 },
-    { id: 5, title: "Center Stage Spotlight", video: centerStageVideo },
+    { id: 5, title: "Center Stage Spotlight", video: "https://res.cloudinary.com/dymkikwdc/video/upload/v1789664727/0908_uyp1mt.mp4" },
     { id: 6, title: "Underground Drill Icon", img: img56 },
     { id: 7, title: "Street Hustle Legacy", img: img57 },
     { id: 8, title: "Dark Romance // Kamini", img: img58 },
@@ -633,7 +675,7 @@ const Home = () => {
             preload="metadata"
             poster={img45}
           >
-            <source src={concertVideo} type="video/mp4" />
+            <source src="https://res.cloudinary.com/dymkikwdc/video/upload/v1789664713/0907_d9i2do.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
 
