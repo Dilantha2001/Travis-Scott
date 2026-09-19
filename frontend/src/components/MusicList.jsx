@@ -77,7 +77,7 @@ const MusicList = ({ playlist = [], currentTrackIndex, onSelectTrack }) => {
               <img src={track.img || track.cover} alt={track.title} className="track-cover" />
               <div className="track-details">
                 <div className="track-title-row">
-                  <h4 className="track-title highlight-blue">{track.title}</h4>
+                  <h4 className="track-title">{track.title}</h4>
                   {track.explicit && <span className="explicit-badge">E</span>}
                 </div>
                 <p className="track-artist">{track.artist}</p>

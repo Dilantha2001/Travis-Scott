@@ -88,12 +88,11 @@ const Home = () => {
 
   const handleAudioPlayPause = () => {
     if (audioRef.current) {
-      if (isAudioPlaying) {
-        audioRef.current.pause();
-      } else {
+      if (audioRef.current.paused) {
         audioRef.current.play();
+      } else {
+        audioRef.current.pause();
       }
-      setIsAudioPlaying(!isAudioPlaying);
     }
   };
 
@@ -570,7 +569,7 @@ const Home = () => {
     }
 
     return () => observer.disconnect();
-  }, [playlist]);
+  }, []);
 
   const songs = [
     {
@@ -702,6 +701,8 @@ const Home = () => {
         preload="auto"
         onEnded={handleNextTrack} 
         onTimeUpdate={handleTimeUpdate}
+        onPlay={() => setIsAudioPlaying(true)}
+        onPause={() => setIsAudioPlaying(false)}
       />
 
       {/* Discography Player Section */}

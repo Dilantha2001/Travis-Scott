@@ -454,6 +454,13 @@
   color: #666;
 }
 
+.disco-link-list-icons {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 50px;
+}
+
 .disco-link-list {
   font-size: 15px;
   font-weight: 800;
@@ -523,166 +530,26 @@
   box-shadow: 0 15px 40px rgba(255,255,255,0.3);
 }
 
-@media (max-width: 900px) {
-  .disco-player-container {
-    flex-direction: column;
-    padding: 60px 20px;
-  }
-  .disco-left {
-    padding-right: 0;
-    margin-bottom: 60px;
-    justify-content: center;
-    width: 100%;
-  }
-  .disco-album-wrapper {
-    width: 100%;
-    max-width: 360px;
-  }
-  .disco-right {
-    padding-left: 0;
-    text-align: center;
-    width: 100%;
-    align-items: center;
-  }
-  .disco-title {
-    margin: 0 auto 20px;
-  }
-  .disco-desc {
-    margin: 0 auto 50px;
-  }
-  .disco-link-list-icons {
-    justify-content: center;
-  }
-  .disco-step, .disco-controls {
-    justify-content: center;
-  }
-}
+/* Default Colors */
+.brand-logo.spotify { color: #1DB954; }
+.brand-logo.apple { color: #fff; }
+.brand-logo.bandcamp { color: #629aa9; }
+.brand-logo.youtube { color: #FF0000; }
 
-
-/* Tonearm for Record Player */
-.disco-tonearm {
-  position: absolute;
-  top: 40px;
-  right: -50px;
-  width: 40px;
-  height: 250px;
-  z-index: 2; /* above vinyl */
-  transform-origin: 20px 20px;
-  transform: rotate(25deg);
-  pointer-events: none;
-}
-
-.disco-tonearm-base {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  background: radial-gradient(circle at 30% 30%, #eee, #999, #333);
-  border-radius: 50%;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.5), inset 0 -2px 5px rgba(0,0,0,0.5);
-  z-index: 3;
-}
-
-.disco-tonearm-base::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 16px;
-  height: 16px;
-  background: #111;
-  border-radius: 50%;
-}
-
-.disco-tonearm-arm {
-  position: absolute;
-  top: 20px;
-  left: 16px;
-  width: 6px;
-  height: 200px;
-  background: linear-gradient(90deg, #444, #999, #444);
-  border-radius: 3px;
-  box-shadow: -2px 5px 10px rgba(0,0,0,0.6);
-  z-index: 2;
-}
-
-.disco-tonearm-head {
-  position: absolute;
-  top: 210px;
-  left: 8px;
-  width: 18px;
-  height: 40px;
-  background: linear-gradient(135deg, #333, #111);
-  border-radius: 4px;
-  transform: rotate(15deg);
-  box-shadow: -2px 5px 10px rgba(0,0,0,0.7);
-  z-index: 3;
-}
-
-.disco-tonearm-head::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 8px;
-  width: 4px;
-  height: 6px;
-  background: #silver;
-  border-radius: 2px;
-}
-
-.disco-link-icon {
-  margin-right: 4px;
-  vertical-align: middle;
-  font-size: 1.1em;
-  margin-bottom: 2px;
-}
-
-.disco-link-list-icons {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  margin-bottom: 50px;
-}
-
-.brand-logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #888;
-  font-size: 22px;
-  text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.brand-logo:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.08);
-}
-
+/* Hover Effects */
 .brand-logo.spotify:hover { 
-  color: #1DB954; 
   border-color: rgba(29, 185, 84, 0.5); 
   box-shadow: 0 10px 20px rgba(29, 185, 84, 0.15); 
 }
 .brand-logo.apple:hover { 
-  color: #fff; 
   border-color: rgba(255, 255, 255, 0.5); 
   box-shadow: 0 10px 20px rgba(255, 255, 255, 0.15); 
 }
 .brand-logo.bandcamp:hover { 
-  color: #629aa9; 
   border-color: rgba(98, 154, 169, 0.5); 
   box-shadow: 0 10px 20px rgba(98, 154, 169, 0.15); 
 }
 .brand-logo.youtube:hover { 
-  color: #FF0000; 
   border-color: rgba(255, 0, 0, 0.5); 
   box-shadow: 0 10px 20px rgba(255, 0, 0, 0.15); 
 }
@@ -702,4 +569,69 @@
 
 .disco-tonearm.playing {
   transform: rotate(38deg);
+}
+
+@media (max-width: 900px) {
+  .disco-player-container {
+    flex-direction: column;
+    padding: 60px 20px;
+  }
+  .disco-left {
+    padding-right: 0;
+    margin-bottom: 60px;
+    justify-content: center;
+    width: 100%;
+  }
+  .disco-album-wrapper {
+    width: 100%;
+    max-width: 360px;
+  }
+  .disco-cover {
+    width: 100%;
+    height: auto;
+    min-height: 420px;
+  }
+  .disco-cover-img {
+    height: 300px;
+  }
+  .disco-cover-footer {
+    padding: 15px 20px;
+    min-height: 80px;
+  }
+  .disco-artist-sig {
+    font-size: 22px;
+  }
+  .disco-logo {
+    font-size: 8px;
+    gap: 8px;
+  }
+  .disco-logo::before {
+    width: 22px;
+    height: 22px;
+  }
+  .disco-right {
+    padding-left: 0;
+    text-align: center;
+    width: 100%;
+    align-items: center;
+  }
+  .disco-title {
+    margin: 0 auto 20px;
+  }
+  .disco-desc {
+    margin: 0 auto 50px;
+  }
+  .disco-link-list-icons {
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+  }
+  .brand-logo {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  .disco-step, .disco-controls {
+    justify-content: center;
+  }
 }

@@ -8,76 +8,9 @@ import { useGSAP } from '@gsap/react';
 
 const DiscographyPlayer = ({ currentTrack, isPlaying, onPlayPause, onPrev, onNext }) => {
   const containerRef = useRef(null);
-  const hoverCardRef = useRef(null);
-
-  useGSAP(() => {
-    const container = containerRef.current;
-    const card = hoverCardRef.current;
-    
-    if (!container || !card) return;
-
-    gsap.set(card, { autoAlpha: 0, scale: 0.8, xPercent: -50, yPercent: -50, pointerEvents: 'none' });
-
-    const moveCursor = (e) => {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      gsap.to(card, {
-        x: x,
-        y: y,
-        duration: 0.4,
-        ease: "power3.out"
-      });
-    };
-
-    const enterCursor = () => {
-      gsap.to(card, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.5)" });
-    };
-
-    const leaveCursor = () => {
-      gsap.to(card, { autoAlpha: 0, scale: 0.8, duration: 0.3, ease: "power2.in" });
-    };
-
-    container.addEventListener('mousemove', moveCursor);
-    container.addEventListener('mouseenter', enterCursor);
-    container.addEventListener('mouseleave', leaveCursor);
-
-    return () => {
-      container.removeEventListener('mousemove', moveCursor);
-      container.removeEventListener('mouseenter', enterCursor);
-      container.removeEventListener('mouseleave', leaveCursor);
-    };
-  }, { scope: containerRef });
 
   return (
     <div className="disco-player-container" ref={containerRef}>
-      {/* Floating Hover Card */}
-      <div className="spotify-hover-cursor-card" ref={hoverCardRef}>
-        <div className="hover-left">
-          <img src={coverImg} alt="Cover" />
-        </div>
-        <div className="hover-right">
-          <h3 className="hover-title">MAKE US PART OF YOUR<br/>SPOTIFY VIBE!</h3>
-          <div className="hover-waveform">
-            {Array.from({length: 40}).map((_, i) => (
-              <div key={i} className="wave-bar" style={{height: `${Math.max(20, Math.random() * 100)}%`}}></div>
-            ))}
-          </div>
-          <div className="hover-progress">
-            <div className="progress-line"><div className="progress-fill"></div><div className="progress-dot"></div></div>
-          </div>
-          <div className="hover-controls">
-            <div className="h-icon-circle"><span className="h-small-icon">i</span></div>
-            <FaStepBackward className="h-icon" />
-            <div className="h-play">
-              {isPlaying ? <FaPause /> : <FaPlay />}
-            </div>
-            <FaStepForward className="h-icon" />
-            <div className="h-icon-circle"><span className="h-small-icon">-</span></div>
-          </div>
-        </div>
-      </div>
 
       <div className="disco-left">
         <div className="disco-album-wrapper">
@@ -121,10 +54,10 @@ const DiscographyPlayer = ({ currentTrack, isPlaying, onPlayPause, onPrev, onNex
         <div className="disco-links">
           <p>LISTEN ON:</p>
           <div className="disco-link-list-icons">
-            <a href="#" className="brand-logo spotify" title="Spotify"><FaSpotify /></a>
-            <a href="#" className="brand-logo apple" title="Apple Music"><FaApple /></a>
-            <a href="#" className="brand-logo bandcamp" title="Bandcamp"><FaBandcamp /></a>
-            <a href="#" className="brand-logo youtube" title="YouTube"><FaYoutube /></a>
+            <a href="#!" onClick={(e) => e.preventDefault()} className="brand-logo spotify" title="Spotify"><FaSpotify /></a>
+            <a href="#!" onClick={(e) => e.preventDefault()} className="brand-logo apple" title="Apple Music"><FaApple /></a>
+            <a href="#!" onClick={(e) => e.preventDefault()} className="brand-logo bandcamp" title="Bandcamp"><FaBandcamp /></a>
+            <a href="#!" onClick={(e) => e.preventDefault()} className="brand-logo youtube" title="YouTube"><FaYoutube /></a>
           </div>
         </div>
         

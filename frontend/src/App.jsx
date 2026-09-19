@@ -24,7 +24,7 @@ function App() {
             <Route path="/tours" element={<Tours />} />
           </Routes>
           <Footer />
-          <CookieConsent />
+          {!loading && <CookieConsent />}
         </div>
       </Router>
     </>

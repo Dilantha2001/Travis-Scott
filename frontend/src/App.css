@@ -32,6 +32,8 @@ html, body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
 }
 
 .app-loading {
@@ -235,7 +237,7 @@ html, body {
     display: flex;
   }
   .brand-logo {
-    margin-left: 1.5rem;
+    margin-left: 0.5rem;
   }
 }
 

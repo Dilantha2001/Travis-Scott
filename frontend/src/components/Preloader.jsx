@@ -8,19 +8,37 @@ const Preloader = ({ onComplete }) => {
   const percentRef = useRef(null);
 
   useEffect(() => {
-    // Simulate loading progress
-    const timer = setInterval(() => {
+    let timer;
+    let isLoaded = document.readyState === 'complete';
+
+    const handleLoad = () => {
+      isLoaded = true;
+    };
+    
+    window.addEventListener('load', handleLoad);
+
+    timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
           return 100;
         }
-        // Random increment for a more organic, erratic loading feel
-        return prev + Math.floor(Math.random() * 15) + 2;
+        
+        // If content isn't fully loaded yet, stall at 99%
+        if (prev >= 99 && !isLoaded) {
+          return 99;
+        }
+
+        // Cinematic sweet spot (takes about 3.5 seconds to reach 100)
+        // If internet is slow, the isLoaded check above will keep it paused at 99%.
+        return prev + Math.floor(Math.random() * 6) + 1;
       });
     }, 150);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener('load', handleLoad);
+    };
   }, []);
 
   useEffect(() => {
