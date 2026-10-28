@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Custom Interactive Neon Green Scrollbar (Windows 11 & Cross-Browser)
+   ========================================================================== */
+
+.custom-scrollbar-track {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 22px; /* Thick, wide scrollbar */
+  height: 100vh;
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.78);
+  border: none;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease;
+  box-sizing: border-box;
+}
+
+.custom-scrollbar-track:hover {
+  background: rgba(0, 0, 0, 0.92);
+}
+
+.custom-scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  left: 3px;
+  right: 3px;
+  background: #c6ff00;
+  border-radius: 999px;
+  cursor: grab;
+  box-shadow: 0 0 14px rgba(198, 255, 0, 0.65), 0 4px 10px rgba(0, 0, 0, 0.8);
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.custom-scrollbar-thumb:hover,
+.custom-scrollbar-thumb.dragging {
+  background: #d4ff33;
+  box-shadow: 0 0 20px rgba(198, 255, 0, 0.95), 0 4px 14px rgba(0, 0, 0, 0.95);
+}
+
+.custom-scrollbar-thumb.dragging {
+  cursor: grabbing;
+}
+
+/* Tactile 3-dot grip inside the neon thumb */
+.thumb-grip-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5px;
+  pointer-events: none;
+}
+
+.thumb-grip-dots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #000000;
+  opacity: 0.8;
+}
+
+/* Mobile & Touch: Hide custom desktop bar so native touch gesture is natural */
+@media (max-width: 768px) {
+  .custom-scrollbar-track {
+    display: none;
+  }
+}

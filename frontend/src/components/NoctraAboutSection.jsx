@@ -1,110 +1,116 @@
 import React, { useEffect, useRef } from 'react';
-import './NoctraAboutSection.css';
-import blueStageImg from '../assets/noctra_blue_stage.jpg';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import './NoctraAboutSection.css';
+import blueStageImg from '../assets/noctra_blue_stage.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const NoctraAboutSection = () => {
-  const sectionRef = useRef(null);
+  const statsRowRef = useRef(null);
+  const countNightsRef = useRef(null);
+  const countPeopleRef = useRef(null);
+  const countCitiesRef = useRef(null);
 
   useEffect(() => {
-    if (!sectionRef.current) return;
+    if (!statsRowRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Subtle background crowd scale & parallax
-      gsap.fromTo('.noctra-bg-layer',
-        { scale: 1.12, yPercent: -4 },
+      // 1. Stat cards entrance animation (staggered fade and slide up)
+      gsap.fromTo('.noctra-stat-item',
         {
-          scale: 1.0,
-          yPercent: 4,
-          ease: 'none',
+          opacity: 0,
+          y: 35,
+          scale: 0.96
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.85,
+          stagger: 0.15,
+          ease: 'power3.out',
           scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.2
+            trigger: statsRowRef.current,
+            start: 'top 85%',
+            once: true
           }
         }
       );
 
-      // Main Entrance Timeline
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 70%',
-          toggleActions: 'play none none reverse'
+      // 2. Dividers scale in
+      gsap.fromTo('.noctra-stat-divider',
+        { scaleY: 0, opacity: 0 },
+        {
+          scaleY: 1,
+          opacity: 1,
+          duration: 0.7,
+          stagger: 0.15,
+          delay: 0.15,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: statsRowRef.current,
+            start: 'top 85%',
+            once: true
+          }
         }
-      });
-
-      // 1. Top Section Tag
-      tl.fromTo('.noctra-top-tag',
-        { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }
-      )
-      // 2. Left Heading 'THIS IS SMOKIO'
-      .fromTo('.noctra-giant-heading span',
-        { opacity: 0, y: 55, skewY: 3 },
-        { opacity: 1, y: 0, skewY: 0, stagger: 0.14, duration: 0.85, ease: 'power4.out' },
-        '-=0.3'
-      )
-      // 3. Lead Paragraphs
-      .fromTo('.noctra-paragraphs p',
-        { opacity: 0, y: 25 },
-        { opacity: 1, y: 0, stagger: 0.15, duration: 0.75, ease: 'power3.out' },
-        '-=0.5'
-      )
-      // 4. Center Neon Beams & Stage Sign
-      .fromTo('.neon-vertical-beams .beam',
-        { scaleY: 0, opacity: 0 },
-        { scaleY: 1, opacity: 1, stagger: 0.1, duration: 0.8, ease: 'power2.out' },
-        '-=0.7'
-      )
-      .fromTo('.neon-stage-sign',
-        { scale: 0.6, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.85, ease: 'back.out(1.8)' },
-        '-=0.6'
-      )
-      .fromTo('.neon-sign-letter',
-        { opacity: 0, y: -15 },
-        { opacity: 1, y: 0, stagger: 0.08, duration: 0.5, ease: 'power3.out' },
-        '-=0.5'
-      )
-      // 5. Right Column Slogan Lines
-      .fromTo('.noctra-slogan-block .slogan-line',
-        { opacity: 0, x: 45, skewX: -3 },
-        { opacity: 1, x: 0, skewX: 0, stagger: 0.12, duration: 0.8, ease: 'power3.out' },
-        '-=0.6'
-      )
-      // 6. Bottom Stats Row & Vertical Dividers
-      .fromTo('.noctra-stat-divider',
-        { scaleY: 0, opacity: 0 },
-        { scaleY: 1, opacity: 1, duration: 0.7, ease: 'power2.out' },
-        '-=0.4'
-      )
-      .fromTo('.noctra-stat-item',
-        { opacity: 0, y: 35, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, stagger: 0.12, duration: 0.75, ease: 'back.out(1.5)' },
-        '-=0.6'
       );
 
-      // Continuous ambient floating bob for Center Stage Neon Sign
-      gsap.to('.neon-stage-sign', {
-        y: -9,
-        duration: 2.4,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1
-      });
+      // 3. Smooth Counter Animations (decelerating count-up with number formatting)
+      const counters = [
+        {
+          ref: countNightsRef,
+          target: 24,
+          suffix: '+',
+          duration: 1.8,
+          format: (v) => `${Math.floor(v)}+`
+        },
+        {
+          ref: countPeopleRef,
+          target: 1500,
+          suffix: '+',
+          duration: 2.2,
+          format: (v) => `${Math.floor(v).toLocaleString('en-US')}+`
+        },
+        {
+          ref: countCitiesRef,
+          target: 6,
+          suffix: '',
+          duration: 1.5,
+          format: (v) => `${Math.floor(v)}`
+        }
+      ];
 
-    }, sectionRef);
+      counters.forEach((item) => {
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: item.target,
+          duration: item.duration,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: statsRowRef.current,
+            start: 'top 85%',
+            once: true
+          },
+          onUpdate: () => {
+            if (item.ref.current) {
+              item.ref.current.textContent = item.format(obj.val);
+            }
+          },
+          onComplete: () => {
+            if (item.ref.current) {
+              item.ref.current.textContent = item.format(item.target);
+            }
+          }
+        });
+      });
+    }, statsRowRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section className="noctra-about-section" id="about-section" ref={sectionRef}>
+    <section className="noctra-about-section" id="about-section">
       {/* Background with Blue Arena Stage Lighting & Deep Vignette */}
       <div 
         className="noctra-bg-layer" 
@@ -177,24 +183,24 @@ const NoctraAboutSection = () => {
 
         </div>
 
-        {/* Bottom Row: Stats Metrics */}
-        <div className="noctra-stats-row">
+        {/* Bottom Row: Stats Metrics with GSAP Animated Counters */}
+        <div className="noctra-stats-row" ref={statsRowRef}>
           <div className="noctra-stat-item">
-            <span className="stat-big-number">24+</span>
+            <span className="stat-big-number" ref={countNightsRef}>0+</span>
             <span className="stat-legend">NIGHTS CREATED</span>
           </div>
 
           <div className="noctra-stat-divider"></div>
 
           <div className="noctra-stat-item">
-            <span className="stat-big-number">1,500+</span>
+            <span className="stat-big-number" ref={countPeopleRef}>0+</span>
             <span className="stat-legend">PEOPLE THROUGH THE DOOR</span>
           </div>
 
           <div className="noctra-stat-divider"></div>
 
           <div className="noctra-stat-item">
-            <span className="stat-big-number">6</span>
+            <span className="stat-big-number" ref={countCitiesRef}>0</span>
             <span className="stat-legend">CITIES</span>
           </div>
         </div>

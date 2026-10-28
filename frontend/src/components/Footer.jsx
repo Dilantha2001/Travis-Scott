@@ -2,11 +2,11 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 
-import cu1 from '../assets/cu1.jfif';
-import cu2 from '../assets/cu2.jfif';
-import cu3 from '../assets/cu3.jfif';
-import cu4 from '../assets/cu4.jfif';
-import cu5 from '../assets/cu5.jfif';
+import cu1 from '../assets/cu1_highres.jpg';
+import cu2 from '../assets/cu2_highres.jpg';
+import cu3 from '../assets/cu3_highres.jpg';
+import cu4 from '../assets/cu4_highres.jpg';
+import cu5 from '../assets/cu5_highres.jpg';
 
 const Footer = () => {
   const footerRef = useRef(null);

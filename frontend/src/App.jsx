@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Preloader from './components/Preloader';
 import CookieConsent from './components/CookieConsent';
 import SmoothScroll from './components/SmoothScroll';
+import CustomScrollbar from './components/CustomScrollbar';
 import './App.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
   return (
     <>
       {loading && <Preloader onComplete={() => setLoading(false)} />}
+      <CustomScrollbar isLoading={loading} />
       <Router>
         <SmoothScroll isLoading={loading}>
           <div className={`app-container ${loading ? 'app-loading' : ''}`}>

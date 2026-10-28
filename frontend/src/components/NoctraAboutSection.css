@@ -22,8 +22,6 @@
   background-position: center center;
   background-repeat: no-repeat;
   z-index: 1;
-  transform: scale(1.02);
-  transition: transform 1.2s ease-out;
   filter: brightness(0.48) contrast(1.15) saturate(0.85);
 }
 
@@ -194,15 +192,14 @@
   display: inline-flex;
   gap: 8px;
   padding: 10px 24px;
-  border: 1.5px solid rgba(198, 255, 0, 0.65);
+  border: 1.5px solid rgba(198, 255, 0, 0.75);
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.55);
   box-shadow: 
-    0 0 15px rgba(198, 255, 0, 0.4),
+    0 0 18px rgba(198, 255, 0, 0.45),
     inset 0 0 15px rgba(198, 255, 0, 0.25);
   backdrop-filter: blur(4px);
   position: relative;
-  animation: neonFlickerGlow 4s infinite alternate ease-in-out;
 }
 
 .neon-sign-letter {
@@ -236,17 +233,6 @@
     rgba(198, 255, 0, 0) 100%
   );
   box-shadow: 0 0 10px #c6ff00;
-}
-
-@keyframes neonFlickerGlow {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(198, 255, 0, 0.4), inset 0 0 15px rgba(198, 255, 0, 0.25);
-    border-color: rgba(198, 255, 0, 0.65);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(198, 255, 0, 0.7), inset 0 0 22px rgba(198, 255, 0, 0.4);
-    border-color: rgba(198, 255, 0, 0.95);
-  }
 }
 
 /* Right Column: Slogan */
@@ -309,7 +295,10 @@
   line-height: 0.92;
   color: #c6ff00;
   letter-spacing: -0.02em;
-  text-shadow: 0 0 24px rgba(198, 255, 0, 0.28);
+  text-shadow: 0 0 24px rgba(198, 255, 0, 0.35);
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+  will-change: transform;
 }
 
 .stat-legend {

@@ -2,7 +2,7 @@ import React from 'react';
 import './DiscographyPlayer.css';
 import { FaPlay, FaPause, FaSpotify } from 'react-icons/fa';
 import { FiHeadphones } from 'react-icons/fi';
-import defaultCoverImg from '../assets/images (45).jpg';
+import defaultCoverImg from '../assets/song_mudukkuwen_highres.jpg';
 
 const DiscographyPlayer = ({ 
   playlist = [],

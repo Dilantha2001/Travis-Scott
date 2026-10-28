@@ -8,10 +8,11 @@ import MusicList from '../components/MusicList';
 import DiscographyPlayer from '../components/DiscographyPlayer';
 import MusicianStatementSection from '../components/MusicianStatementSection';
 import Contact from './Contact';
-import img45 from '../assets/images (45).jpg';
-import img46 from '../assets/images (46).jpg';
-import img47 from '../assets/images (47).jpg';
-import img48 from '../assets/images (48).jpg';
+import songMudukkuwenImg from '../assets/song_mudukkuwen_highres.jpg';
+import songNidahasiImg from '../assets/song_nidahasi_highres.jpg';
+import songKaminiImg from '../assets/song_kamini_highres.jpg';
+import songKuddahImg from '../assets/song_kuddah_highres.jpg';
+import songMokadaImg from '../assets/song_mokada_highres.jpg';
 import stageImg from '../assets/stage.jpeg';
 
 import smokioDissAudio from '../assets/kuddah-reply-diss-smokio.mp3';
@@ -61,11 +62,11 @@ const Home = () => {
   const [showPlaylistDrawer, setShowPlaylistDrawer] = useState(true);
 
   const playlist = [
-    { id: 1, title: 'MUDUKKUWEN ELIYATA', artist: 'Smokio, 44 Kalliya', duration: '3:45', date: '11.12.25', img: img48, audio: mudukkuwenAudio, bpm: '125 BPM', genre: 'Melodic Rap', mood: 'Vibes' },
-    { id: 2, title: 'NIDAHASI', artist: 'Smokio', duration: '3:18', date: '15.12.25', img: img45, audio: nidahasiAudio, bpm: '92 BPM', genre: 'Underground', mood: 'Heavy' },
-    { id: 3, title: 'KAMINI', artist: 'Smokio, Breezy, Tee Cee', duration: '3:24', date: '2.12.25', img: img46, audio: kaminiAudio, bpm: '121 BPM', genre: 'Trap, Hip-Hop', mood: 'Hype' },
-    { id: 4, title: 'KUDDAH (REPLY DISS)', artist: 'Smokio', duration: '2:36', date: '07.09.26', img: img45, audio: smokioDissAudio, bpm: '90 BPM', genre: 'Sinhala Rap', mood: 'Fierce, Aggressive' },
-    { id: 5, title: 'MOKADA WENNE', artist: 'Smokio', duration: '4:02', date: '26.11.25', img: img47, audio: mokadaWenneAudio, bpm: '95 BPM', genre: 'Rap, Drill', mood: 'Dark' }
+    { id: 1, title: 'MUDUKKUWEN ELIYATA', artist: 'Smokio, 44 Kalliya', duration: '3:45', date: '11.12.25', img: songMudukkuwenImg, audio: mudukkuwenAudio, bpm: '125 BPM', genre: 'Melodic Rap', mood: 'Vibes' },
+    { id: 2, title: 'NIDAHASI', artist: 'Smokio', duration: '3:18', date: '15.12.25', img: songNidahasiImg, audio: nidahasiAudio, bpm: '92 BPM', genre: 'Underground', mood: 'Heavy' },
+    { id: 3, title: 'KAMINI', artist: 'Smokio, Breezy, Tee Cee', duration: '3:24', date: '2.12.25', img: songKaminiImg, audio: kaminiAudio, bpm: '121 BPM', genre: 'Trap, Hip-Hop', mood: 'Hype' },
+    { id: 4, title: 'KUDDAH (REPLY DISS)', artist: 'Smokio', duration: '2:36', date: '07.09.26', img: songKuddahImg, audio: smokioDissAudio, bpm: '90 BPM', genre: 'Sinhala Rap', mood: 'Fierce, Aggressive' },
+    { id: 5, title: 'MOKADA WENNE', artist: 'Smokio', duration: '4:02', date: '26.11.25', img: songMokadaImg, audio: mokadaWenneAudio, bpm: '95 BPM', genre: 'Rap, Drill', mood: 'Dark' }
   ];
 
   const currentTrack = playlist[currentTrackIndex];
@@ -506,37 +507,37 @@ const Home = () => {
     {
       title: 'GOLDEN FEVER',
       date: '2.12.25',
-      img: img45,
+      img: songNidahasiImg,
       size: 'tall'
     },
     {
       title: 'ELECTRIC HEARTLINE',
       date: '26.11.25',
-      img: img46,
+      img: songKaminiImg,
       size: 'square'
     },
     {
       title: 'FALLING INTO BLUE',
       date: '11.12.25',
-      img: img47,
+      img: songMokadaImg,
       size: 'wide'
     },
     {
       title: 'NEON GRAVITY',
       date: '15.12.25',
-      img: img48,
+      img: songMudukkuwenImg,
       size: 'wide'
     },
     {
       title: 'ECHOING HEARTS',
       date: '24.12.25',
-      img: img45,
+      img: songKuddahImg,
       size: 'wide'
     },
     {
       title: 'TWILIGHT SPARKS',
       date: '30.12.25',
-      img: img46,
+      img: songKaminiImg,
       size: 'tall'
     }
   ];
