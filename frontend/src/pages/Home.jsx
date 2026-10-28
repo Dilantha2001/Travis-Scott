@@ -2,9 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FaArrowRight, FaSpotify, FaPlay, FaPause, FaVolumeUp, FaVolumeMute, FaStepBackward, FaStepForward, FaMusic, FaListUl, FaExpand, FaChevronLeft, FaChevronRight, FaRegHeart } from 'react-icons/fa';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import CubeSlider from '../components/CubeSlider';
+import MovementSection from '../components/MovementSection';
+import NoctraAboutSection from '../components/NoctraAboutSection';
 import MusicList from '../components/MusicList';
 import DiscographyPlayer from '../components/DiscographyPlayer';
+import MusicianStatementSection from '../components/MusicianStatementSection';
+import Contact from './Contact';
 import img45 from '../assets/images (45).jpg';
 import img46 from '../assets/images (46).jpg';
 import img47 from '../assets/images (47).jpg';
@@ -48,11 +51,6 @@ const Home = () => {
 
   // Concert Gallery Section ref
   const gallerySectionRef = useRef(null);
-
-  // Video showcase state & ref
-  const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
 
   // Audio Playlist Player state & refs
   const playlistWidgetRef = useRef(null);
@@ -130,120 +128,52 @@ const Home = () => {
     }
   };
 
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
-
-  const toggleFullScreen = () => {
-    if (videoRef.current) {
-      if (videoRef.current.requestFullscreen) {
-        videoRef.current.requestFullscreen();
-      } else if (videoRef.current.webkitRequestFullscreen) {
-        videoRef.current.webkitRequestFullscreen();
-      } else if (videoRef.current.msRequestFullscreen) {
-        videoRef.current.msRequestFullscreen();
-      }
-    }
-  };
-
   const titleText = "breaks limits";
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Hero Pinned Section Timeline (Curtain Expand + Shatter + Horizontal Stream Text)
+      // 1. Hero Section Scroll Animation (Shatter + Fade + Continuous Natural Scroll)
       const heroTl = gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,
           start: 'top top',
-          end: '+=150%',
-          pin: true,
-          scrub: 1.5,
-          anticipatePin: 1
+          end: 'bottom top',
+          scrub: true
         }
       });
 
-
-      // Step A: Letter Crumble and Fall (kadila watenwa)
+      // Step A: Letter Crumble and Fall as you scroll down
       heroTl.to('.shatter-letter', {
-        y: () => (Math.random() * 400) + 400, // Drops down heavily
-        x: () => (Math.random() - 0.5) * 300, // Tumbles sideways slightly
-        rotationZ: () => (Math.random() - 0.5) * 360, // Spins as it falls
-        rotationX: () => (Math.random() - 0.5) * 180,
+        y: () => (Math.random() * 320) + 260, // Drops down heavily
+        x: () => (Math.random() - 0.5) * 220, // Tumbles sideways slightly
+        rotationZ: () => (Math.random() - 0.5) * 220, // Spins as it falls
+        rotationX: () => (Math.random() - 0.5) * 120,
         opacity: 0,
-        scale: () => Math.random() * 0.8 + 0.2, // Pieces shrink as they fall away
+        scale: () => Math.random() * 0.6 + 0.3,
         stagger: {
-          each: 0.08, // Happens piece by piece!
-          from: "center" // Breaks from the middle outwards
+          each: 0.03,
+          from: "center"
         },
-        duration: 1.5,
-        ease: 'power2.in' // Gravity-like acceleration
-      }, 0.2);
+        duration: 0.7,
+        ease: 'power2.in'
+      }, 0);
 
       // Step B: Hero desc fade out
       heroTl.to(heroContentRef.current, {
-        scale: 0.85,
+        scale: 0.88,
         opacity: 0,
-        ease: 'power1.in'
-      }, 0.4);
-
-      // Step C: Smooth Background Image Zoom
-      heroTl.to('.hero-full-bg', {
-        scale: 1.15,
-        ease: 'none'
+        y: -40,
+        ease: 'power1.out',
+        duration: 0.5
       }, 0);
 
-      // All black curtain and cube logic removed here.
-
-      // 3. Pinned Video Showcase Transition (Split Screen Expand) & Text Highlight
-      const videoTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: '.video-showcase-section',
-          start: 'top top',
-          end: '+=250%',
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1
-        }
-      });
-
-      // Expand the video frame using clip-path for a true center split reveal
-      videoTl.fromTo('.video-container-frame',
-        { clipPath: 'inset(0 50% 0 50%)' },
-        { clipPath: 'inset(0 0% 0 0%)', ease: 'power2.inOut', duration: 1.5 }
-      );
-
-      // Fade in the video overlay controls / HUD
-      videoTl.fromTo('.video-overlay-controls',
-        { opacity: 0 },
-        { opacity: 1, ease: 'power1.out', duration: 0.5 },
-        '-=0.5'
-      );
-
-      // Scroll-Driven Word-by-Word Text Highlight (Light Gray -> Pure White)
-      const quoteWords = gsap.utils.toArray('.scroll-quote-word');
-      if (quoteWords.length > 0) {
-        videoTl.to(quoteWords, {
-          color: '#ffffff',
-          opacity: 1,
-          stagger: 0.04,
-          ease: 'none',
-          duration: 2
-        });
-      }
+      // Step C: Smooth Background Image Parallax
+      heroTl.to('.hero-full-bg', {
+        y: 80,
+        scale: 1.15,
+        ease: 'none',
+        duration: 1
+      }, 0);
 
       // 4. Digital Glitch & Color Shift Transition into Songs Section
       const songsSec = songsSectionRef.current;
@@ -339,7 +269,7 @@ const Home = () => {
             trigger: forgetConcertRef.current,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 1
+            scrub: true
           }
         });
 
@@ -441,16 +371,16 @@ const Home = () => {
                 trigger: row,
                 start: 'top 80%',
                 end: 'top 40%',
-                scrub: 0.6
+                scrub: true
               }
             })
             .to(bgFill, {
               scaleX: 1,
-              ease: 'power2.inOut'
+              ease: 'none'
             }, 0)
             .to(rowTexts, {
               color: '#000000',
-              ease: 'power1.out'
+              ease: 'none'
             }, 0);
           }
         });
@@ -468,7 +398,7 @@ const Home = () => {
               end: '+=400%',
               pin: true,
               pinSpacing: true,
-              scrub: 1,
+              scrub: true,
               anticipatePin: 1
             }
           });
@@ -535,7 +465,8 @@ const Home = () => {
         });
       }
 
-      // (Removed GSAP ScrollTrigger for autoplay to use IntersectionObserver instead)
+      // Refresh all ScrollTriggers once all components and pinned spacers are mounted
+      ScrollTrigger.refresh();
     });
 
     return () => ctx.revert();
@@ -624,7 +555,7 @@ const Home = () => {
     { id: 2, title: "Midnight Haze // Smokio & Chrish VI", img: img24 },
     { id: 3, title: "Raw Ambition", img: img23 },
     { id: 4, title: "Kamini // Neon Nights", img: img25 },
-    { id: 5, title: "Center Stage Spotlight", video: "https://res.cloudinary.com/dymkikwdc/video/upload/v1789664727/0908_uyp1mt.mp4" },
+    { id: 5, title: "Center Stage Spotlight", video: "https://res.cloudinary.com/dymkikwdc/video/upload/v1789664713/0907_d9i2do.mp4" },
     { id: 6, title: "Underground Drill Icon", img: img56 },
     { id: 7, title: "Street Hustle Legacy", img: img57 },
     { id: 8, title: "Dark Romance // Kamini", img: img58 },
@@ -658,41 +589,37 @@ const Home = () => {
 
       </section>
 
-      {/* About Producer Section */}
-      <CubeSlider />
-
-      {/* Featured Live Singing Video Showcase Section */}
-      <section className="video-showcase-section">
-        <div className="video-container-frame">
-          <video
-            ref={videoRef}
-            className="singing-video-player"
-            autoPlay
-            loop
-            muted={isMuted}
-            playsInline
-            preload="metadata"
-            poster={img45}
-          >
-            <source src="https://res.cloudinary.com/dymkikwdc/video/upload/v1789664713/0907_d9i2do.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-
-          {/* Overlay Controls & Info HUD */}
-          <div className="video-overlay-controls">
-            <div className="video-bottom-container">
-              {/* Scroll-Driven Word-by-Word Light Gray to Pure White Continuous Paragraph */}
-              <div className="video-scroll-quote-box">
-                <p className="scroll-quote-paragraph">
-                  {"Music is not just something we create — it's the raw emotion that connects us across every stage. From quiet lyrics written in the dark to the thunderous roar of a live stadium crowd, we break limits. This is our legacy: unfiltered sound, high-voltage energy, and a connection that will never fade.".split(' ').map((word, i) => (
-                    <span key={i} className="scroll-quote-word">{word}{' '}</span>
-                  ))}
-                </p>
-              </div>
-            </div>
+      {/* Neon Lime Infinite Marquee Ribbon Under Hero */}
+      <div className="neon-marquee-strip">
+        <div className="neon-marquee-track">
+          <div className="neon-marquee-content">
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> LIVE IN COLOMBO · KANDY · GALLE · JAFFNA · LONDON · MELBOURNE</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> MUDUKKUWEN ELIYATA — OUT NOW</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> WORLD TOUR 2027</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> THE UNDISPUTED KING OF SINHALA RAP</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> UNFILTERED SOUND · RAW ENERGY</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> KAMINI // DARK ROMANCE</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> 44 KALLIYA LEGACY</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> BREAKING LIMITS EVERY NIGHT</span>
+          </div>
+          <div className="neon-marquee-content" aria-hidden="true">
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> LIVE IN COLOMBO · KANDY · GALLE · JAFFNA · LONDON · MELBOURNE</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> MUDUKKUWEN ELIYATA — OUT NOW</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> WORLD TOUR 2027</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> THE UNDISPUTED KING OF SINHALA RAP</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> UNFILTERED SOUND · RAW ENERGY</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> KAMINI // DARK ROMANCE</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> 44 KALLIYA LEGACY</span>
+            <span className="neon-marquee-item"><span className="neon-star">✦</span> BREAKING LIMITS EVERY NIGHT</span>
           </div>
         </div>
-      </section>
+      </div>
+
+      {/* The Movement Section (Section 2) */}
+      <MovementSection />
+
+      {/* Noctra 03 About Section with Blue Arena Lighting (Section 3) */}
+      <NoctraAboutSection />
 
       {/* Global Audio Element */}
       <audio 
@@ -705,23 +632,21 @@ const Home = () => {
         onPause={() => setIsAudioPlaying(false)}
       />
 
-      {/* Discography Player Section */}
+      {/* Discography Player Section (Section 4 - Turn Up the Feeling) */}
       <div id="playlist" ref={playlistWidgetRef}>
         <DiscographyPlayer 
-          currentTrack={currentTrack}
-          isPlaying={isAudioPlaying}
-          onPlayPause={handleAudioPlayPause}
-          onPrev={handlePrevTrack}
-          onNext={handleNextTrack}
-        />
-
-        {/* Music List Section */}
-        <MusicList 
           playlist={playlist}
+          currentTrack={currentTrack}
           currentTrackIndex={currentTrackIndex}
+          isPlaying={isAudioPlaying}
+          trackProgress={trackProgress}
+          onPlayPause={handleAudioPlayPause}
           onSelectTrack={handleSelectTrack}
         />
       </div>
+
+      {/* Musician Statement Editorial Section with Inline Images & Yellow Cross Ribbons */}
+      <MusicianStatementSection />
 
       {/* "A Concert You'll Never Forget" Hero Banner Section */}
       <section className="forget-concert-section" ref={forgetConcertRef}>
@@ -741,20 +666,20 @@ const Home = () => {
         <div className="forget-marquee-container">
           <div className="forget-marquee-content">
             <span>
-              A Concert You'll Never Forget <span style={{ color: '#3b82f6' }}> SMOKIO </span> 
-              Feel The Energy <span style={{ color: '#3b82f6' }}> LIVE </span> 
-              The Undisputed King of Sinhala Rap <span style={{ color: '#3b82f6' }}> SMOKIO </span> 
-              Unstoppable Vibes <span style={{ color: '#3b82f6' }}> LIVE </span> 
-              Breaking Limits <span style={{ color: '#3b82f6' }}> SMOKIO </span> 
-              Pure Smoke & Energy <span style={{ color: '#3b82f6' }}> LIVE </span>
+              A Concert You'll Never Forget <span style={{ color: '#c6ff00' }}> SMOKIO </span> 
+              Feel The Energy <span style={{ color: '#c6ff00' }}> LIVE </span> 
+              The Undisputed King of Sinhala Rap <span style={{ color: '#c6ff00' }}> SMOKIO </span> 
+              Unstoppable Vibes <span style={{ color: '#c6ff00' }}> LIVE </span> 
+              Breaking Limits <span style={{ color: '#c6ff00' }}> SMOKIO </span> 
+              Pure Smoke & Energy <span style={{ color: '#c6ff00' }}> LIVE </span>
             </span>
             <span>
-              A Concert You'll Never Forget <span style={{ color: '#3b82f6' }}> SMOKIO </span> 
-              Feel The Energy <span style={{ color: '#3b82f6' }}> LIVE </span> 
-              The Undisputed King of Sinhala Rap <span style={{ color: '#3b82f6' }}> SMOKIO </span> 
-              Unstoppable Vibes <span style={{ color: '#3b82f6' }}> LIVE </span> 
-              Breaking Limits <span style={{ color: '#3b82f6' }}> SMOKIO </span> 
-              Pure Smoke & Energy <span style={{ color: '#3b82f6' }}> LIVE </span>
+              A Concert You'll Never Forget <span style={{ color: '#c6ff00' }}> SMOKIO </span> 
+              Feel The Energy <span style={{ color: '#c6ff00' }}> LIVE </span> 
+              The Undisputed King of Sinhala Rap <span style={{ color: '#c6ff00' }}> SMOKIO </span> 
+              Unstoppable Vibes <span style={{ color: '#c6ff00' }}> LIVE </span> 
+              Breaking Limits <span style={{ color: '#c6ff00' }}> SMOKIO </span> 
+              Pure Smoke & Energy <span style={{ color: '#c6ff00' }}> LIVE </span>
             </span>
           </div>
         </div>
@@ -823,7 +748,7 @@ const Home = () => {
               className={`gallery-item-card ${idx === 4 ? 'center-gallery-card' : 'side-gallery-card'}`}
             >
               {photo.video ? (
-                <video src={photo.video} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%)' }} />
+                <video src={photo.video} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
                 <img src={photo.img} alt={photo.title} />
               )}
@@ -834,6 +759,9 @@ const Home = () => {
           ))}
         </div>
       </section>
+
+      {/* Contact Section matching Reference Layout */}
+      <Contact />
     </div>
   );
 };

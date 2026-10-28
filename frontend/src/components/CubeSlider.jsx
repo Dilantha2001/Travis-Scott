@@ -20,21 +20,13 @@ const CubeSlider = () => {
     let mm = gsap.matchMedia();
 
     mm.add("(min-width: 1025px)", () => {
-      // Pin the section so it stays fixed behind the upcoming video split (Desktop only)
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "+=400%",
-        pin: true,
-        pinSpacing: true
-      });
-
+      // Natural scrolling timeline: animates smoothly as user scrolls down into the section
       const textTl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 50%", // Starts when section is 50% down the screen
-          end: "+=350%", // Increased scroll distance to accommodate all animations
-          scrub: 1
+          start: "top 80%",
+          end: "top 15%",
+          scrub: true
         }
       });
 
@@ -47,33 +39,22 @@ const CubeSlider = () => {
             "50%": { opacity: 1, color: "#a2cfee" },
             "100%": { opacity: 1, color: "#ffffff" }
           },
-          stagger: 0.1,
+          stagger: 0.08,
           ease: 'none',
-          duration: 2
+          duration: 1.5
         });
       }
       
       textTl.fromTo('.service-item', 
-        { scale: 0, opacity: 0, y: 20 },
-        { scale: 1, opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'back.out(1.7)' }, 
+        { scale: 0.8, opacity: 0, y: 30 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' }, 
         "-=0.5" 
       )
       .fromTo('.gallery-col', 
-        { scale: 0, opacity: 0, y: 40 },
-        { scale: 1, opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: 'back.out(1.5)' }, 
+        { scale: 0.85, opacity: 0, y: 40 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out' }, 
         "-=0.4"
       );
-
-      // Independent smooth animation for the Navbar
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top 50%", 
-        end: "+=350%",
-        onEnter: () => gsap.to(document.querySelector('.playza-header'), { y: -100, opacity: 0, duration: 0.4, ease: 'power2.inOut' }),
-        onLeave: () => gsap.to(document.querySelector('.playza-header'), { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }),
-        onEnterBack: () => gsap.to(document.querySelector('.playza-header'), { y: -100, opacity: 0, duration: 0.4, ease: 'power2.inOut' }),
-        onLeaveBack: () => gsap.to(document.querySelector('.playza-header'), { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' })
-      });
     });
 
     mm.add("(max-width: 1024px)", () => {

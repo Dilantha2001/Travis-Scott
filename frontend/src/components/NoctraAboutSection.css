@@ -1,0 +1,395 @@
+/* ==========================================================================
+   NOCTRA 03 ABOUT SECTION - CINEMATIC BLUE ARENA EXPERIENCE
+   ========================================================================== */
+
+.noctra-about-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #000000;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Background Stage Layer with Rich Darkened Blue Arena Lighting Treatment */
+.noctra-bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  transform: scale(1.02);
+  transition: transform 1.2s ease-out;
+  filter: brightness(0.48) contrast(1.15) saturate(0.85);
+}
+
+/* Deep Blue & Atmospheric Dark Overlay */
+.noctra-blue-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    #000000 0%,
+    rgba(0, 0, 0, 0.95) 14%,
+    rgba(1, 4, 14, 0.82) 38%,
+    rgba(1, 4, 16, 0.85) 68%,
+    #000000 100%
+  );
+  backdrop-filter: blur(0.5px);
+}
+
+/* Ambient Subtle Cobalt/Cyan Light Glow from the stage */
+.noctra-radial-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(0, 140, 240, 0.12) 0%,
+    rgba(0, 70, 180, 0.05) 45%,
+    transparent 72%
+  );
+  pointer-events: none;
+}
+
+/* Deep edge vignette to deepen corners and edges */
+.noctra-dark-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 35%,
+    rgba(0, 0, 0, 0.55) 75%,
+    rgba(0, 0, 0, 0.92) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Seamless Top Black Shading connecting from Section 2 */
+.noctra-top-fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 250px;
+  background: linear-gradient(
+    180deg,
+    #000000 0%,
+    rgba(0, 0, 0, 0.95) 25%,
+    rgba(0, 0, 0, 0.7) 55%,
+    rgba(0, 0, 0, 0.25) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Content Container */
+.noctra-content-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 85px 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* Top-Left Section Tag */
+.noctra-top-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Space Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  color: #c6ff00;
+  margin-bottom: 24px;
+}
+
+.noctra-tag-num {
+  font-weight: 700;
+}
+
+.noctra-tag-text {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Main Grid Layout */
+.noctra-main-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 0.85fr;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  margin: auto 0;
+  padding: 20px 0;
+}
+
+/* Left Column */
+.noctra-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.noctra-giant-heading {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Oswald', 'Bebas Neue', 'Impact', sans-serif;
+  font-size: clamp(3.2rem, 5.8vw, 6.2rem);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.noctra-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 380px;
+}
+
+.noctra-p-lead {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 400;
+}
+
+.noctra-p-sub {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 400;
+}
+
+/* Center Stage Neon Hologram Sign */
+.noctra-center-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 200px;
+}
+
+.neon-stage-sign {
+  display: inline-flex;
+  gap: 8px;
+  padding: 10px 24px;
+  border: 1.5px solid rgba(198, 255, 0, 0.65);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.55);
+  box-shadow: 
+    0 0 15px rgba(198, 255, 0, 0.4),
+    inset 0 0 15px rgba(198, 255, 0, 0.25);
+  backdrop-filter: blur(4px);
+  position: relative;
+  animation: neonFlickerGlow 4s infinite alternate ease-in-out;
+}
+
+.neon-sign-letter {
+  font-family: 'Oswald', 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 2.8vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #c6ff00;
+  text-shadow: 
+    0 0 10px rgba(198, 255, 0, 0.8),
+    0 0 25px rgba(198, 255, 0, 0.5);
+}
+
+.neon-vertical-beams {
+  display: flex;
+  gap: 28px;
+  position: absolute;
+  top: -40px;
+  bottom: -40px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.beam {
+  width: 2px;
+  height: 140%;
+  background: linear-gradient(
+    180deg,
+    rgba(198, 255, 0, 0) 0%,
+    rgba(198, 255, 0, 0.8) 50%,
+    rgba(198, 255, 0, 0) 100%
+  );
+  box-shadow: 0 0 10px #c6ff00;
+}
+
+@keyframes neonFlickerGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(198, 255, 0, 0.4), inset 0 0 15px rgba(198, 255, 0, 0.25);
+    border-color: rgba(198, 255, 0, 0.65);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(198, 255, 0, 0.7), inset 0 0 22px rgba(198, 255, 0, 0.4);
+    border-color: rgba(198, 255, 0, 0.95);
+  }
+}
+
+/* Right Column: Slogan */
+.noctra-right-col {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.noctra-slogan-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+
+.slogan-line {
+  font-family: 'Oswald', 'Bebas Neue', 'Impact', sans-serif;
+  font-size: clamp(2.4rem, 3.8vw, 4.4rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  color: #c6ff00;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(198, 255, 0, 0.35);
+}
+
+/* Bottom Row: Stats Metrics */
+.noctra-stats-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  width: 100%;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin-top: 36px;
+}
+
+.noctra-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.noctra-stat-item:nth-child(1) {
+  text-align: left;
+}
+
+.noctra-stat-item:nth-child(3) {
+  text-align: center;
+}
+
+.noctra-stat-item:nth-child(5) {
+  text-align: right;
+}
+
+.stat-big-number {
+  font-family: 'Oswald', 'Bebas Neue', 'Impact', sans-serif;
+  font-size: clamp(3.2rem, 5.4vw, 5.8rem);
+  font-weight: 900;
+  line-height: 0.92;
+  color: #c6ff00;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 24px rgba(198, 255, 0, 0.28);
+}
+
+.stat-legend {
+  font-family: 'Space Mono', 'Courier New', monospace;
+  font-size: clamp(0.72rem, 1vw, 0.88rem);
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  color: #ffffff;
+  text-transform: uppercase;
+  opacity: 0.95;
+}
+
+.noctra-stat-divider {
+  width: 1px;
+  height: 55px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .noctra-content-wrapper {
+    padding: 75px 28px 32px;
+  }
+
+  .noctra-main-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .noctra-center-stage {
+    display: none;
+  }
+
+  .noctra-right-col {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .noctra-about-section {
+    min-height: auto;
+    padding-bottom: 50px;
+  }
+
+  .noctra-content-wrapper {
+    padding: 70px 20px 24px;
+    min-height: auto;
+  }
+
+  .noctra-main-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .noctra-paragraphs {
+    max-width: 100%;
+  }
+
+  .noctra-slogan-block {
+    text-align: left;
+  }
+
+  .noctra-stats-row {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .noctra-stat-divider {
+    display: none;
+  }
+
+  .noctra-stat-item:nth-child(1),
+  .noctra-stat-item:nth-child(3),
+  .noctra-stat-item:nth-child(5) {
+    text-align: left;
+  }
+
+  .stat-big-number {
+    font-size: 3.4rem;
+  }
+}

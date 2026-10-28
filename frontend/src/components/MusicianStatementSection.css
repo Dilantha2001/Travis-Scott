@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap');
+
+/* ==========================================================================
+   Musician Statement Section - Dark Cyberpunk Editorial Typography (Smokio)
+   ========================================================================== */
+
+.musician-statement-section {
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+  background-image: linear-gradient(180deg, #000000 0%, #070707 30%, #0a0a0a 50%, #070707 70%, #000000 100%);
+  padding: 5.5rem 0 3.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 5;
+}
+
+/* Subtle Film Grain Noise Overlay */
+.musician-noise-overlay {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  background-size: 480px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Seamless Top Black Fade connecting from Section 5 */
+.musician-top-fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  background: linear-gradient(180deg, #000000 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Seamless Bottom Black Fade connecting to Section 7 (Tours) */
+.musician-bottom-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  background: linear-gradient(to bottom, transparent 0%, #000000 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.musician-statement-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 4vw;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.musician-statement-text {
+  margin: 0;
+  padding: 0;
+  font-family: 'Syncopate', sans-serif;
+  font-size: clamp(2rem, 4.5vw, 4.8rem);
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  text-transform: uppercase;
+  word-break: break-word;
+  user-select: none;
+  text-shadow: none; /* Normal white, no glow */
+}
+
+/* Inline Thumbnail Image Boxes */
+.musician-img-box {
+  display: inline-block;
+  vertical-align: middle;
+  width: clamp(60px, 7.5vw, 110px);
+  height: clamp(35px, 4.4vw, 64px);
+  margin: 0 0.38vw;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #121316;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease;
+  transform: translateY(-0.1em);
+}
+
+.musician-img-box:hover {
+  transform: translateY(-0.18em) scale(1.05);
+  border-color: #c6ff00;
+  box-shadow: 0 9px 24px rgba(0, 0, 0, 0.8);
+}
+
+.musician-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.musician-img-box.img-1 img {
+  object-position: 70% 30%;
+}
+
+.musician-img-box.img-2 img {
+  object-position: 45% 25%;
+}
+
+.musician-img-box.img-3 img {
+  object-position: 25% 25%;
+}
+
+.musician-img-box.img-4 img {
+  object-position: 50% 50%;
+}
+
+.musician-img-box.img-5 img {
+  object-position: 50% 28%;
+}
+
+/* Main Brand Yellow (#c6ff00) Action CTA - Normal, No Glow */
+.musician-highlight-yellow {
+  display: inline-block;
+  color: #c6ff00;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+  letter-spacing: -0.035em;
+  text-shadow: none; /* No glow */
+}
+
+.musician-highlight-yellow:hover {
+  opacity: 0.85;
+  transform: scale(1.03);
+  text-shadow: none;
+}
+
+/* ==========================================================================
+   Dual Intersecting Yellow Tape Ribbons (Pure Scroll-Driven)
+   ========================================================================== */
+
+.musician-ribbons-wrapper {
+  position: relative;
+  width: 100%;
+  height: clamp(120px, 15vw, 185px);
+  margin-top: clamp(35px, 4.5vw, 60px);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Angle Layers: Locks the physical rotation angle */
+.musician-tape-angle-layer {
+  position: absolute;
+  width: 180vw;
+  left: -40vw;
+  user-select: none;
+  transform-origin: center center;
+}
+
+/* Tape 1 Angle: Tilted Down-Right (-3.5deg) and on Top */
+.tape-angle-top {
+  transform: rotate(-3.5deg);
+  z-index: 3;
+}
+
+/* Tape 2 Angle: Tilted Up-Right (+2.8deg) crossing underneath */
+.tape-angle-bottom {
+  transform: rotate(2.8deg);
+  z-index: 2;
+}
+
+/* Actual Main Yellow (#c6ff00) Tape Strips with 3D drop shadow, No Color Glow */
+.musician-tape-strip {
+  width: 100%;
+  background-color: #c6ff00;
+  padding: clamp(9px, 1.3vw, 18px) 0;
+  white-space: nowrap;
+  box-sizing: border-box;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.tape-angle-top .musician-tape-strip {
+  box-shadow: 0 11px 28px rgba(0, 0, 0, 0.8), 0 3px 9px rgba(0, 0, 0, 0.45);
+}
+
+.tape-angle-bottom .musician-tape-strip {
+  box-shadow: 0 9px 22px rgba(0, 0, 0, 0.72), 0 2px 7px rgba(0, 0, 0, 0.38);
+}
+
+/* Scroll Track inside Tape */
+.tape-scroll-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Typography on the Yellow Tape */
+.tape-text {
+  display: inline-block;
+  font-family: 'Syncopate', sans-serif;
+  font-size: clamp(1.6rem, 3.2vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #000000;
+  text-shadow: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Responsive Layout Adaptations
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .musician-statement-section {
+    padding: 4rem 0 2.5rem;
+    min-height: auto;
+  }
+  
+  .musician-statement-text {
+    font-size: clamp(1.8rem, 4.6vw, 3.6rem);
+    line-height: 1.15;
+  }
+  
+  .musician-img-box {
+    width: clamp(48px, 8vw, 85px);
+    height: clamp(28px, 4.8vw, 50px);
+  }
+
+  .musician-ribbons-wrapper {
+    height: clamp(100px, 14vw, 145px);
+    margin-top: 32px;
+  }
+
+  .musician-tape-angle-layer {
+    width: 200vw;
+    left: -50vw;
+  }
+
+  .musician-tape-strip {
+    padding: clamp(8px, 1.1vw, 14px) 0;
+  }
+
+  .tape-text {
+    font-size: clamp(1.3rem, 2.6vw, 2.2rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .musician-statement-section {
+    padding: 3rem 0 1.8rem;
+  }
+  
+  .musician-statement-text {
+    font-size: clamp(1.35rem, 4.8vw, 2.1rem);
+    line-height: 1.22;
+    letter-spacing: -0.025em;
+  }
+  
+  .musician-img-box {
+    width: clamp(40px, 10vw, 60px);
+    height: clamp(25px, 6vw, 36px);
+    margin: 0 3px;
+    border-radius: 3px;
+  }
+
+  .musician-ribbons-wrapper {
+    height: 110px;
+    margin-top: 28px;
+  }
+
+  .musician-tape-angle-layer {
+    width: 220vw;
+    left: -60vw;
+  }
+
+  .tape-angle-top {
+    transform: rotate(-3.5deg);
+  }
+
+  .tape-angle-bottom {
+    transform: rotate(3deg);
+  }
+
+  .musician-tape-strip {
+    padding: 7px 0;
+  }
+
+  .tape-text {
+    font-size: clamp(1.1rem, 3.4vw, 1.5rem);
+  }
+}

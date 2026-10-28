@@ -133,7 +133,7 @@ const Footer = () => {
         <div className="footer-bottom-row">
           <div className="footer-bottom-left">
             <h3 className="footer-stream-tagline">
-              Stream the music that reached 2.4M plays this year and keeps growing every single day.
+              Stream the music that reached <span className="footer-highlight-green">2.4M plays</span> this year and keeps growing every single day.
             </h3>
             <div className="footer-copyright-meta">
               <p>© Smokio. All Rights Reserved. Licensing</p>
@@ -143,11 +143,11 @@ const Footer = () => {
 
           <div className="footer-bottom-right">
             <p className="footer-bio-mono">
-              Smokio brings together over 10 years of Sri Lankan Hip-Hop artistry, performing for more than 250,000 fans worldwide.
+              Smokio brings together over <span className="footer-highlight-green">10 years</span> of Sri Lankan Hip-Hop artistry, performing for more than <span className="footer-highlight-green">250,000 fans</span> worldwide.
             </p>
             <div className="footer-cta-buttons">
-              <button className="btn-black-pill">book a live event</button>
-              <button className="btn-outline-pill">open media gallery</button>
+              <a href="/#booking" className="btn-black-pill">book a live event</a>
+              <a href="/#gallery" className="btn-outline-pill">open media gallery</a>
             </div>
           </div>
         </div>

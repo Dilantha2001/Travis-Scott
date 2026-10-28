@@ -1,0 +1,859 @@
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ==========================================================================
+   Festival Concert Tickets Section - Smokio Brand Green Theme
+   ========================================================================== */
+
+.festival-tickets-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #05070f;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding-bottom: 7rem;
+}
+
+/* --------------------------------------------------------------------------
+   Top Brand Green (#c6ff00) & Black Checkerboard Marquee Ribbon Strip
+   -------------------------------------------------------------------------- */
+.ticket-checkerboard-tape {
+  width: 100%;
+  height: 32px;
+  background: repeating-conic-gradient(#c6ff00 0% 25%, #000000 0% 50%) 50% / 32px 32px;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   Atmospheric Festival Twilight Stage Background
+   -------------------------------------------------------------------------- */
+.festival-tickets-backdrop {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.festival-warm-glow {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(234, 114, 30, 0.12) 0%, rgba(198, 255, 0, 0.06) 50%, transparent 75%);
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Header Guide Lines (From Reference Screenshot)
+   -------------------------------------------------------------------------- */
+.festival-tickets-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.ticket-header-guides {
+  width: 100%;
+  max-width: 920px;
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+  margin-bottom: 2rem;
+  opacity: 0.35;
+}
+
+.header-guide-line {
+  flex: 1;
+  height: 1.5px;
+  background-color: #ffffff;
+}
+
+.festival-tickets-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.tickets-micro-tag {
+  display: inline-block;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #c6ff00;
+  background: rgba(198, 255, 0, 0.1);
+  border: 1px solid rgba(198, 255, 0, 0.35);
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+
+.tickets-main-heading {
+  margin: 0;
+  font-family: 'Syncopate', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+}
+
+/* --------------------------------------------------------------------------
+   Staggered Festival Tickets List
+   -------------------------------------------------------------------------- */
+.festival-tickets-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+/* Cascading Stagger Offsets matching screenshot */
+.ticket-stagger-left {
+  align-self: flex-start;
+  margin-left: max(0px, calc(50% - 490px - 60px));
+}
+
+.ticket-stagger-right {
+  align-self: flex-end;
+  margin-right: max(0px, calc(50% - 490px - 60px));
+}
+
+.ticket-stagger-center {
+  align-self: center;
+}
+
+/* --------------------------------------------------------------------------
+   Authentic Concert Ticket Pass Card
+   -------------------------------------------------------------------------- */
+.festival-ticket-card {
+  position: relative;
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 980px;
+  height: 240px;
+  display: flex;
+  align-items: stretch;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
+  user-select: none;
+}
+
+.festival-ticket-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.8), 0 8px 25px rgba(198, 255, 0, 0.3);
+}
+
+/* LEFT BLOCK: Price, Description & Split Buy Button */
+.ticket-left-block {
+  flex: 1.15;
+  padding: 1.6rem 1.8rem 1.6rem 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.ticket-price-display {
+  font-family: 'Syncopate', sans-serif;
+  font-size: clamp(2rem, 2.8vw, 2.8rem);
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.ticket-description-text {
+  margin: 0.6rem 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: #27272a;
+  font-weight: 500;
+  max-width: 290px;
+}
+
+/* Distinctive Split Pill "Buy Tickets ↗" Button in Brand Green */
+.ticket-buy-btn {
+  display: inline-flex;
+  align-items: stretch;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  align-self: flex-start;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ticket-buy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(198, 255, 0, 0.45);
+}
+
+.buy-btn-label {
+  background-color: #c6ff00;
+  color: #000000;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  padding: 9px 16px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s ease;
+}
+
+.ticket-buy-btn:hover .buy-btn-label {
+  background-color: #d4ff33;
+}
+
+.buy-btn-arrow {
+  background-color: #000000;
+  color: #c6ff00;
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.ticket-buy-btn:hover .buy-btn-arrow svg {
+  transform: translate(2px, -2px);
+}
+
+/* CENTER BLOCK: Stage Photo with Category Overlay */
+.ticket-center-block {
+  flex: 1.25;
+  padding: 1.4rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.ticket-image-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #000000;
+}
+
+.ticket-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(115%) brightness(0.85);
+  display: block;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.festival-ticket-card:hover .ticket-poster-img {
+  transform: scale(1.05);
+  filter: grayscale(80%) contrast(115%) brightness(0.95);
+}
+
+.ticket-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 1rem 1.2rem;
+  box-sizing: border-box;
+}
+
+.ticket-badge-title {
+  font-family: 'Syncopate', sans-serif;
+  font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  text-align: right;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   PERFORATED DIVIDER WITH CIRCULAR PUNCH HOLE NOTCHES
+   -------------------------------------------------------------------------- */
+.ticket-perforation-divider {
+  position: relative;
+  width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 1.2rem;
+}
+
+.ticket-dashed-line {
+  height: 100%;
+  border-left: 2.8px dashed #000000;
+}
+
+/* Circular Punch Notches at the Perforation */
+.ticket-notch {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background-color: #0e1222;
+  border-radius: 50%;
+  z-index: 5;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.notch-top {
+  top: -14px;
+  left: -14px;
+}
+
+.notch-bottom {
+  bottom: -14px;
+  left: -14px;
+}
+
+/* --------------------------------------------------------------------------
+   RIGHT BLOCK: TICKET STUB (Time, Date, Vertical Barcode)
+   -------------------------------------------------------------------------- */
+.ticket-right-stub {
+  flex: 0.65;
+  min-width: 130px;
+  padding: 1.4rem 1.6rem 1.4rem 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Vertical sideway time */
+.stub-time-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #000000;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+/* Bold Event Date */
+.stub-date-text {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: -0.02em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+/* Vertical Barcode with Serial Number */
+.stub-barcode-block {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+}
+
+.stub-barcode-svg {
+  width: 22px;
+  height: 100%;
+}
+
+.stub-serial-text {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.62rem;
+  color: #4b5563;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 0.1em;
+}
+
+/* ==========================================================================
+   Interactive Ticket Checkout Modal
+   ========================================================================== */
+.ticket-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.ticket-modal-container {
+  position: relative;
+  background: #0d111d;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 520px;
+  padding: 2.5rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(198, 255, 0, 0.15);
+  box-sizing: border-box;
+  color: #ffffff;
+  animation: modalSlideUp 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes modalSlideUp {
+  from { transform: translateY(30px) scale(0.96); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background: #c6ff00;
+  border-color: #c6ff00;
+  color: #000000;
+  transform: rotate(90deg);
+}
+
+.modal-tier-tag {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #c6ff00;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.modal-title {
+  margin: 0.4rem 0 0.8rem;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.modal-event-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.88rem;
+  color: #94a3b8;
+  margin-bottom: 1.6rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-event-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.modal-quantity-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.9rem 1.2rem;
+  border-radius: 10px;
+}
+
+.quantity-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.qty-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.qty-btn:hover:not(:disabled) {
+  background: #c6ff00;
+  border-color: #c6ff00;
+  color: #000000;
+}
+
+.qty-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.qty-number {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+}
+
+.modal-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.modal-input-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.modal-input-group input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.modal-input-group input:focus {
+  border-color: #c6ff00;
+  background: rgba(198, 255, 0, 0.08);
+}
+
+.modal-total-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.modal-total-price {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #c6ff00;
+}
+
+.modal-submit-btn {
+  background: #c6ff00;
+  border: none;
+  color: #000000;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(198, 255, 0, 0.4);
+}
+
+.modal-submit-btn:hover {
+  background: #d4ff33;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(198, 255, 0, 0.6);
+}
+
+.modal-security-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  color: #64748b;
+  text-align: center;
+}
+
+/* Success Screen inside Modal */
+.modal-success-screen {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.success-icon-wrap {
+  width: 60px;
+  height: 60px;
+  background: rgba(198, 255, 0, 0.15);
+  border: 1px solid #c6ff00;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem;
+  font-size: 2rem;
+  color: #c6ff00;
+}
+
+.modal-success-screen h3 {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 1.4rem;
+  margin: 0 0 0.5rem;
+  color: #ffffff;
+}
+
+.success-msg {
+  color: #94a3b8;
+  font-size: 0.92rem;
+  margin-bottom: 1.6rem;
+}
+
+.issued-pass-card {
+  background: #ffffff;
+  color: #000000;
+  border-radius: 10px;
+  padding: 1.2rem;
+  text-align: left;
+  margin-bottom: 1.8rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.issued-pass-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.issued-badge {
+  background: #c6ff00;
+  color: #000000;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.issued-order-num {
+  color: #64748b;
+}
+
+.issued-pass-body h4 {
+  margin: 0 0 0.3rem;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 1rem;
+}
+
+.issued-pass-body p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.issued-total-badge {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #000000;
+  margin-top: 0.6rem;
+}
+
+.issued-pass-barcode {
+  border-top: 1.5px dashed #cbd5e1;
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.barcode-bars {
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+}
+
+.barcode-num {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.modal-close-action-btn {
+  background: #c6ff00;
+  color: #000000;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 800;
+  padding: 0.75rem 2.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-close-action-btn:hover {
+  background: #d4ff33;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .ticket-stagger-left,
+  .ticket-stagger-right {
+    margin-left: auto;
+    margin-right: auto;
+    align-self: center;
+  }
+
+  .festival-ticket-card {
+    max-width: 720px;
+    height: 220px;
+  }
+
+  .ticket-price-display {
+    font-size: 2.1rem;
+  }
+
+  .ticket-description-text {
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .festival-tickets-section {
+    padding-bottom: 5rem;
+  }
+
+  .festival-ticket-card {
+    height: auto;
+    flex-direction: column;
+    max-width: 420px;
+    padding-bottom: 1.2rem;
+  }
+
+  .ticket-left-block {
+    padding: 1.5rem 1.5rem 1rem;
+    gap: 1rem;
+  }
+
+  .ticket-center-block {
+    height: 160px;
+    padding: 0 1.5rem;
+  }
+
+  .ticket-perforation-divider {
+    width: 100%;
+    height: 0;
+    margin: 1.5rem 0;
+  }
+
+  .ticket-dashed-line {
+    width: 100%;
+    height: 0;
+    border-left: none;
+    border-top: 2.5px dashed #000000;
+  }
+
+  .notch-top {
+    left: -14px;
+    top: -14px;
+  }
+
+  .notch-bottom {
+    right: -14px;
+    left: auto;
+    top: -14px;
+    bottom: auto;
+  }
+
+  .ticket-right-stub {
+    flex-direction: row;
+    padding: 0.8rem 1.5rem;
+    width: 100%;
+  }
+
+  .stub-time-text,
+  .stub-date-text,
+  .stub-serial-text {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .stub-barcode-block {
+    height: 35px;
+    flex-direction: column;
+  }
+
+  .stub-barcode-svg {
+    height: 20px;
+    width: 80px;
+  }
+}
