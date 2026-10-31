@@ -2,14 +2,24 @@ import React, { useEffect, useState, useRef } from 'react';
 import './CustomScrollbar.css';
 
 const CustomScrollbar = ({ isLoading }) => {
-  const [thumbTop, setThumbTop] = useState(0);
   const [thumbHeight, setThumbHeight] = useState(80);
   const [isDragging, setIsDragging] = useState(false);
   const startDragY = useRef(0);
   const startScrollY = useRef(0);
   const trackRef = useRef(null);
+  const thumbRef = useRef(null);
+  const rafId = useRef(null);
 
-  const updateScrollbar = () => {
+  // Cached dimension metrics to avoid layout thrashing during scroll
+  const metrics = useRef({
+    docHeight: 0,
+    winHeight: 0,
+    maxScroll: 0,
+    thumbHeight: 80,
+    availableTrack: 0
+  });
+
+  const recalculateDimensions = () => {
     if (typeof window === 'undefined') return;
     const docHeight = document.documentElement.scrollHeight;
     const winHeight = window.innerHeight;
@@ -17,32 +27,53 @@ const CustomScrollbar = ({ isLoading }) => {
 
     if (maxScroll <= 0) {
       setThumbHeight(0);
+      metrics.current = { docHeight, winHeight, maxScroll: 0, thumbHeight: 0, availableTrack: 0 };
       return;
     }
 
-    // Proportional thumb height (clamped between 60px and winHeight * 0.7)
     const calculatedHeight = Math.max(60, Math.min(winHeight * 0.7, (winHeight / docHeight) * winHeight));
+    const availableTrack = winHeight - calculatedHeight;
+
+    metrics.current = {
+      docHeight,
+      winHeight,
+      maxScroll,
+      thumbHeight: calculatedHeight,
+      availableTrack
+    };
+
     setThumbHeight(calculatedHeight);
+    updateThumbPosition();
+  };
+
+  const updateThumbPosition = () => {
+    if (!thumbRef.current) return;
+    const { maxScroll, availableTrack } = metrics.current;
+    if (maxScroll <= 0 || availableTrack <= 0) return;
 
     const currentScroll = window.lenis ? window.lenis.scroll : window.scrollY;
     const scrollRatio = Math.min(1, Math.max(0, currentScroll / maxScroll));
-    const availableTrack = winHeight - calculatedHeight;
-    setThumbTop(scrollRatio * availableTrack);
+    const thumbTop = scrollRatio * availableTrack;
+
+    thumbRef.current.style.transform = `translate3d(0, ${thumbTop}px, 0)`;
   };
 
   useEffect(() => {
     if (isLoading) return;
 
-    updateScrollbar();
+    recalculateDimensions();
 
     const handleScroll = () => {
-      if (!isDragging) {
-        updateScrollbar();
-      }
+      if (isDragging) return;
+      if (rafId.current) return;
+      rafId.current = requestAnimationFrame(() => {
+        updateThumbPosition();
+        rafId.current = null;
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', updateScrollbar);
+    window.addEventListener('resize', recalculateDimensions, { passive: true });
 
     let lenisUnsub;
     if (window.lenis) {
@@ -50,14 +81,17 @@ const CustomScrollbar = ({ isLoading }) => {
       lenisUnsub = () => window.lenis?.off('scroll', handleScroll);
     }
 
-    const ro = new ResizeObserver(updateScrollbar);
+    const ro = new ResizeObserver(() => {
+      recalculateDimensions();
+    });
     if (document.body) {
       ro.observe(document.body);
     }
 
     return () => {
+      if (rafId.current) cancelAnimationFrame(rafId.current);
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', updateScrollbar);
+      window.removeEventListener('resize', recalculateDimensions);
       if (lenisUnsub) lenisUnsub();
       ro.disconnect();
     };
@@ -78,12 +112,9 @@ const CustomScrollbar = ({ isLoading }) => {
 
     const handleMouseMove = (e) => {
       const deltaY = e.clientY - startDragY.current;
-      const winHeight = window.innerHeight;
-      const docHeight = document.documentElement.scrollHeight;
-      const maxScroll = docHeight - winHeight;
-      const availableTrack = winHeight - thumbHeight;
+      const { maxScroll, availableTrack } = metrics.current;
 
-      if (availableTrack <= 0) return;
+      if (availableTrack <= 0 || maxScroll <= 0) return;
 
       const scrollDelta = (deltaY / availableTrack) * maxScroll;
       const targetScroll = Math.max(0, Math.min(maxScroll, startScrollY.current + scrollDelta));
@@ -95,7 +126,10 @@ const CustomScrollbar = ({ isLoading }) => {
       }
 
       const scrollRatio = targetScroll / maxScroll;
-      setThumbTop(scrollRatio * availableTrack);
+      const thumbTop = scrollRatio * availableTrack;
+      if (thumbRef.current) {
+        thumbRef.current.style.transform = `translate3d(0, ${thumbTop}px, 0)`;
+      }
     };
 
     const handleMouseUp = () => {
@@ -103,7 +137,7 @@ const CustomScrollbar = ({ isLoading }) => {
       document.body.style.userSelect = '';
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mouseup', handleMouseUp);
 
     return () => {
@@ -111,7 +145,7 @@ const CustomScrollbar = ({ isLoading }) => {
       window.removeEventListener('mouseup', handleMouseUp);
       document.body.style.userSelect = '';
     };
-  }, [isDragging, thumbHeight]);
+  }, [isDragging]);
 
   // Click on Track to jump
   const handleTrackClick = (e) => {
@@ -120,18 +154,15 @@ const CustomScrollbar = ({ isLoading }) => {
 
     const trackRect = trackRef.current.getBoundingClientRect();
     const clickY = e.clientY - trackRect.top;
-    const winHeight = window.innerHeight;
-    const docHeight = document.documentElement.scrollHeight;
-    const maxScroll = docHeight - winHeight;
-    const availableTrack = winHeight - thumbHeight;
+    const { maxScroll, availableTrack, thumbHeight: currentThumbHeight } = metrics.current;
 
-    if (availableTrack <= 0) return;
+    if (availableTrack <= 0 || maxScroll <= 0) return;
 
-    const targetScrollRatio = Math.max(0, Math.min(1, (clickY - thumbHeight / 2) / availableTrack));
+    const targetScrollRatio = Math.max(0, Math.min(1, (clickY - currentThumbHeight / 2) / availableTrack));
     const targetScroll = targetScrollRatio * maxScroll;
 
     if (window.lenis) {
-      window.lenis.scrollTo(targetScroll, { duration: 1.0 });
+      window.lenis.scrollTo(targetScroll, { duration: 0.9 });
     } else {
       window.scrollTo({ top: targetScroll, behavior: 'smooth' });
     }
@@ -147,10 +178,11 @@ const CustomScrollbar = ({ isLoading }) => {
       title="Scroll"
     >
       <div 
+        ref={thumbRef}
         className={`custom-scrollbar-thumb ${isDragging ? 'dragging' : ''}`}
         style={{
           height: `${thumbHeight}px`,
-          transform: `translateY(${thumbTop}px)`
+          willChange: 'transform'
         }}
         onMouseDown={handleThumbMouseDown}
       >

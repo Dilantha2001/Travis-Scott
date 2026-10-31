@@ -1,6 +1,6 @@
 /* ==========================================================================
    Turn Up the Feeling - Sleek 2-Column Discography Player
-   Pixel-Perfect Match & Fully Responsive across all Devices
+   Pixel-Perfect Match & Fully Responsive across all Devices & Laptops
    ========================================================================== */
 
 .vaeliq-player-section {
@@ -10,7 +10,7 @@
   flex-direction: column;
   justify-content: center;
   background-color: #000000;
-  padding: 120px 48px 120px;
+  padding: clamp(50px, 7vh, 100px) clamp(24px, 4vw, 48px);
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
@@ -42,19 +42,21 @@
 }
 
 /* ==========================================================================
-   Header: Title Left | Subtitle Right
+   Header: Title Left | Subtitle Right (Aligned to Centered Content Box)
    ========================================================================== */
 .vaeliq-player-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 42px;
+  margin: 0 auto clamp(24px, 3.5vh, 38px);
   gap: 30px;
+  max-width: 1080px;
+  width: 100%;
 }
 
 .vaeliq-title {
   font-family: var(--font-primary, "Inter", sans-serif);
-  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  font-size: clamp(2.2rem, 3.8vw, 3.6rem);
   font-weight: 700;
   letter-spacing: -0.035em;
   color: #ffffff;
@@ -73,18 +75,22 @@
 }
 
 /* ==========================================================================
-   Main Grid: Left Featured Card | Right Other Tracks
-   Fluid, narrow portrait card on left & spacious tracklist on right
+   Main Grid: Centered & Balanced (Image shifted nicely to the right)
+   No longer pinned to the far left screen edge; cohesive centered layout
    ========================================================================== */
 .vaeliq-grid {
   display: grid;
-  grid-template-columns: minmax(300px, 385px) 1fr;
-  gap: clamp(28px, 3.5vw, 48px);
+  grid-template-columns: minmax(390px, 470px) minmax(320px, 540px);
+  justify-content: center;
+  gap: clamp(32px, 4.5vw, 60px);
   align-items: start;
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* ==========================================================================
-   LEFT COLUMN: Featured Track Card (Tall vertical portrait poster style)
+   LEFT COLUMN: Featured Track Card (Enlarged, Centered Album Poster)
    ========================================================================== */
 .featured-card {
   background: #09090d;
@@ -97,18 +103,17 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   position: relative;
   width: 100%;
-  max-width: 395px;
+  max-width: 470px;
 }
 
 .featured-card:hover {
   border-color: rgba(255, 255, 255, 0.14);
 }
 
-/* Increased height (usa wadi) and reduced width (palala adu) for a sleek portrait poster */
 .featured-card-artwork {
   position: relative;
   width: 100%;
-  height: 580px;
+  height: 480px;
   overflow: hidden;
   border-radius: 25px 25px 0 0;
   background: #09090d;
@@ -120,7 +125,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center center;
   transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
   z-index: 1;
 }
@@ -143,8 +148,8 @@
 /* Pill Tag: ✦ FEATURED TRACK */
 .featured-pill-tag {
   position: absolute;
-  top: 24px;
-  left: 24px;
+  top: 22px;
+  left: 22px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -170,10 +175,10 @@
 /* Mini Vinyl Record Badge in Lower Right of Artwork */
 .featured-vinyl-badge {
   position: absolute;
-  bottom: 38px;
-  right: 28px;
-  width: 76px;
-  height: 76px;
+  bottom: 34px;
+  right: 24px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   background: #0e0e11;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -221,8 +226,8 @@
 /* Horizontal Animated LED Equalizer Progress Track */
 .featured-led-meter {
   position: absolute;
-  bottom: 24px;
-  left: 26px;
+  bottom: 22px;
+  left: 24px;
   display: flex;
   align-items: center;
   gap: 3.5px;
@@ -244,7 +249,7 @@
 
 /* Bottom Meta Bar & Large Play Button */
 .featured-card-bottom {
-  padding: 22px 26px 24px;
+  padding: 20px 24px 22px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -262,8 +267,8 @@
 }
 
 .featured-play-btn {
-  width: 54px;
-  height: 54px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: #c6ff00;
   color: #000000;
@@ -285,7 +290,7 @@
 
 .featured-track-name {
   font-family: var(--font-primary, "Inter", sans-serif);
-  font-size: clamp(1.2rem, 1.8vw, 1.65rem);
+  font-size: clamp(1.15rem, 1.7vw, 1.55rem);
   font-weight: 800;
   color: #ffffff;
   text-transform: uppercase;
@@ -313,12 +318,14 @@
 }
 
 /* ==========================================================================
-   RIGHT COLUMN: Other Tracks List
+   RIGHT COLUMN: Other Tracks List (Tighter, Elegant Width)
    ========================================================================== */
 .tracklist-container {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  width: 100%;
+  max-width: 540px;
 }
 
 .tracklist-header {
@@ -337,19 +344,19 @@
 .tracklist-items {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 13px;
 }
 
 /* Sleek Track Row */
 .vaeliq-track-row {
   display: flex;
   align-items: center;
-  padding: 14px 20px;
+  padding: 13px 18px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 16px;
   cursor: pointer;
-  gap: 16px;
+  gap: 14px;
   transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -374,8 +381,8 @@
 }
 
 .row-thumb-wrap {
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   border-radius: 11px;
   overflow: hidden;
   flex-shrink: 0;
@@ -521,83 +528,57 @@
 }
 
 /* ==========================================================================
-   Responsive Adaptations
+   Laptop Responsive Specifics (1025px - 1440px Screens)
+   Bigger Image on Left (430px-450px) & Centered Layout (shifted away from left edge)
    ========================================================================== */
-@media (max-width: 1200px) {
+@media (max-width: 1440px) {
   .vaeliq-player-section {
-    padding: 90px 32px;
-  }
-
-  .vaeliq-grid {
-    grid-template-columns: minmax(340px, 420px) 1fr;
-    gap: 32px;
-  }
-
-  .featured-card-artwork {
-    height: 480px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .vaeliq-player-section {
-    padding: 70px 24px 80px;
+    padding: clamp(48px, 6vh, 75px) clamp(24px, 3.5vw, 40px);
+    min-height: auto;
   }
 
   .vaeliq-player-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 32px;
-  }
-
-  .vaeliq-subtitle {
-    text-align: left;
-    max-width: 100%;
-  }
-
-  .vaeliq-grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-
-  .featured-card {
-    max-width: 395px;
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  .featured-card-artwork {
-    height: 540px;
-  }
-
-  .tracklist-container {
-    max-width: 640px;
-    margin: 0 auto;
-    width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .vaeliq-player-section {
-    padding: 60px 20px 70px;
+    max-width: 1020px;
+    margin-bottom: 24px;
+    gap: 20px;
   }
 
   .vaeliq-title {
-    font-size: 2.2rem;
+    font-size: clamp(2rem, 3.2vw, 2.8rem);
+  }
+
+  .vaeliq-subtitle {
+    font-size: 0.88rem;
+    max-width: 330px;
+    line-height: 1.45;
+  }
+
+  .vaeliq-grid {
+    grid-template-columns: minmax(380px, 440px) minmax(300px, 510px);
+    justify-content: center;
+    gap: clamp(28px, 3.5vw, 48px);
+    max-width: 1020px;
   }
 
   .featured-card {
-    max-width: 370px;
+    max-width: 440px;
   }
 
   .featured-card-artwork {
-    height: 500px;
+    height: 410px;
+  }
+
+  .featured-pill-tag {
+    top: 18px;
+    left: 18px;
+    padding: 6px 14px;
+    font-size: 10.5px;
   }
 
   .featured-vinyl-badge {
-    width: 64px;
-    height: 64px;
-    bottom: 28px;
+    width: 66px;
+    height: 66px;
+    bottom: 26px;
     right: 22px;
   }
 
@@ -607,7 +588,316 @@
   }
 
   .featured-card-bottom {
-    padding: 18px 20px 20px;
+    padding: 18px 22px 20px;
+    gap: 14px;
+  }
+
+  .featured-play-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 17px;
+  }
+
+  .featured-track-name {
+    font-size: 1.3rem;
+  }
+
+  .featured-track-meta {
+    font-size: 11.5px;
+  }
+
+  .tracklist-container {
+    max-width: 510px;
+  }
+
+  .tracklist-items {
+    gap: 12px;
+  }
+
+  .vaeliq-track-row {
+    padding: 12px 16px;
+    gap: 13px;
+  }
+
+  .row-thumb-wrap {
+    width: 44px;
+    height: 44px;
+  }
+
+  .row-title {
+    font-size: 14.5px;
+  }
+
+  .row-sub {
+    font-size: 11px;
+  }
+
+  .row-play-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+  }
+
+  .spotify-banner-pill {
+    padding: 11px 18px;
+    margin-top: 4px;
+  }
+}
+
+/* ==========================================================================
+   Height-Aware Responsive Rules for Laptops (Viewport Height <= 850px)
+   Balanced & Centered with great vertical clearance
+   ========================================================================== */
+@media (min-width: 1025px) and (max-height: 850px) {
+  .vaeliq-player-section {
+    padding: 38px 32px 42px;
+    min-height: auto;
+    justify-content: flex-start;
+  }
+
+  .vaeliq-player-header {
+    max-width: 960px;
+    margin-bottom: 18px;
+  }
+
+  .vaeliq-title {
+    font-size: 2.2rem;
+  }
+
+  .vaeliq-subtitle {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    max-width: 310px;
+  }
+
+  .vaeliq-grid {
+    grid-template-columns: minmax(370px, 420px) minmax(290px, 480px);
+    justify-content: center;
+    gap: 36px;
+    max-width: 960px;
+  }
+
+  .featured-card {
+    max-width: 420px;
+  }
+
+  .featured-card-artwork {
+    height: 360px;
+  }
+
+  .featured-pill-tag {
+    top: 14px;
+    left: 14px;
+    padding: 5px 12px;
+    font-size: 10px;
+  }
+
+  .featured-vinyl-badge {
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    right: 18px;
+  }
+
+  .featured-led-meter {
+    bottom: 16px;
+    left: 16px;
+    gap: 3px;
+  }
+
+  .featured-card-bottom {
+    padding: 14px 20px 16px;
+    gap: 12px;
+  }
+
+  .featured-play-btn {
+    width: 46px;
+    height: 46px;
+    font-size: 15px;
+  }
+
+  .featured-track-name {
+    font-size: 1.2rem;
+  }
+
+  .featured-track-meta {
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .tracklist-container {
+    max-width: 480px;
+  }
+
+  .tracklist-items {
+    gap: 10px;
+  }
+
+  .vaeliq-track-row {
+    padding: 10px 15px;
+    gap: 12px;
+  }
+
+  .row-thumb-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+  }
+
+  .row-title {
+    font-size: 14px;
+  }
+
+  .row-sub {
+    font-size: 10.5px;
+  }
+
+  .row-play-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 12px;
+  }
+
+  .spotify-banner-pill {
+    padding: 9px 16px;
+    margin-top: 4px;
+    font-size: 12px;
+  }
+}
+
+/* For ultra-compact laptop screens (e.g. 1366x768 with browser bars, or 1080p @ 150%) */
+@media (min-width: 1025px) and (max-height: 740px) {
+  .vaeliq-player-section {
+    padding: 24px 24px 28px;
+  }
+
+  .vaeliq-player-header {
+    max-width: 900px;
+    margin-bottom: 14px;
+  }
+
+  .vaeliq-title {
+    font-size: 1.95rem;
+  }
+
+  .vaeliq-grid {
+    grid-template-columns: minmax(330px, 380px) minmax(280px, 450px);
+    justify-content: center;
+    gap: 28px;
+    max-width: 900px;
+  }
+
+  .featured-card {
+    max-width: 380px;
+  }
+
+  .featured-card-artwork {
+    height: 310px;
+  }
+
+  .tracklist-container {
+    max-width: 450px;
+  }
+
+  .tracklist-items {
+    gap: 8px;
+  }
+
+  .vaeliq-track-row {
+    padding: 8px 14px;
+    gap: 10px;
+  }
+
+  .row-thumb-wrap {
+    width: 36px;
+    height: 36px;
+  }
+
+  .row-play-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 11px;
+  }
+
+  .spotify-banner-pill {
+    padding: 8px 14px;
+  }
+}
+
+/* ==========================================================================
+   Tablets & Mobile Viewports
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .vaeliq-player-section {
+    padding: 60px 24px 70px;
+    min-height: auto;
+  }
+
+  .vaeliq-player-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .vaeliq-subtitle {
+    text-align: left;
+    max-width: 100%;
+  }
+
+  .vaeliq-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .featured-card {
+    max-width: 460px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .featured-card-artwork {
+    height: 440px;
+  }
+
+  .tracklist-container {
+    max-width: 520px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .vaeliq-player-section {
+    padding: 50px 20px 60px;
+  }
+
+  .vaeliq-title {
+    font-size: 2.2rem;
+  }
+
+  .featured-card {
+    max-width: 390px;
+  }
+
+  .featured-card-artwork {
+    height: 400px;
+  }
+
+  .featured-vinyl-badge {
+    width: 64px;
+    height: 64px;
+    bottom: 26px;
+    right: 20px;
+  }
+
+  .featured-led-meter {
+    bottom: 20px;
+    left: 20px;
+  }
+
+  .featured-card-bottom {
+    padding: 16px 20px 18px;
   }
 
   .featured-play-btn {
@@ -648,7 +938,7 @@
 
 @media (max-width: 640px) {
   .vaeliq-player-section {
-    padding: 50px 16px 60px;
+    padding: 44px 16px 50px;
   }
 
   .featured-card {
@@ -657,14 +947,14 @@
   }
 
   .featured-card-artwork {
-    height: 470px;
+    height: 360px;
     border-radius: 21px 21px 0 0;
   }
 
   .featured-vinyl-badge {
     width: 58px;
     height: 58px;
-    bottom: 22px;
+    bottom: 20px;
     right: 18px;
   }
 
@@ -691,7 +981,7 @@
 
 @media (max-width: 480px) {
   .vaeliq-player-section {
-    padding: 40px 14px 50px;
+    padding: 36px 14px 44px;
   }
 
   .vaeliq-title {
@@ -704,11 +994,11 @@
   }
 
   .vaeliq-player-header {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
   .vaeliq-grid {
-    gap: 28px;
+    gap: 24px;
   }
 
   .featured-card {
@@ -717,13 +1007,13 @@
   }
 
   .featured-card-artwork {
-    height: 420px;
+    height: 320px;
     border-radius: 17px 17px 0 0;
   }
 
   .featured-pill-tag {
-    top: 16px;
-    left: 16px;
+    top: 14px;
+    left: 14px;
     padding: 5px 12px;
     font-size: 9.5px;
     letter-spacing: 1px;
@@ -732,8 +1022,8 @@
   .featured-vinyl-badge {
     width: 50px;
     height: 50px;
-    bottom: 18px;
-    right: 16px;
+    bottom: 16px;
+    right: 14px;
   }
 
   .featured-vinyl-badge .vinyl-neon-spindle {
@@ -742,8 +1032,8 @@
   }
 
   .featured-led-meter {
-    bottom: 16px;
-    left: 16px;
+    bottom: 14px;
+    left: 14px;
     gap: 2.5px;
   }
 
@@ -832,7 +1122,7 @@
 
 @media (max-width: 360px) {
   .featured-card-artwork {
-    height: 310px;
+    height: 280px;
   }
 
   .featured-track-name {

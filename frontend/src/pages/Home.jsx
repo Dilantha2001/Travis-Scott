@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FaArrowRight, FaSpotify, FaPlay, FaPause, FaVolumeUp, FaVolumeMute, FaStepBackward, FaStepForward, FaMusic, FaListUl, FaExpand, FaChevronLeft, FaChevronRight, FaRegHeart } from 'react-icons/fa';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MovementSection from '../components/MovementSection';
 import NoctraAboutSection from '../components/NoctraAboutSection';
-import MusicList from '../components/MusicList';
 import DiscographyPlayer from '../components/DiscographyPlayer';
 import MusicianStatementSection from '../components/MusicianStatementSection';
 import Contact from './Contact';
@@ -21,7 +19,6 @@ import mokadaWenneAudio from '../assets/audio/mokada-wenne-reply-diss-to-sosa-sm
 import mudukkuwenAudio from '../assets/audio/sinhanada.net-Mudukkuwen-Eliyata-Smokio-Ft-Iraj.mp3';
 import nidahasiAudio from '../assets/audio/nidahasi-smokio.mp3';
 import manPerformingImg from '../assets/backgrounds/Man_performing_on_stage_202609082107.jpeg';
-import neonGirlImg from '../assets/gallery/neon-girl.jpg';
 import img22 from '../assets/gallery/img22.jpeg';
 import img23 from '../assets/gallery/img23.jpeg';
 import img24 from '../assets/gallery/img24.jpeg';
@@ -36,10 +33,6 @@ gsap.registerPlugin(ScrollTrigger);
 const Home = () => {
   const heroRef = useRef(null);
   const heroContentRef = useRef(null);
-
-
-  const songsSectionRef = useRef(null);
-  const glitchOverlayRef = useRef(null);
 
   // Forget Concert Section refs
   const forgetConcertRef = useRef(null);
@@ -59,7 +52,6 @@ const Home = () => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
-  const [showPlaylistDrawer, setShowPlaylistDrawer] = useState(true);
 
   const playlist = [
     { id: 1, title: 'MUDUKKUWEN ELIYATA', artist: 'Smokio, 44 Kalliya', duration: '3:45', date: '11.12.25', img: songMudukkuwenImg, audio: mudukkuwenAudio, bpm: '125 BPM', genre: 'Melodic Rap', mood: 'Vibes' },
@@ -112,11 +104,6 @@ const Home = () => {
     }
   };
 
-  const handlePrevTrack = () => {
-    const newIdx = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-    handleSelectTrack(newIdx);
-  };
-
   const handleNextTrack = () => {
     const newIdx = (currentTrackIndex + 1) % playlist.length;
     handleSelectTrack(newIdx);
@@ -132,6 +119,11 @@ const Home = () => {
   const titleText = "breaks limits";
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { immediate: true });
+    }
+
     const ctx = gsap.context(() => {
       // 1. Hero Section Scroll Animation (Shatter + Fade + Continuous Natural Scroll)
       const heroTl = gsap.timeline({
@@ -176,54 +168,7 @@ const Home = () => {
         duration: 1
       }, 0);
 
-      // 4. Digital Glitch & Color Shift Transition into Songs Section
-      const songsSec = songsSectionRef.current;
-      const glitchOverlay = glitchOverlayRef.current;
-
-      if (songsSec && glitchOverlay) {
-        const glitchTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: songsSec,
-            start: 'top 75%',
-            toggleActions: 'play none none reverse',
-            onEnter: () => {
-              if (audioRef.current) {
-                audioRef.current.play().then(() => {
-                  setIsAudioPlaying(true);
-                }).catch(err => console.log('Autoplay handled:', err));
-              }
-            }
-          }
-        });
-
-        // Step 1: Rapid RGB Glitch Flicker
-        glitchTl
-          .to(glitchOverlay, { opacity: 1, duration: 0.05 })
-          .to('.glitch-slice.red', { x: -45, skewX: 25, duration: 0.05 })
-          .to('.glitch-slice.blue', { x: 55, skewX: -20, duration: 0.05 }, '<')
-          .to('.glitch-slice.cyan', { x: -35, skewX: 15, duration: 0.05 }, '<')
-          .to(glitchOverlay, { opacity: 0.15, duration: 0.04 })
-          .to(glitchOverlay, { opacity: 0.95, duration: 0.06 })
-          .to('.glitch-slice.red', { x: 35, skewX: -15, duration: 0.05 })
-          .to('.glitch-slice.blue', { x: -40, skewX: 30, duration: 0.05 }, '<')
-          .to(glitchOverlay, { opacity: 0, duration: 0.1 });
-
-        // Step 2: Shift Background Color from #000000 to Deep Cyber Dark Blue (#070d1a)
-        glitchTl.to(songsSec, {
-          backgroundColor: '#070d1a',
-          duration: 0.8,
-          ease: 'power2.out'
-        }, 0.1);
-
-        // Step 3: Reveal Song Cards with smooth slide up
-        glitchTl.from('.song-card', {
-          y: 50,
-          opacity: 0,
-          stagger: 0.1,
-          duration: 0.6,
-          ease: 'power3.out'
-        }, 0.25);
-      }
+      
 
       // 5. GSAP Entrance for Ultra Clean Audio Player
       if (playlistWidgetRef.current) {
@@ -284,7 +229,7 @@ const Home = () => {
         }
 
         // Beautiful Smokio Phrase Reveal
-        gsap.fromTo('.smokio-beautiful-phrase',
+        gsap.fromTo('.smokio-phrase-box',
           { y: 50, opacity: 0, scale: 0.95 },
           {
             y: 0,
@@ -503,45 +448,6 @@ const Home = () => {
     return () => observer.disconnect();
   }, []);
 
-  const songs = [
-    {
-      title: 'GOLDEN FEVER',
-      date: '2.12.25',
-      img: songNidahasiImg,
-      size: 'tall'
-    },
-    {
-      title: 'ELECTRIC HEARTLINE',
-      date: '26.11.25',
-      img: songKaminiImg,
-      size: 'square'
-    },
-    {
-      title: 'FALLING INTO BLUE',
-      date: '11.12.25',
-      img: songMokadaImg,
-      size: 'wide'
-    },
-    {
-      title: 'NEON GRAVITY',
-      date: '15.12.25',
-      img: songMudukkuwenImg,
-      size: 'wide'
-    },
-    {
-      title: 'ECHOING HEARTS',
-      date: '24.12.25',
-      img: songKuddahImg,
-      size: 'wide'
-    },
-    {
-      title: 'TWILIGHT SPARKS',
-      date: '30.12.25',
-      img: songKaminiImg,
-      size: 'tall'
-    }
-  ];
-
   const tours = [
     { title: 'Colombo Rebellion Live', date: '15.05.2027', time: '20:00', location: 'Sugathadasa Indoor Stadium, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80' },
     { title: 'Midnight Haze Sessions', date: '28.06.2027', time: '21:30', location: 'Viharamahadevi Open Air Theatre, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80' },
@@ -566,7 +472,7 @@ const Home = () => {
   return (
     <div className="home-container">
       {/* Hero Pinned Container */}
-      <section className="hero-pinned-container" ref={heroRef}>
+      <section id="home" className="hero-pinned-container" ref={heroRef}>
         
         {/* Full Screen Background Image Layer */}
         <div className="hero-full-bg" style={{ backgroundImage: `url(${stageImg})` }}>
@@ -616,11 +522,13 @@ const Home = () => {
         </div>
       </div>
 
-      {/* The Movement Section (Section 2) */}
-      <MovementSection />
-
-      {/* Noctra 03 About Section with Blue Arena Lighting (Section 3) */}
-      <NoctraAboutSection />
+      {/* The Movement Section (Section 2) & Noctra About (Section 3) */}
+      <div id="about" className="about-sections-anchor">
+        <div id="movement">
+          <MovementSection />
+        </div>
+        <NoctraAboutSection />
+      </div>
 
       {/* Global Audio Element */}
       <audio 
@@ -634,7 +542,8 @@ const Home = () => {
       />
 
       {/* Discography Player Section (Section 4 - Turn Up the Feeling) */}
-      <div id="playlist" ref={playlistWidgetRef}>
+      <div id="music">
+        <div id="playlist" ref={playlistWidgetRef}>
         <DiscographyPlayer 
           playlist={playlist}
           currentTrack={currentTrack}
@@ -644,6 +553,7 @@ const Home = () => {
           onPlayPause={handleAudioPlayPause}
           onSelectTrack={handleSelectTrack}
         />
+      </div>
       </div>
 
       {/* Musician Statement Editorial Section with Inline Images & Yellow Cross Ribbons */}
@@ -661,7 +571,13 @@ const Home = () => {
         </div>
 
         <div className="smokio-phrase-container">
-          <h3 className="smokio-beautiful-phrase">"The Undisputed King of Sinhala Rap, Breaking Limits Every Single Night." - Smokio</h3>
+          <div className="smokio-phrase-box">
+            <h3 className="smokio-beautiful-phrase">
+              <span className="phrase-quote-mark">“</span>
+              THE <span className="phrase-neon">UNDISPUTED KING</span> OF SINHALA RAP, BREAKING LIMITS <span className="phrase-neon">EVERY SINGLE NIGHT</span>.
+              <span className="phrase-quote-mark">”</span>
+            </h3>
+          </div>
         </div>
 
         <div className="forget-marquee-container">
@@ -687,7 +603,7 @@ const Home = () => {
       </section>
 
       {/* Tours Section with Red Cyberpunk Glitch Reveal Animation */}
-      <section className="tours-section" ref={toursSectionRef}>
+      <section id="tours" className="tours-section" ref={toursSectionRef}>
         {/* Red Glitch Overlay Effect Elements */}
         <div className="tour-glitch-overlay" ref={tourGlitchOverlayRef}>
           <div className="tour-glitch-slice red-slice"></div>
@@ -727,7 +643,7 @@ const Home = () => {
                   <p className="tour-loc tour-text-item">{tour.location}</p>
                 </div>
                 <div className="tour-action">
-                  <button className="tour-btn">Get Ticket ↗</button>
+                  <a href="#tickets" className="tour-btn" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>Get Ticket ↗</a>
                 </div>
               </div>
             </div>
@@ -737,6 +653,7 @@ const Home = () => {
 
       {/* 9-Image Concert & Band Photo Gallery Grid */}
       <section id="gallery" className="concert-gallery-section" ref={gallerySectionRef}>
+        <span id="videos" style={{ position: 'absolute', top: 0, left: 0, opacity: 0, pointerEvents: 'none' }}></span>
         <div className="gallery-header">
           <span className="section-subtitle">Live Moments & Backstage</span>
           <h2 className="gallery-title">Captured On Tour</h2>
@@ -761,10 +678,15 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Contact Section matching Reference Layout */}
-      <Contact />
+      {/* Tickets, Booking & Passes Section */}
+      <div id="tickets">
+        <div id="booking">
+          <Contact />
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Home;
+

@@ -114,17 +114,17 @@ const Footer = () => {
         {/* Navigation Grid */}
         <div className="footer-nav-grid">
           <div className="footer-nav-col">
-            <Link to="/about">INSIDE OUR STORY</Link>
-            <Link to="/about">MEET THE ARTIST</Link>
-            <Link to="/tours">EXPLORE OUR ALBUMS</Link>
-            <Link to="/">LISTEN TO SONGS</Link>
+            <Link to="/#about">INSIDE OUR STORY</Link>
+            <Link to="/#about">MEET THE ARTIST</Link>
+            <Link to="/#music">EXPLORE OUR TRACKS</Link>
+            <Link to="/#music">LISTEN TO SONGS</Link>
           </div>
 
           <div className="footer-nav-col">
-            <Link to="/about">OUR PROUD AWARDS</Link>
-            <Link to="/tours">SHOP OFFICIAL MERCH</Link>
-            <Link to="/tours">UPCOMING TOUR DATES</Link>
-            <Link to="/about">FIND YOUR ANSWERS</Link>
+            <Link to="/#about">OUR PROUD AWARDS</Link>
+            <Link to="/#tickets">GET TOUR TICKETS</Link>
+            <Link to="/#tours">UPCOMING TOUR DATES</Link>
+            <Link to="/#contact">TOUR PASSES & ACCESS</Link>
           </div>
 
           <div className="footer-nav-col socials-col">
@@ -157,7 +157,7 @@ const Footer = () => {
               Smokio brings together over <span className="footer-highlight-green">10 years</span> of Sri Lankan Hip-Hop artistry, performing for more than <span className="footer-highlight-green">250,000 fans</span> worldwide.
             </p>
             <div className="footer-cta-buttons">
-              <a href="/#booking" className="btn-black-pill">book a live event</a>
+              <a href="/#tickets" className="btn-black-pill">book a live event</a>
               <a href="/#gallery" className="btn-outline-pill">open media gallery</a>
             </div>
           </div>

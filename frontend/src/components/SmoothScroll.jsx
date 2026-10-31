@@ -7,20 +7,31 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const SmoothScroll = ({ children, isLoading }) => {
+const SmoothScroll = ({ children }) => {
   const lenisRef = useRef(null);
   const location = useLocation();
 
   useEffect(() => {
+    // 0. Ensure manual scroll restoration and reset to top
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
+    const handleBeforeUnload = () => {
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
     // 1. Initialize Lenis with luxury exponential easing curve
     const lenis = new Lenis({
-      duration: 1.25, // Fluid momentum duration
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential deceleration (signature Awwwards butter glide)
+      duration: 1.15, // Butter-smooth fluid duration
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential deceleration
       direction: 'vertical',
       gestureDirection: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1.05, // Responsive without overshoot
-      touchMultiplier: 1.8,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
       syncTouch: false,
       infinite: false,
       autoResize: true,
@@ -29,6 +40,12 @@ const SmoothScroll = ({ children, isLoading }) => {
 
     lenisRef.current = lenis;
     window.lenis = lenis;
+
+    // Immediately start at top if no hash in URL
+    if (!location.hash) {
+      window.scrollTo(0, 0);
+      lenis.scrollTo(0, { immediate: true });
+    }
 
     // 2. Synchronize Lenis with GSAP ScrollTrigger
     const handleScroll = () => {
@@ -42,8 +59,8 @@ const SmoothScroll = ({ children, isLoading }) => {
     };
     gsap.ticker.add(updateTicker);
 
-    // 4. Disable GSAP lag smoothing to eliminate micro-stutters during rapid scrolling
-    gsap.ticker.lagSmoothing(0);
+    // 4. Smooth lag handling to eliminate micro-stutters during rapid scrolling
+    gsap.ticker.lagSmoothing(500, 33);
 
     // 5. Intercept anchor links for silky smooth in-page gliding
     const handleAnchorClick = (e) => {
@@ -59,10 +76,11 @@ const SmoothScroll = ({ children, isLoading }) => {
         if (targetEl && lenisRef.current) {
           e.preventDefault();
           lenisRef.current.scrollTo(targetEl, {
-            offset: -60,
-            duration: 1.4,
+            offset: -70,
+            duration: 1.3,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           });
+          window.history.pushState(null, '', `/#${selector}`);
         }
       }
     };
@@ -88,7 +106,33 @@ const SmoothScroll = ({ children, isLoading }) => {
       resizeObserver.observe(document.body);
     }
 
+    // Staggered layout recalibration on initial mount to guarantee top position and trigger sync
+    const timers = [
+      setTimeout(() => {
+        if (!location.hash) {
+          window.scrollTo(0, 0);
+          lenis.scrollTo(0, { immediate: true });
+        }
+        lenis.resize();
+        ScrollTrigger.refresh();
+      }, 50),
+      setTimeout(() => {
+        if (!location.hash) {
+          window.scrollTo(0, 0);
+          lenis.scrollTo(0, { immediate: true });
+        }
+        lenis.resize();
+        ScrollTrigger.refresh();
+      }, 250),
+      setTimeout(() => {
+        lenis.resize();
+        ScrollTrigger.refresh();
+      }, 600),
+    ];
+
     return () => {
+      timers.forEach((t) => clearTimeout(t));
+      window.removeEventListener('beforeunload', handleBeforeUnload);
       document.removeEventListener('click', handleAnchorClick);
       window.removeEventListener('load', refreshDimensions);
       if (resizeObserver) {
@@ -102,49 +146,35 @@ const SmoothScroll = ({ children, isLoading }) => {
     };
   }, [location.pathname]);
 
-  // Handle preloader state transition
+  // Reset scroll to top on route change or scroll to target hash
   useEffect(() => {
     if (!lenisRef.current) return;
 
-    if (isLoading) {
-      lenisRef.current.stop();
-    } else {
-      lenisRef.current.start();
-      // Staggered layout recalibration as the preloader slides away
-      const timers = [
-        setTimeout(() => {
-          lenisRef.current?.resize();
-          ScrollTrigger.refresh();
-        }, 50),
-        setTimeout(() => {
-          lenisRef.current?.resize();
-          ScrollTrigger.refresh();
-        }, 300),
-        setTimeout(() => {
-          lenisRef.current?.resize();
-          ScrollTrigger.refresh();
-        }, 800),
-        setTimeout(() => {
-          lenisRef.current?.resize();
-          ScrollTrigger.refresh();
-        }, 1500)
-      ];
-
-      return () => timers.forEach(t => clearTimeout(t));
+    if (location.hash) {
+      const selector = location.hash.replace(/^#/, '');
+      const targetEl = document.getElementById(selector) || document.querySelector(`[name="${selector}"]`);
+      if (targetEl) {
+        const timer = setTimeout(() => {
+          lenisRef.current?.scrollTo(targetEl, {
+            offset: -70,
+            duration: 1.3,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          });
+        }, 120);
+        return () => clearTimeout(timer);
+      }
     }
-  }, [isLoading]);
 
-  // Reset scroll to top on route change
-  useEffect(() => {
-    if (lenisRef.current) {
-      lenisRef.current.scrollTo(0, { immediate: true });
-      const timer = setTimeout(() => {
-        lenisRef.current?.resize();
-        ScrollTrigger.refresh();
-      }, 60);
-      return () => clearTimeout(timer);
-    }
-  }, [location.pathname]);
+    window.scrollTo(0, 0);
+    lenisRef.current.scrollTo(0, { immediate: true });
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+      lenisRef.current?.scrollTo(0, { immediate: true });
+      lenisRef.current?.resize();
+      ScrollTrigger.refresh();
+    }, 60);
+    return () => clearTimeout(timer);
+  }, [location.pathname, location.hash]);
 
   return <>{children}</>;
 };
