@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './Contact.css';
 import { FiArrowUpRight, FiCheckCircle, FiX, FiPlus, FiMinus, FiCalendar, FiClock, FiShield } from 'react-icons/fi';
-import manPerformingImg from '../assets/Man_performing_on_stage_202609082107.jpeg';
-import smokeImg from '../assets/smoke.jpg';
-import blueStageImg from '../assets/noctra_blue_stage.jpg';
-import stageImg from '../assets/stage.jpeg';
+import manPerformingImg from '../assets/backgrounds/Man_performing_on_stage_202609082107.jpeg';
+import smokeImg from '../assets/backgrounds/smoke.jpg';
+import blueStageImg from '../assets/backgrounds/noctra_blue_stage.jpg';
+import stageImg from '../assets/backgrounds/stage.jpeg';
 
 const TICKETS = [
   {

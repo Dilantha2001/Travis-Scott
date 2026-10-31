@@ -2,11 +2,12 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 
-import cu1 from '../assets/cu1_highres.jpg';
-import cu2 from '../assets/cu2_highres.jpg';
-import cu3 from '../assets/cu3_highres.jpg';
-import cu4 from '../assets/cu4_highres.jpg';
-import cu5 from '../assets/cu5_highres.jpg';
+import cu1 from '../assets/trail/cu1_highres.jpg';
+import cu2 from '../assets/trail/cu2_highres.jpg';
+import cu3 from '../assets/trail/cu3_highres.jpg';
+import cu4 from '../assets/trail/cu4_highres.jpg';
+import cu5 from '../assets/trail/cu5_highres.jpg';
+import footerBgImg from '../assets/backgrounds/noctra_blue_stage.jpg';
 
 const Footer = () => {
   const footerRef = useRef(null);
@@ -78,6 +79,16 @@ const Footer = () => {
   return (
     <footer className="playza-footer" ref={footerRef} onMouseMove={handleMouseMove}>
       
+      {/* Seamless Black Blend Transition connecting from upper section */}
+      <div className="footer-top-blend" />
+
+      {/* 2nd Page (Noctra Blue Stage) Atmospheric Background Layer */}
+      <div 
+        className="footer-bg-layer" 
+        style={{ backgroundImage: `url(${footerBgImg})` }}
+      />
+      <div className="footer-bg-overlay" />
+
       {/* 5-Image Mouse Cursor Trail Layer */}
       <div className="footer-trail-layer">
         {trailImages.map((src, idx) => (

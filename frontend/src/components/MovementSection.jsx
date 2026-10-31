@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import './MovementSection.css';
-import aboutBg from '../assets/about.jpg';
+import aboutBg from '../assets/backgrounds/about.jpg';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 

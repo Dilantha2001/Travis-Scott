@@ -2,21 +2,78 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './NoctraAboutSection.css';
-import blueStageImg from '../assets/noctra_blue_stage.jpg';
+import blueStageImg from '../assets/backgrounds/noctra_blue_stage.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const NoctraAboutSection = () => {
+  const sectionRef = useRef(null);
+  const mainGridRef = useRef(null);
   const statsRowRef = useRef(null);
   const countNightsRef = useRef(null);
   const countPeopleRef = useRef(null);
   const countCitiesRef = useRef(null);
 
   useEffect(() => {
-    if (!statsRowRef.current) return;
+    if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // 1. Stat cards entrance animation (staggered fade and slide up)
+      // 1. Sequential Editorial Entrance for Main Content Grid
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: mainGridRef.current || sectionRef.current,
+          start: 'top 80%',
+          once: true
+        }
+      });
+
+      // Step A: Top Tag (03 ABOUT)
+      tl.fromTo('.noctra-top-tag',
+        { opacity: 0, x: -25 },
+        { opacity: 1, x: 0, duration: 0.6, ease: 'power2.out' }
+      );
+
+      // Step B: Giant Heading ("THIS IS", "SMOKIO.")
+      tl.fromTo('.noctra-giant-heading span',
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 0.85, stagger: 0.15, ease: 'power3.out' },
+        '-=0.35'
+      );
+
+      // Step C: Narrative Paragraphs (Lead & Sub)
+      tl.fromTo(['.noctra-p-lead', '.noctra-p-sub'],
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.75, stagger: 0.15, ease: 'power2.out' },
+        '-=0.55'
+      );
+
+      // Step D: Center Stage Neon Sign & Hologram Beams
+      tl.fromTo('.neon-stage-sign',
+        { opacity: 0, scale: 0.85 },
+        { opacity: 1, scale: 1, duration: 0.65, ease: 'back.out(1.6)' },
+        '-=0.6'
+      );
+
+      tl.fromTo('.neon-sign-letter',
+        { opacity: 0, y: -22, scale: 0.7 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.45, stagger: 0.08, ease: 'back.out(2)' },
+        '-=0.45'
+      );
+
+      tl.fromTo('.beam',
+        { scaleY: 0, opacity: 0 },
+        { scaleY: 1, opacity: 1, duration: 0.7, stagger: 0.1, ease: 'power2.out' },
+        '-=0.5'
+      );
+
+      // Step E: Right Column Slogan ("NO RULES.", "NO ROUTINE.", "NO SLEEP.")
+      tl.fromTo('.slogan-line',
+        { opacity: 0, x: 45 },
+        { opacity: 1, x: 0, duration: 0.8, stagger: 0.16, ease: 'power3.out' },
+        '-=0.65'
+      );
+
+      // 2. Stat cards entrance animation (staggered fade and slide up)
       gsap.fromTo('.noctra-stat-item',
         {
           opacity: 0,
@@ -38,7 +95,7 @@ const NoctraAboutSection = () => {
         }
       );
 
-      // 2. Dividers scale in
+      // 3. Dividers scale in
       gsap.fromTo('.noctra-stat-divider',
         { scaleY: 0, opacity: 0 },
         {
@@ -56,7 +113,7 @@ const NoctraAboutSection = () => {
         }
       );
 
-      // 3. Smooth Counter Animations (decelerating count-up with number formatting)
+      // 4. Smooth Counter Animations (decelerating count-up with number formatting)
       const counters = [
         {
           ref: countNightsRef,
@@ -104,13 +161,13 @@ const NoctraAboutSection = () => {
           }
         });
       });
-    }, statsRowRef);
+    }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section className="noctra-about-section" id="about-section">
+    <section className="noctra-about-section" id="about-section" ref={sectionRef}>
       {/* Background with Blue Arena Stage Lighting & Deep Vignette */}
       <div 
         className="noctra-bg-layer" 
@@ -133,7 +190,7 @@ const NoctraAboutSection = () => {
         </div>
 
         {/* Main Center Content Grid */}
-        <div className="noctra-main-grid">
+        <div className="noctra-main-grid" ref={mainGridRef}>
           
           {/* Left Column: Heading & Narrative */}
           <div className="noctra-left-col">

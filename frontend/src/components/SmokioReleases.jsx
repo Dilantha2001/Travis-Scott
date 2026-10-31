@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { FaYoutube, FaSpotify, FaBandcamp, FaApple } from 'react-icons/fa';
-import cubeImg from '../assets/cube.jpeg';
+import cubeImg from '../assets/gallery/cube.jpeg';
 import './SmokioReleases.css';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);

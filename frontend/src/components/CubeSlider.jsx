@@ -7,9 +7,9 @@ import { TbWaveSine, TbAdjustmentsHorizontal } from "react-icons/tb";
 import { MdOutlineQueueMusic } from "react-icons/md";
 import { RiMicLine } from "react-icons/ri";
 
-import img1 from '../assets/img22.jpeg';
-import img2 from '../assets/img23.jpeg';
-import img3 from '../assets/img24.jpeg';
+import img1 from '../assets/gallery/img22.jpeg';
+import img2 from '../assets/gallery/img23.jpeg';
+import img3 from '../assets/gallery/img24.jpeg';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 

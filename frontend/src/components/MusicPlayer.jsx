@@ -15,8 +15,8 @@ import 'swiper/css/navigation';
 import './MusicPlayer.css';
 
 // Import local assets
-import sccCover from '../assets/smoke.jpg';
-import smokioDissAudio from '../assets/kuddah-reply-diss-smokio.mp3';
+import sccCover from '../assets/backgrounds/smoke.jpg';
+import smokioDissAudio from '../assets/audio/kuddah-reply-diss-smokio.mp3';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
