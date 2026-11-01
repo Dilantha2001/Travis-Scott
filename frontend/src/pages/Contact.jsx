@@ -277,8 +277,10 @@ const Contact = () => {
 
               {/* Right Column: Ticket Stub with Time, Date & Vertical Barcode */}
               <div className="ticket-right-stub">
-                <div className="stub-time-text">{ticket.time}</div>
-                <div className="stub-date-text">{ticket.date}</div>
+                <div className="stub-meta-info">
+                  <div className="stub-time-text">{ticket.time}</div>
+                  <div className="stub-date-text">{ticket.date}</div>
+                </div>
                 <div className="stub-barcode-block">
                   <svg className="stub-barcode-svg" viewBox="0 0 16 110" preserveAspectRatio="none">
                     <rect x="0" y="0" width="1.5" height="110" fill="#000" />

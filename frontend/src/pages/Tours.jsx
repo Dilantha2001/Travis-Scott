@@ -18,7 +18,7 @@ const Tours = () => {
           <div>
             <h2 className="tours-title">Get ready for our upcoming tours</h2>
             <span className="section-subtitle red">Upcoming Tour Nights</span>
-            <p className="section-desc">Our next tour spans 12 cities with over 25 live performances planned. Get ready for an unforgettable experience.</p>
+            <p className="section-desc">Our next tour spans 15 cities with over 25 live performances planned. Get ready for an unforgettable experience.</p>
           </div>
         </div>
 

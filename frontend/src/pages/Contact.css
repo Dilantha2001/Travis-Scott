@@ -358,6 +358,10 @@
 /* --------------------------------------------------------------------------
    RIGHT BLOCK: TICKET STUB (Time, Date, Vertical Barcode)
    -------------------------------------------------------------------------- */
+.stub-meta-info {
+  display: contents;
+}
+
 .ticket-right-stub {
   flex: 0.65;
   min-width: 130px;
@@ -848,25 +852,114 @@
   }
 
   .ticket-right-stub {
+    display: flex;
     flex-direction: row;
-    padding: 0.8rem 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.4rem;
     width: 100%;
+    box-sizing: border-box;
+    gap: 0.75rem;
   }
 
-  .stub-time-text,
-  .stub-date-text,
-  .stub-serial-text {
+  .stub-meta-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .stub-date-text {
+    font-size: clamp(0.88rem, 3.4vw, 1rem);
+    font-weight: 800;
+    line-height: 1.1;
     writing-mode: horizontal-tb;
     transform: none;
+    letter-spacing: -0.01em;
+  }
+
+  .stub-time-text {
+    font-size: clamp(0.72rem, 2.7vw, 0.8rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: #52525b;
+    writing-mode: horizontal-tb;
+    transform: none;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
   }
 
   .stub-barcode-block {
-    height: 35px;
+    display: flex;
     flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    height: auto;
+    gap: 3px;
+    flex-shrink: 0;
+    max-width: 50%;
   }
 
   .stub-barcode-svg {
+    height: clamp(20px, 5.2vw, 24px);
+    width: clamp(65px, 18vw, 84px);
+    max-width: 100%;
+    display: block;
+  }
+
+  .stub-serial-text {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: clamp(0.52rem, 1.9vw, 0.62rem);
+    letter-spacing: 0.04em;
+    color: #52525b;
+    white-space: nowrap;
+    text-align: right;
+  }
+}
+
+@media (max-width: 480px) {
+  .festival-tickets-content {
+    padding: 2rem 14px 0;
+  }
+
+  .festival-ticket-card {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+
+  .ticket-left-block {
+    padding: 1.2rem 1.1rem 0.8rem;
+  }
+
+  .ticket-price-display {
+    font-size: clamp(1.8rem, 6.8vw, 2.2rem);
+  }
+
+  .ticket-description-text {
+    font-size: 0.8rem;
+    max-width: 100%;
+  }
+
+  .ticket-center-block {
+    height: 145px;
+    padding: 0 1.1rem;
+  }
+
+  .ticket-right-stub {
+    padding: 0.75rem 1.1rem;
+    gap: 0.6rem;
+  }
+
+  .stub-barcode-svg {
+    width: clamp(60px, 16vw, 75px);
     height: 20px;
-    width: 80px;
+  }
+
+  .stub-serial-text {
+    font-size: 0.52rem;
+    letter-spacing: 0.03em;
   }
 }

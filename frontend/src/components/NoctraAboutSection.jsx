@@ -133,7 +133,7 @@ const NoctraAboutSection = () => {
         },
         {
           ref: countCitiesRef,
-          target: 6,
+          target: 15,
           suffix: '',
           duration: 1.6,
           ease: 'sine.out', // Smooth, even stepping so 1 -> 2 -> 3 -> 4 -> 5 -> 6 is clearly visible
