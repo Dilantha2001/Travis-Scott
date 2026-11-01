@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MovementSection from '../components/MovementSection';
@@ -29,6 +29,67 @@ import img58 from '../assets/gallery/images_(58).jpg_20260911200933.jpeg';
 import img59 from '../assets/gallery/images_(59).jpg_20260911200937.jpeg';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Dynamically calculate upcoming tour dates relative to the current date
+const generateDynamicTours = () => {
+  const now = new Date();
+
+  const formatTourDate = (d) => {
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
+
+  const getFutureDate = (daysAhead) => {
+    return new Date(now.getTime() + daysAhead * 24 * 60 * 60 * 1000);
+  };
+
+  return [
+    { 
+      title: 'Colombo Rebellion Live', 
+      date: formatTourDate(getFutureDate(12)), 
+      time: '20:00', 
+      location: 'Sugathadasa Indoor Stadium, Colombo, Sri Lanka', 
+      img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80' 
+    },
+    { 
+      title: 'Midnight Haze Sessions', 
+      date: formatTourDate(getFutureDate(26)), 
+      time: '21:30', 
+      location: 'Viharamahadevi Open Air Theatre, Colombo, Sri Lanka', 
+      img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80' 
+    },
+    { 
+      title: 'Raw Ambition Tour', 
+      date: formatTourDate(getFutureDate(42)), 
+      time: '18:30', 
+      location: 'Kandy City Centre Amphitheatre, Kandy, Sri Lanka', 
+      img: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80' 
+    },
+    { 
+      title: 'Kamini // Dark Romance', 
+      date: formatTourDate(getFutureDate(60)), 
+      time: '21:00', 
+      location: 'Galle Face Green Open Air, Colombo, Sri Lanka', 
+      img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80' 
+    },
+    { 
+      title: 'Underground Drill Experience', 
+      date: formatTourDate(getFutureDate(78)), 
+      time: '19:30', 
+      location: 'Nelum Pokuna Theatre, Colombo, Sri Lanka', 
+      img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80' 
+    },
+    { 
+      title: 'Pure Smoke & Energy Finale', 
+      date: formatTourDate(getFutureDate(95)), 
+      time: '20:30', 
+      location: 'CR & FC Grounds, Colombo, Sri Lanka', 
+      img: 'https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?auto=format&fit=crop&w=600&q=80' 
+    }
+  ];
+};
 
 const Home = () => {
   const heroRef = useRef(null);
@@ -547,14 +608,7 @@ const Home = () => {
     return () => observer.disconnect();
   }, []);
 
-  const tours = [
-    { title: 'Colombo Rebellion Live', date: '15.05.2027', time: '20:00', location: 'Sugathadasa Indoor Stadium, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80' },
-    { title: 'Midnight Haze Sessions', date: '28.06.2027', time: '21:30', location: 'Viharamahadevi Open Air Theatre, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80' },
-    { title: 'Raw Ambition Tour', date: '12.08.2027', time: '18:30', location: 'Kandy City Centre Amphitheatre, Kandy, Sri Lanka', img: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80' },
-    { title: 'Kamini // Dark Romance', date: '15.09.2027', time: '21:00', location: 'Galle Face Green Open Air, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80' },
-    { title: 'Underground Drill Experience', date: '28.10.2027', time: '19:30', location: 'Nelum Pokuna Theatre, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80' },
-    { title: 'Pure Smoke & Energy Finale', date: '12.12.2027', time: '20:30', location: 'CR & FC Grounds, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?auto=format&fit=crop&w=600&q=80' }
-  ];
+  const tours = useMemo(() => generateDynamicTours(), []);
 
   const galleryPhotos = [
     { id: 1, title: "Colombo Rebellion", img: img22 },

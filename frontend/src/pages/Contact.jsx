@@ -300,9 +300,9 @@ const Contact = () => {
 
       {/* Interactive Ticket Checkout Modal */}
       {selectedTicket && (
-        <div className="ticket-modal-backdrop" onClick={handleCloseModal}>
-          <div className="ticket-modal-container" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close-btn" onClick={handleCloseModal} type="button">
+        <div className="ticket-modal-backdrop" onClick={handleCloseModal} data-lenis-prevent>
+          <div className="ticket-modal-container" onClick={(e) => e.stopPropagation()} data-lenis-prevent>
+            <button className="modal-close-btn" onClick={handleCloseModal} type="button" aria-label="Close modal">
               <FiX />
             </button>
 

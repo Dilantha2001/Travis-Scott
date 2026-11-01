@@ -47,12 +47,6 @@ const DiscographyPlayer = ({
                 className="featured-cover-img"
               />
               <div className="featured-card-overlay"></div>
-              
-              {/* Top Featured Pill Tag */}
-              <div className="featured-pill-tag">
-                <span className="sparkle-icon">✦</span>
-                <span>FEATURED TRACK</span>
-              </div>
 
               {/* Mini Vinyl Record Badge in Lower Right of Artwork */}
               <div className={`featured-vinyl-badge ${isPlaying ? 'spinning' : ''}`}>
