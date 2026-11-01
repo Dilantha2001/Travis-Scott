@@ -124,47 +124,53 @@ const Home = () => {
     if (window.lenis) {
       window.lenis.scrollTo(0, { immediate: true });
     }
+    ScrollTrigger.clearScrollMemory();
 
     const ctx = gsap.context(() => {
-      // 1. Hero Section Scroll Animation (Shatter + Fade + Continuous Natural Scroll)
+      // 0. Smooth Entrance on initial load for Hero Title
+      gsap.fromTo('.shatter-letter',
+        { opacity: 0, y: 30, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.0, stagger: 0.03, ease: 'power3.out', delay: 0.2 }
+      );
+
+      // 1. Hero Section Scroll Animation (Butter-smooth scrub with Lenis lerp)
       const heroTl = gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,
           start: 'top top',
           end: 'bottom top',
-          scrub: true
+          scrub: 1
         }
       });
 
-      // Step A: Letter Crumble and Fall as you scroll down
+      // Step A: Silky smooth letter dispersal as you scroll down
       heroTl.to('.shatter-letter', {
-        y: () => (Math.random() * 320) + 260, // Drops down heavily
-        x: () => (Math.random() - 0.5) * 220, // Tumbles sideways slightly
-        rotationZ: () => (Math.random() - 0.5) * 220, // Spins as it falls
-        rotationX: () => (Math.random() - 0.5) * 120,
+        y: (i) => 180 + ((i % 4) * 45),
+        x: (i) => (i - 6) * 16,
+        rotationZ: (i) => (i % 2 === 0 ? 1 : -1) * (14 + (i * 2)),
         opacity: 0,
-        scale: () => Math.random() * 0.6 + 0.3,
+        scale: 0.8,
         stagger: {
-          each: 0.03,
+          each: 0.02,
           from: "center"
         },
-        duration: 0.7,
-        ease: 'power2.in'
+        duration: 0.8,
+        ease: 'power2.out'
       }, 0);
 
       // Step B: Hero desc fade out
       heroTl.to(heroContentRef.current, {
-        scale: 0.88,
+        scale: 0.92,
         opacity: 0,
-        y: -40,
+        y: -30,
         ease: 'power1.out',
-        duration: 0.5
+        duration: 0.6
       }, 0);
 
       // Step C: Smooth Background Image Parallax
       heroTl.to('.hero-full-bg', {
-        y: 80,
-        scale: 1.15,
+        y: 60,
+        scale: 1.1,
         ease: 'none',
         duration: 1
       }, 0);
@@ -447,10 +453,12 @@ const Home = () => {
 
     const timers = [
       setTimeout(() => {
+        ScrollTrigger.clearScrollMemory();
         ScrollTrigger.sort();
         ScrollTrigger.refresh();
       }, 250),
       setTimeout(() => {
+        ScrollTrigger.clearScrollMemory();
         ScrollTrigger.sort();
         ScrollTrigger.refresh();
       }, 800)

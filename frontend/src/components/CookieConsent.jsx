@@ -31,11 +31,8 @@ const CookieConsent = () => {
     <div className="cookie-consent-overlay">
       <div className="cookie-consent-modal">
         <div className="cookie-consent-content">
-          <div className="cookie-sys-header">
-            <span className="sys-blink"></span>
-            <span>SYSTEM // COOKIE PROTOCOL</span>
-          </div>
-          <h3>STAY LOCKED IN</h3>
+          
+          
           <p>
             WE DROP COOKIES TO KEEP THE VIBES 100 AND MAKE SURE YOUR EXPERIENCE ON THE SITE IS LIT. ACCEPT TO KEEP RAGING WITH US.
           </p>

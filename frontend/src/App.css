@@ -460,6 +460,10 @@ html, body {
 
 .shatter-letter {
   display: inline-block;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 .shatter-letter-green {
@@ -1648,6 +1652,7 @@ html, body {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
+  will-change: transform, opacity;
 }
 
 .smokio-beautiful-phrase {

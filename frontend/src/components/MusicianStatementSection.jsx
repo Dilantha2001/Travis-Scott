@@ -162,7 +162,7 @@ const MusicianStatementSection = () => {
           <span className="musician-img-box img-1">
             <img src={smokioProfileImg} alt="Smokio Bandana Profile" />
           </span>{' '}
-          SMOKIO IS THE UNDISPUTED KING<br className="desktop-only-br" />
+          SMOKIO IS THE UNDISPUTED KING{' '}<br className="desktop-only-br" />
           OF SINHALA{' '}
           <span className="musician-img-box img-2">
             <img src={smokioStageImg} alt="Smokio Live Stage Concert" />
@@ -171,7 +171,7 @@ const MusicianStatementSection = () => {
           <span className="musician-highlight-yellow">COLOMBO STREETS</span>{' '}
           <span className="musician-img-box img-3">
             <img src={smokioStreetImg} alt="Smokio 44 Kalliya Street Icon" />
-          </span><br className="desktop-only-br" />
+          </span>{' '}<br className="desktop-only-br" />
           TO PACKED ARENAS{' '}
           <span className="musician-img-box img-4">
             <img src={smokioDrillImg} alt="Smokio Street Drill" />

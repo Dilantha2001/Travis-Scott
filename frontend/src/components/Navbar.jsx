@@ -100,15 +100,10 @@ const Navbar = () => {
         } else {
           targetEl.scrollIntoView({ behavior: 'smooth' });
         }
-        window.history.pushState(null, '', `/#${targetId}`);
         setActiveSection(targetId);
       }
     } else {
-      if (targetId === 'home') {
-        navigate('/');
-      } else {
-        navigate(`/#${targetId}`);
-      }
+      navigate('/');
     }
   };
 

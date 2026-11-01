@@ -16,12 +16,23 @@ const SmoothScroll = ({ children }) => {
     if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
     window.scrollTo(0, 0);
+    ScrollTrigger.clearScrollMemory();
 
     const handleBeforeUnload = () => {
       window.scrollTo(0, 0);
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+      if (window.location.hash) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
     };
     window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('pagehide', handleBeforeUnload);
 
     // 1. Initialize Lenis with luxury exponential easing curve
     const lenis = new Lenis({
@@ -41,11 +52,9 @@ const SmoothScroll = ({ children }) => {
     lenisRef.current = lenis;
     window.lenis = lenis;
 
-    // Immediately start at top if no hash in URL
-    if (!location.hash) {
-      window.scrollTo(0, 0);
-      lenis.scrollTo(0, { immediate: true });
-    }
+    // Immediately start at top on reload/mount
+    window.scrollTo(0, 0);
+    lenis.scrollTo(0, { immediate: true });
 
     // 2. Synchronize Lenis with GSAP ScrollTrigger
     const handleScroll = () => {
@@ -80,7 +89,6 @@ const SmoothScroll = ({ children }) => {
             duration: 1.3,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           });
-          window.history.pushState(null, '', `/#${selector}`);
         }
       }
     };
@@ -97,6 +105,15 @@ const SmoothScroll = ({ children }) => {
       document.fonts.ready.then(refreshDimensions);
     }
 
+    const handlePageShow = () => {
+      window.scrollTo(0, 0);
+      lenis.scrollTo(0, { immediate: true });
+      ScrollTrigger.clearScrollMemory();
+      lenis.resize();
+      ScrollTrigger.refresh();
+    };
+    window.addEventListener('pageshow', handlePageShow);
+
     let resizeObserver;
     if (typeof ResizeObserver !== 'undefined' && document.body) {
       resizeObserver = new ResizeObserver(() => {
@@ -109,18 +126,16 @@ const SmoothScroll = ({ children }) => {
     // Staggered layout recalibration on initial mount to guarantee top position and trigger sync
     const timers = [
       setTimeout(() => {
-        if (!location.hash) {
-          window.scrollTo(0, 0);
-          lenis.scrollTo(0, { immediate: true });
-        }
+        window.scrollTo(0, 0);
+        lenis.scrollTo(0, { immediate: true });
+        ScrollTrigger.clearScrollMemory();
         lenis.resize();
         ScrollTrigger.refresh();
       }, 50),
       setTimeout(() => {
-        if (!location.hash) {
-          window.scrollTo(0, 0);
-          lenis.scrollTo(0, { immediate: true });
-        }
+        window.scrollTo(0, 0);
+        lenis.scrollTo(0, { immediate: true });
+        ScrollTrigger.clearScrollMemory();
         lenis.resize();
         ScrollTrigger.refresh();
       }, 250),
@@ -133,6 +148,8 @@ const SmoothScroll = ({ children }) => {
     return () => {
       timers.forEach((t) => clearTimeout(t));
       window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('pagehide', handleBeforeUnload);
+      window.removeEventListener('pageshow', handlePageShow);
       document.removeEventListener('click', handleAnchorClick);
       window.removeEventListener('load', refreshDimensions);
       if (resizeObserver) {
@@ -146,35 +163,22 @@ const SmoothScroll = ({ children }) => {
     };
   }, [location.pathname]);
 
-  // Reset scroll to top on route change or scroll to target hash
+  // Reset scroll to top on route change
   useEffect(() => {
     if (!lenisRef.current) return;
 
-    if (location.hash) {
-      const selector = location.hash.replace(/^#/, '');
-      const targetEl = document.getElementById(selector) || document.querySelector(`[name="${selector}"]`);
-      if (targetEl) {
-        const timer = setTimeout(() => {
-          lenisRef.current?.scrollTo(targetEl, {
-            offset: -70,
-            duration: 1.3,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          });
-        }, 120);
-        return () => clearTimeout(timer);
-      }
-    }
-
     window.scrollTo(0, 0);
     lenisRef.current.scrollTo(0, { immediate: true });
+    ScrollTrigger.clearScrollMemory();
     const timer = setTimeout(() => {
       window.scrollTo(0, 0);
       lenisRef.current?.scrollTo(0, { immediate: true });
+      ScrollTrigger.clearScrollMemory();
       lenisRef.current?.resize();
       ScrollTrigger.refresh();
     }, 60);
     return () => clearTimeout(timer);
-  }, [location.pathname, location.hash]);
+  }, [location.pathname]);
 
   return <>{children}</>;
 };

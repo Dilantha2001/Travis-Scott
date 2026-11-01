@@ -287,7 +287,7 @@
   }
 
   .musician-statement-section {
-    padding: 3.5rem 0 2.5rem;
+    padding: 4.5rem 0 3.2rem;
   }
   
   .musician-statement-container {
@@ -295,16 +295,16 @@
   }
 
   .musician-statement-text {
-    font-size: clamp(1.15rem, 4.4vw, 1.65rem);
-    line-height: 1.45;
-    letter-spacing: -0.02em;
+    font-size: clamp(1.4rem, 4.8vw, 2.1rem);
+    line-height: 1.4;
+    letter-spacing: -0.025em;
     word-break: normal;
     overflow-wrap: break-word;
   }
   
   .musician-img-box {
-    width: clamp(38px, 8.5vw, 52px);
-    height: clamp(22px, 5vw, 30px);
+    width: clamp(52px, 10vw, 75px);
+    height: clamp(30px, 5.8vw, 44px);
     margin: 0 4px;
     border-radius: 4px;
     vertical-align: middle;
@@ -313,7 +313,7 @@
 
   .musician-highlight-yellow {
     display: inline;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 
   .musician-trail-layer {
@@ -321,8 +321,8 @@
   }
 
   .musician-ribbons-wrapper {
-    height: 140px;
-    margin-top: 45px;
+    height: 155px;
+    margin-top: 50px;
   }
 
   .musician-tape-angle-layer {
@@ -339,18 +339,18 @@
   }
 
   .musician-tape-strip {
-    padding: 9px 0;
+    padding: 11px 0;
   }
 
   .tape-text {
-    font-size: clamp(1.05rem, 3.4vw, 1.35rem);
-    letter-spacing: -0.02em;
+    font-size: clamp(1.15rem, 3.8vw, 1.55rem);
+    letter-spacing: -0.025em;
   }
 }
 
 @media (max-width: 480px) {
   .musician-statement-section {
-    padding: 3rem 0 2rem;
+    padding: 4rem 0 2.8rem;
   }
 
   .musician-statement-container {
@@ -358,16 +358,16 @@
   }
 
   .musician-statement-text {
-    font-size: clamp(1.02rem, 4.5vw, 1.25rem);
-    line-height: 1.48;
-    letter-spacing: -0.015em;
+    font-size: clamp(1.3rem, 5.5vw, 1.7rem);
+    line-height: 1.42;
+    letter-spacing: -0.02em;
   }
 
   .musician-img-box {
-    width: clamp(32px, 8vw, 40px);
-    height: clamp(19px, 4.8vw, 24px);
+    width: clamp(46px, 11vw, 62px);
+    height: clamp(27px, 6.5vw, 36px);
     margin: 0 3px;
-    border-radius: 3px;
+    border-radius: 4px;
     vertical-align: middle;
     transform: translateY(-0.05em);
   }
@@ -378,8 +378,8 @@
   }
 
   .musician-ribbons-wrapper {
-    height: 125px;
-    margin-top: 38px;
+    height: 140px;
+    margin-top: 42px;
   }
 
   .musician-tape-angle-layer {
@@ -396,11 +396,11 @@
   }
 
   .musician-tape-strip {
-    padding: 8px 0;
+    padding: 10px 0;
   }
 
   .tape-text {
-    font-size: clamp(0.92rem, 3.8vw, 1.15rem);
-    letter-spacing: -0.015em;
+    font-size: clamp(1.05rem, 4.4vw, 1.3rem);
+    letter-spacing: -0.02em;
   }
 }
