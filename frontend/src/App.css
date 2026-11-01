@@ -1806,7 +1806,7 @@ html, body {
 
 .tours-section {
   width: 100%;
-  padding: 5rem 0 1rem 0;
+  padding: 4.5rem 0 2rem 0;
   background-color: #000000;
   color: #ffffff;
   position: relative;
@@ -1933,7 +1933,7 @@ html, body {
 /* Mobile Responsiveness for Tours */
 @media (max-width: 768px) {
   .tours-section {
-    padding: 3.5rem 0 1rem 0;
+    padding: 3rem 0 1.5rem 0;
   }
   .tours-section .section-header {
     padding: 0 1.5rem;
@@ -1971,7 +1971,8 @@ html, body {
   width: 100%;
   height: auto;
   min-height: 700px;
-  padding: 0.5rem 0 3.5rem 0;
+  margin-top: 0;
+  padding: 1.5rem 0 3.5rem 0;
   background-color: #000000;
   color: #ffffff;
   position: relative;
@@ -1986,7 +1987,7 @@ html, body {
 .gallery-header {
   width: 100%;
   padding: 0 4rem;
-  margin: 0 0 0.8rem 0;
+  margin: 0 0 1rem 0;
   text-align: left;
   box-sizing: border-box;
   z-index: 10;
@@ -2098,7 +2099,8 @@ html, body {
 
 @media (max-width: 640px) {
   .concert-gallery-section {
-    padding: 1rem 0 3.5rem 0;
+    padding: 1rem 0 3rem 0;
+    margin-top: 0;
   }
   .gallery-header {
     padding: 0 1.5rem;
