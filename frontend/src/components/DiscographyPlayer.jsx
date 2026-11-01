@@ -16,10 +16,8 @@ const DiscographyPlayer = ({
   const activeTrack = currentTrack || playlist[0];
   const activeCover = activeTrack?.img || defaultCoverImg;
 
-  // Other tracks excluding the currently active featured track
-  const otherTracks = playlist
-    .map((t, idx) => ({ ...t, originalIndex: idx }))
-    .filter((_, idx) => idx !== currentTrackIndex);
+  // All tracks in playlist with original index
+  const allTracks = playlist.map((t, idx) => ({ ...t, originalIndex: idx }));
 
   const totalLEDs = 24;
   const activeLEDs = Math.round((trackProgress / 100) * totalLEDs);
@@ -95,17 +93,17 @@ const DiscographyPlayer = ({
             </div>
           </div>
 
-          {/* Right: Other Tracks List */}
+          {/* Right: Tracklist */}
           <div className="tracklist-container">
             <div className="tracklist-header">
-              <span className="tracklist-header-label">OTHER TRACKS</span>
+              <span className="tracklist-header-label">ALL TRACKS</span>
               <span className="tracklist-header-count">
-                {String(otherTracks.length).padStart(2, '0')} SONGS
+                {String(allTracks.length).padStart(2, '0')} SONGS
               </span>
             </div>
 
             <div className="tracklist-items">
-              {otherTracks.map((track) => {
+              {allTracks.map((track) => {
                 const isThisActive = track.originalIndex === currentTrackIndex;
                 const isThisPlaying = isThisActive && isPlaying;
                 const trackNum = String(track.originalIndex + 1).padStart(2, '0');
@@ -114,7 +112,13 @@ const DiscographyPlayer = ({
                   <div 
                     key={track.id} 
                     className={`vaeliq-track-row ${isThisActive ? 'active' : ''}`}
-                    onClick={() => onSelectTrack(track.originalIndex)}
+                    onClick={() => {
+                      if (isThisActive) {
+                        onPlayPause();
+                      } else {
+                        onSelectTrack(track.originalIndex);
+                      }
+                    }}
                   >
                     {/* Index */}
                     <span className="row-track-num">{trackNum}</span>
@@ -160,7 +164,7 @@ const DiscographyPlayer = ({
                         }
                       }}
                       title={isThisPlaying ? "Pause" : "Play"}
-                      aria-label="Play track"
+                      aria-label={isThisPlaying ? "Pause track" : "Play track"}
                     >
                       {isThisPlaying ? <FaPause /> : <FaPlay style={{ marginLeft: '2px' }} />}
                     </button>

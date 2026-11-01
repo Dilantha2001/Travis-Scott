@@ -78,19 +78,36 @@ const Home = () => {
     }
   }, [isAudioPlaying]);
 
+  // Preload initial track on mount
+  useEffect(() => {
+    if (audioRef.current && playlist[0]?.audio) {
+      audioRef.current.src = playlist[0].audio;
+      audioRef.current.load();
+    }
+  }, []);
+
   const handleAudioPlayPause = () => {
-    if (audioRef.current) {
-      if (audioRef.current.paused) {
-        audioRef.current.play();
-      } else {
-        audioRef.current.pause();
+    if (!audioRef.current) return;
+
+    if (audioRef.current.paused) {
+      if (!audioRef.current.src && playlist[currentTrackIndex]?.audio) {
+        audioRef.current.src = playlist[currentTrackIndex].audio;
+        audioRef.current.load();
       }
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsAudioPlaying(true))
+          .catch((err) => console.warn('Audio play error:', err));
+      }
+    } else {
+      audioRef.current.pause();
+      setIsAudioPlaying(false);
     }
   };
 
   const handleSelectTrack = (index) => {
     setCurrentTrackIndex(index);
-    setIsAudioPlaying(true);
 
     if (vinylRecordRef.current) {
       gsap.fromTo(vinylRecordRef.current,
@@ -99,9 +116,19 @@ const Home = () => {
       );
     }
 
-    if (audioRef.current) {
+    if (audioRef.current && playlist[index]?.audio) {
       audioRef.current.src = playlist[index].audio;
-      audioRef.current.play();
+      audioRef.current.load();
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsAudioPlaying(true);
+          })
+          .catch((err) => {
+            console.warn('Audio play error:', err);
+          });
+      }
     }
   };
 
@@ -612,7 +639,6 @@ const Home = () => {
       {/* Global Audio Element */}
       <audio 
         ref={audioRef}
-        src={currentTrack?.audio}
         preload="auto"
         onEnded={handleNextTrack} 
         onTimeUpdate={handleTimeUpdate}
