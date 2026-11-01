@@ -173,12 +173,12 @@
   align-items: stretch;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 5px 15px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
+  transition: box-shadow 0.35s ease;
+  will-change: transform, opacity;
   user-select: none;
 }
 
 .festival-ticket-card:hover {
-  transform: translateY(-6px) scale(1.015);
   box-shadow: 0 35px 80px rgba(0, 0, 0, 0.8), 0 8px 25px rgba(198, 255, 0, 0.3);
 }
 
@@ -286,11 +286,11 @@
   object-fit: cover;
   filter: grayscale(100%) contrast(115%) brightness(0.85);
   display: block;
-  transition: transform 0.5s ease, filter 0.5s ease;
+  transition: filter 0.3s ease;
 }
 
 .festival-ticket-card:hover .ticket-poster-img {
-  transform: scale(1.05);
+  transform: none;
   filter: grayscale(80%) contrast(115%) brightness(0.95);
 }
 

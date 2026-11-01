@@ -209,30 +209,117 @@
   }
 
   .movement-bg-overlay {
-    background: rgba(0, 0, 0, 0.85);
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.6) 35%,
+      rgba(0, 0, 0, 0.88) 75%,
+      #000000 100%
+    );
   }
 }
 
 @media (max-width: 768px) {
   .movement-section {
     padding: 4rem 1.5rem;
+    text-align: center;
+    background-position: 68% center;
+    background-size: cover;
+  }
+
+  .movement-bottom-fade {
+    height: 140px;
+  }
+
+  .movement-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2.5rem;
+  }
+
+  .movement-left-col {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .movement-tag {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 1.8rem;
+    text-align: center;
   }
 
   .movement-giant-title {
-    font-size: 3.2rem;
+    font-size: clamp(2.6rem, 8vw, 3.8rem);
     line-height: 0.95;
+    align-items: center;
+    text-align: center;
+    width: 100%;
   }
 
-  .movement-description {
-    font-size: 1rem;
-    line-height: 1.5;
+  .movement-title-last {
+    justify-content: center;
+    align-items: baseline;
   }
 
   .movement-footer-brand {
     margin-top: 2rem;
+    text-align: center;
+  }
+
+  .movement-center-col {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .movement-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: center;
+    margin: 0 auto;
   }
 
   .movement-sub-tagline {
     margin-top: 2rem;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .movement-section {
+    padding: 3.5rem 1rem;
+    background-position: 68% 10%;
+  }
+
+  .movement-bottom-fade {
+    height: 110px;
+  }
+
+  .movement-container {
+    gap: 2rem;
+  }
+
+  .movement-tag {
+    margin-bottom: 1.4rem;
+  }
+
+  .movement-giant-title {
+    font-size: clamp(2.2rem, 9.5vw, 2.9rem);
+  }
+
+  .movement-description {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .movement-sub-tagline {
+    margin-top: 1.6rem;
   }
 }

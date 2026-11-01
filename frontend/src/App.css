@@ -101,23 +101,22 @@ html, body {
 
 .eq-bar {
   width: 3.5px;
+  height: 18px;
   background-color: #c6ff00;
   border-radius: 2px;
-  will-change: height;
+  transform-origin: bottom;
+  will-change: transform;
 }
 
 .eq-bar-1 {
-  height: 10px;
   animation: eqBounce1 1.15s ease-in-out infinite;
 }
 
 .eq-bar-2 {
-  height: 18px;
   animation: eqBounce2 0.88s ease-in-out infinite 0.12s;
 }
 
 .eq-bar-3 {
-  height: 13px;
   animation: eqBounce3 1.05s ease-in-out infinite 0.28s;
 }
 
@@ -132,24 +131,24 @@ html, body {
 }
 
 @keyframes eqBounce1 {
-  0%, 100% { height: 6px; }
-  30% { height: 15px; }
-  60% { height: 9px; }
-  80% { height: 16px; }
+  0%, 100% { transform: scaleY(0.33); }
+  30% { transform: scaleY(0.85); }
+  60% { transform: scaleY(0.5); }
+  80% { transform: scaleY(0.9); }
 }
 
 @keyframes eqBounce2 {
-  0%, 100% { height: 18px; }
-  25% { height: 8px; }
-  55% { height: 17px; }
-  75% { height: 10px; }
+  0%, 100% { transform: scaleY(1); }
+  25% { transform: scaleY(0.44); }
+  55% { transform: scaleY(0.94); }
+  75% { transform: scaleY(0.55); }
 }
 
 @keyframes eqBounce3 {
-  0%, 100% { height: 11px; }
-  20% { height: 17px; }
-  50% { height: 6px; }
-  75% { height: 14px; }
+  0%, 100% { transform: scaleY(0.6); }
+  20% { transform: scaleY(0.94); }
+  50% { transform: scaleY(0.33); }
+  75% { transform: scaleY(0.8); }
 }
 
 .logo-text {
@@ -461,6 +460,11 @@ html, body {
 
 .shatter-letter {
   display: inline-block;
+}
+
+.shatter-letter-green {
+  color: #c6ff00 !important;
+  text-shadow: 0 0 40px rgba(198, 255, 0, 0.45), 0 10px 40px rgba(0, 0, 0, 0.95);
 }
 
 /* ==========================================================================
@@ -1802,7 +1806,7 @@ html, body {
 
 .tours-section {
   width: 100%;
-  padding: 8rem 0;
+  padding: 5rem 0 1rem 0;
   background-color: #000000;
   color: #ffffff;
   position: relative;
@@ -1929,7 +1933,7 @@ html, body {
 /* Mobile Responsiveness for Tours */
 @media (max-width: 768px) {
   .tours-section {
-    padding: 3.5rem 0;
+    padding: 3.5rem 0 1rem 0;
   }
   .tours-section .section-header {
     padding: 0 1.5rem;
@@ -1966,8 +1970,8 @@ html, body {
 .concert-gallery-section {
   width: 100%;
   height: auto;
-  min-height: 750px;
-  padding: 6rem 0;
+  min-height: 700px;
+  padding: 0.5rem 0 3.5rem 0;
   background-color: #000000;
   color: #ffffff;
   position: relative;
@@ -1982,7 +1986,7 @@ html, body {
 .gallery-header {
   width: 100%;
   padding: 0 4rem;
-  margin: 0 0 2rem 0;
+  margin: 0 0 0.8rem 0;
   text-align: left;
   box-sizing: border-box;
   z-index: 10;
@@ -2014,7 +2018,7 @@ html, body {
 .gallery-item-card {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   border-radius: 16px;
   overflow: hidden;
   background: #0d1117;
@@ -2035,7 +2039,8 @@ html, body {
   z-index: 5;
 }
 
-.gallery-item-card img {
+.gallery-item-card img,
+.gallery-item-card video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -2093,7 +2098,7 @@ html, body {
 
 @media (max-width: 640px) {
   .concert-gallery-section {
-    padding: 4rem 0 6rem 0;
+    padding: 1rem 0 3.5rem 0;
   }
   .gallery-header {
     padding: 0 1.5rem;

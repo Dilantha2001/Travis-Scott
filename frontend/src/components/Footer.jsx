@@ -26,7 +26,7 @@ const Footer = () => {
     const distance = Math.hypot(dx, dy);
 
     // Trigger next image spawn after cursor moves at least 45 pixels
-    if (distance > 45) {
+    if (distance > 75) {
       const rect = footerRef.current.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -63,9 +63,9 @@ const Footer = () => {
           y: y - 140,
           scale: 0.75,
           opacity: 0,
-          duration: 0.55,
+          duration: 0.4,
           ease: 'power2.in',
-          delay: 0.15
+          delay: 0.08
         });
 
         // Cycle to next image in the 5-image sequence

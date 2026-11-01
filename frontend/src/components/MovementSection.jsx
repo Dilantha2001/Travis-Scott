@@ -13,11 +13,14 @@ const MovementSection = () => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Subtle background parallax on scroll
+      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+      const xPos = isMobile ? '68%' : 'right';
+
+      // Subtle background parallax on scroll with mobile-aware focal centering
       gsap.fromTo(sectionRef.current,
-        { backgroundPosition: 'right 0%' },
+        { backgroundPosition: `${xPos} 0%` },
         {
-          backgroundPosition: 'right 25%',
+          backgroundPosition: `${xPos} 20%`,
           ease: 'none',
           scrollTrigger: {
             trigger: sectionRef.current,

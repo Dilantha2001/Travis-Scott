@@ -113,53 +113,64 @@ const NoctraAboutSection = () => {
         }
       );
 
-      // 4. Smooth Counter Animations (decelerating count-up with number formatting)
+      // 4. Smooth & Deliberate Counter Animations
       const counters = [
         {
           ref: countNightsRef,
           target: 24,
           suffix: '+',
           duration: 1.8,
-          format: (v) => `${Math.floor(v)}+`
+          ease: 'power2.out',
+          format: (v) => `${Math.round(v)}+`
         },
         {
           ref: countPeopleRef,
           target: 1500,
           suffix: '+',
-          duration: 2.2,
-          format: (v) => `${Math.floor(v).toLocaleString('en-US')}+`
+          duration: 2.1,
+          ease: 'power2.out',
+          format: (v) => `${Math.round(v).toLocaleString('en-US')}+`
         },
         {
           ref: countCitiesRef,
           target: 6,
           suffix: '',
-          duration: 1.5,
-          format: (v) => `${Math.floor(v)}`
+          duration: 1.6,
+          ease: 'sine.out', // Smooth, even stepping so 1 -> 2 -> 3 -> 4 -> 5 -> 6 is clearly visible
+          format: (v) => `${Math.round(v)}`
         }
       ];
 
       counters.forEach((item) => {
         const obj = { val: 0 };
-        gsap.to(obj, {
-          val: item.target,
-          duration: item.duration,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: statsRowRef.current,
-            start: 'top 85%',
-            once: true
-          },
-          onUpdate: () => {
-            if (item.ref.current) {
-              item.ref.current.textContent = item.format(obj.val);
-            }
-          },
-          onComplete: () => {
-            if (item.ref.current) {
-              item.ref.current.textContent = item.format(item.target);
+        gsap.fromTo(obj,
+          { val: 0 },
+          {
+            val: item.target,
+            duration: item.duration,
+            ease: item.ease,
+            scrollTrigger: {
+              trigger: statsRowRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            },
+            onUpdate: () => {
+              if (item.ref.current) {
+                item.ref.current.textContent = item.format(obj.val);
+              }
+            },
+            onComplete: () => {
+              if (item.ref.current) {
+                item.ref.current.textContent = item.format(item.target);
+              }
+            },
+            onReverseComplete: () => {
+              if (item.ref.current) {
+                item.ref.current.textContent = item.format(0);
+              }
             }
           }
-        });
+        );
       });
     }, sectionRef);
 

@@ -10,7 +10,6 @@ import cu2 from '../assets/trail/cu2_highres.jpg';
 import cu3 from '../assets/trail/cu3_highres.jpg';
 import cu4 from '../assets/trail/cu4_highres.jpg';
 import cu5 from '../assets/trail/cu5_highres.jpg';
-import noiseBg from '../assets/backgrounds/noise.gif';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -37,7 +36,7 @@ const MusicianStatementSection = () => {
     const distance = Math.hypot(dx, dy);
 
     // Trigger next image spawn after cursor moves at least 45 pixels
-    if (distance > 45) {
+    if (distance > 75) {
       const rect = sectionRef.current.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -74,9 +73,9 @@ const MusicianStatementSection = () => {
           y: y - 140,
           scale: 0.75,
           opacity: 0,
-          duration: 0.55,
+          duration: 0.4,
           ease: 'power2.in',
-          delay: 0.15
+          delay: 0.08
         });
 
         // Cycle to next image in the 5-image sequence
@@ -91,11 +90,17 @@ const MusicianStatementSection = () => {
     if (!ribbonsRef.current || !tapeTopRef.current || !tapeBottomRef.current) return;
 
     const ctx = gsap.context(() => {
+      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+      const startTop = isMobile ? 50 : 120;
+      const endTop = isMobile ? -280 : -650;
+      const startBottom = isMobile ? -280 : -650;
+      const endBottom = isMobile ? 50 : 120;
+
       // 100% Pure Scroll-Driven: Top Ribbon glides to the LEFT only when scrolling
       gsap.fromTo(tapeTopRef.current,
-        { x: 120 },
+        { x: startTop },
         {
-          x: -650,
+          x: endTop,
           ease: 'none',
           scrollTrigger: {
             trigger: ribbonsRef.current,
@@ -108,9 +113,9 @@ const MusicianStatementSection = () => {
 
       // 100% Pure Scroll-Driven: Bottom Ribbon glides to the RIGHT only when scrolling
       gsap.fromTo(tapeBottomRef.current,
-        { x: -650 },
+        { x: startBottom },
         {
-          x: 120,
+          x: endBottom,
           ease: 'none',
           scrollTrigger: {
             trigger: ribbonsRef.current,
@@ -137,10 +142,7 @@ const MusicianStatementSection = () => {
       <div className="musician-bottom-fade"></div>
 
       {/* Animated Subtle Film Grain / Noise Overlay */}
-      <div 
-        className="musician-noise-overlay" 
-        style={{ backgroundImage: `url(${noiseBg})` }}
-      ></div>
+      <div className="musician-noise-overlay"></div>
 
       {/* 5-Image Mouse Cursor Trail Layer */}
       <div className="musician-trail-layer">
@@ -160,7 +162,7 @@ const MusicianStatementSection = () => {
           <span className="musician-img-box img-1">
             <img src={smokioProfileImg} alt="Smokio Bandana Profile" />
           </span>{' '}
-          SMOKIO IS THE UNDISPUTED KING<br />
+          SMOKIO IS THE UNDISPUTED KING<br className="desktop-only-br" />
           OF SINHALA{' '}
           <span className="musician-img-box img-2">
             <img src={smokioStageImg} alt="Smokio Live Stage Concert" />
@@ -169,12 +171,12 @@ const MusicianStatementSection = () => {
           <span className="musician-highlight-yellow">COLOMBO STREETS</span>{' '}
           <span className="musician-img-box img-3">
             <img src={smokioStreetImg} alt="Smokio 44 Kalliya Street Icon" />
-          </span><br />
-          TO PACKED ARENAS ACROSS{' '}
+          </span><br className="desktop-only-br" />
+          TO PACKED ARENAS{' '}
           <span className="musician-img-box img-4">
             <img src={smokioDrillImg} alt="Smokio Street Drill" />
           </span>{' '}
-          THE{' '}
+          ACROSS THE{' '}
           <span className="musician-img-box img-5">
             <img src={smokioArenaImg} alt="Smokio Mokada Wenne Arena" />
           </span>{' '}

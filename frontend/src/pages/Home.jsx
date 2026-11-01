@@ -45,6 +45,7 @@ const Home = () => {
 
   // Concert Gallery Section ref
   const gallerySectionRef = useRef(null);
+  const galleryVideoRef = useRef(null);
 
   // Audio Playlist Player state & refs
   const playlistWidgetRef = useRef(null);
@@ -345,17 +346,45 @@ const Home = () => {
               pin: true,
               pinSpacing: true,
               scrub: true,
-              anticipatePin: 1
+              anticipatePin: 1,
+              invalidateOnRefresh: true
             }
           });
 
           // Add a delay to keep it full screen initially
           galleryTl.to({}, { duration: 0.8 }); // Stays full screen for first 0.8s of scroll
 
-          // Step A: Center image zooms out from full screen (scale 6) to grid cell size (scale 1)
+          // Step A: Center video card zooms out from screen-fit size (~3x) down to grid cell size (1)
           galleryTl.fromTo('.center-gallery-card',
-            { scale: 6, zIndex: 30 },
-            { scale: 1, zIndex: 1, ease: 'power1.inOut', duration: 1.5 }
+            { 
+              scale: () => {
+                const card = document.querySelector('.center-gallery-card');
+                const w = card && card.offsetWidth > 50 ? card.offsetWidth : (window.innerWidth / 3);
+                const h = card && card.offsetHeight > 50 ? card.offsetHeight : (w * 9 / 16);
+                const scaleW = window.innerWidth / (w || 1);
+                const scaleH = window.innerHeight / (h || 1);
+                return Math.max(scaleW, scaleH) * 1.01;
+              },
+              y: () => {
+                const card = document.querySelector('.center-gallery-card');
+                const sec = gallerySectionRef.current;
+                if (!card || !sec) return 0;
+                const cRect = card.getBoundingClientRect();
+                const sRect = sec.getBoundingClientRect();
+                const cardCenterY = (cRect.top - sRect.top) + (cRect.height / 2);
+                return (window.innerHeight / 2) - cardCenterY;
+              },
+              borderRadius: '0px',
+              zIndex: 30 
+            },
+            { 
+              scale: 1, 
+              y: 0,
+              borderRadius: '16px',
+              zIndex: 1, 
+              ease: 'power1.inOut', 
+              duration: 1.5 
+            }
           );
 
           // Step B: Surrounding 8 images reveal & scale into grid positions
@@ -412,10 +441,25 @@ const Home = () => {
       }
 
       // Refresh all ScrollTriggers once all components and pinned spacers are mounted
+      ScrollTrigger.sort();
       ScrollTrigger.refresh();
     });
 
-    return () => ctx.revert();
+    const timers = [
+      setTimeout(() => {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+      }, 250),
+      setTimeout(() => {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+      }, 800)
+    ];
+
+    return () => {
+      timers.forEach(t => clearTimeout(t));
+      ctx.revert();
+    };
   }, []);
 
   // Scroll-based Autoplay Attempt
@@ -448,6 +492,26 @@ const Home = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Only decode & play gallery video when visible in viewport (saves laptop GPU/fans)
+  useEffect(() => {
+    if (!gallerySectionRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const isVisible = entries[0].isIntersecting;
+        if (galleryVideoRef.current) {
+          if (isVisible) {
+            galleryVideoRef.current.play().catch(() => {});
+          } else {
+            galleryVideoRef.current.pause();
+          }
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(gallerySectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   const tours = [
     { title: 'Colombo Rebellion Live', date: '15.05.2027', time: '20:00', location: 'Sugathadasa Indoor Stadium, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80' },
     { title: 'Midnight Haze Sessions', date: '28.06.2027', time: '21:30', location: 'Viharamahadevi Open Air Theatre, Colombo, Sri Lanka', img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80' },
@@ -462,7 +526,7 @@ const Home = () => {
     { id: 2, title: "Midnight Haze // Smokio & Chrish VI", img: img24 },
     { id: 3, title: "Raw Ambition", img: img23 },
     { id: 4, title: "Kamini // Neon Nights", img: img25 },
-    { id: 5, title: "Center Stage Spotlight", video: "https://res.cloudinary.com/dymkikwdc/video/upload/v1789664713/0907_d9i2do.mp4" },
+    { id: 5, title: "Center Stage Spotlight", video: "https://res.cloudinary.com/dymkikwdc/video/upload/v1793458106/0907_vcyral.mp4" },
     { id: 6, title: "Underground Drill Icon", img: img56 },
     { id: 7, title: "Street Hustle Legacy", img: img57 },
     { id: 8, title: "Dark Romance // Kamini", img: img58 },
@@ -486,11 +550,18 @@ const Home = () => {
             shakes you awake and reminds you how real sound should feel.
           </p>
           <h1 className="hero-giant-title shatter-title">
-            {Array.from(titleText).map((char, index) => (
-              <span key={index} className="shatter-letter">
-                {char === ' ' ? '\u00A0' : char}
-              </span>
-            ))}
+            {Array.from(titleText).map((char, index) => {
+              const isLimits = index >= 7; // "breaks " is 7 chars (0-6), "limits" is 7-12
+              return (
+                <span 
+                  key={index} 
+                  className={`shatter-letter ${isLimits ? 'shatter-letter-green' : ''}`}
+                  style={isLimits ? { color: '#c6ff00' } : undefined}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              );
+            })}
           </h1>
         </div>
 
@@ -574,7 +645,7 @@ const Home = () => {
           <div className="smokio-phrase-box">
             <h3 className="smokio-beautiful-phrase">
               <span className="phrase-quote-mark">“</span>
-              THE <span className="phrase-neon">UNDISPUTED KING</span> OF SINHALA RAP, BREAKING LIMITS <span className="phrase-neon">EVERY SINGLE NIGHT</span>.
+              THE <span className="phrase-neon">UNDISPUTED KING</span> OF SINHALA RAP, BREAKING <span className="phrase-neon">LIMITS</span> <span className="phrase-neon">EVERY SINGLE NIGHT</span>.
               <span className="phrase-quote-mark">”</span>
             </h3>
           </div>
@@ -587,7 +658,7 @@ const Home = () => {
               Feel The Energy <span style={{ color: '#c6ff00' }}> LIVE </span> 
               The Undisputed King of Sinhala Rap <span style={{ color: '#c6ff00' }}> SMOKIO </span> 
               Unstoppable Vibes <span style={{ color: '#c6ff00' }}> LIVE </span> 
-              Breaking Limits <span style={{ color: '#c6ff00' }}> SMOKIO </span> 
+              <span style={{ color: "#c6ff00" }}>Breaking Limits</span> <span style={{ color: "#c6ff00" }}> SMOKIO </span> 
               Pure Smoke & Energy <span style={{ color: '#c6ff00' }}> LIVE </span>
             </span>
             <span>
@@ -595,7 +666,7 @@ const Home = () => {
               Feel The Energy <span style={{ color: '#c6ff00' }}> LIVE </span> 
               The Undisputed King of Sinhala Rap <span style={{ color: '#c6ff00' }}> SMOKIO </span> 
               Unstoppable Vibes <span style={{ color: '#c6ff00' }}> LIVE </span> 
-              Breaking Limits <span style={{ color: '#c6ff00' }}> SMOKIO </span> 
+              <span style={{ color: "#c6ff00" }}>Breaking Limits</span> <span style={{ color: "#c6ff00" }}> SMOKIO </span> 
               Pure Smoke & Energy <span style={{ color: '#c6ff00' }}> LIVE </span>
             </span>
           </div>
@@ -666,7 +737,7 @@ const Home = () => {
               className={`gallery-item-card ${idx === 4 ? 'center-gallery-card' : 'side-gallery-card'}`}
             >
               {photo.video ? (
-                <video src={photo.video} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <video ref={galleryVideoRef} src={photo.video} loop muted playsInline preload="none" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
                 <img src={photo.img} alt={photo.title} />
               )}

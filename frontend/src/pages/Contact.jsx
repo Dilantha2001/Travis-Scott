@@ -1,57 +1,96 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import './Contact.css';
 import { FiArrowUpRight, FiCheckCircle, FiX, FiPlus, FiMinus, FiCalendar, FiClock, FiShield } from 'react-icons/fi';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import manPerformingImg from '../assets/backgrounds/Man_performing_on_stage_202609082107.jpeg';
-import smokeImg from '../assets/backgrounds/smoke.jpg';
+import smokioPortraitImg from '../assets/backgrounds/about.jpg';
 import blueStageImg from '../assets/backgrounds/noctra_blue_stage.jpg';
 import stageImg from '../assets/backgrounds/stage.jpeg';
 
-const TICKETS = [
-  {
-    id: 'general-admission',
-    tier: 'GENERAL ADMISSION',
-    price: 'LKR 3,500',
-    priceNum: 3500,
-    description: 'Perfect for first-timers or casual fans. Enjoy a full day of music, food, and nonstop vibes on the main stages.',
-    image: manPerformingImg,
-    badgeText: 'GENERAL ADMISSION',
-    time: '11 AM – Midnight',
-    date: '10 OCT',
-    serial: '*816108004027145*',
-    admitText: 'ADMIT ONE',
-    staggerClass: 'ticket-stagger-left'
-  },
-  {
-    id: 'vip-pass',
-    tier: 'WEEKEND VIP PASS',
-    price: 'LKR 6,500',
-    priceNum: 6500,
-    description: "Double the fun with two days of festival magic. Ideal for those who don't want to miss a single drop or headliner.",
-    image: smokeImg,
-    badgeText: 'VIP PASS',
-    time: '1 PM – 2 AM',
-    date: '10 NOV',
-    serial: '*93821049281734*',
-    admitText: 'ADMIT TWO DAYS',
-    staggerClass: 'ticket-stagger-right'
-  },
-  {
-    id: 'all-access-pass',
-    tier: 'ALL ACCESS BACKSTAGE',
-    price: 'LKR 12,000',
-    priceNum: 12000,
-    description: 'Full festival access, VIP lounge, side-stage soundcheck viewing, express entry, and exclusive official 44 Kalliya merchandise kit.',
-    image: blueStageImg,
-    badgeText: 'ALL ACCESS',
-    time: 'All Weekend',
-    date: '12 DEC',
-    serial: '*44109283746192*',
-    admitText: 'VIP ALL ACCESS',
-    staggerClass: 'ticket-stagger-center'
-  }
-];
+gsap.registerPlugin(ScrollTrigger);
+
+// Dynamically generate tickets based on the current date
+const generateDynamicTickets = () => {
+  const now = new Date();
+
+  // Helper to format short stub date like "31 OCT", "30 NOV", "30 DEC"
+  const formatStubDate = (d) => {
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+    return `${day} ${month}`;
+  };
+
+  // Helper to format full modal date like "31 OCT 2026"
+  const formatFullDate = (d) => {
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+    const year = d.getFullYear();
+    return `${day} ${month} ${year}`;
+  };
+
+  // Ticket 1: Current Date (Today's live festival pass)
+  const date1 = new Date(now);
+
+  // Ticket 2: 1 Month from Current Date (+30 days)
+  const date2 = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+  // Ticket 3: 2 Months from Current Date (+60 days)
+  const date3 = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000);
+
+  return [
+    {
+      id: 'general-admission',
+      tier: 'GENERAL ADMISSION',
+      price: 'LKR 3,500',
+      priceNum: 3500,
+      description: 'Perfect for first-timers or casual fans. Enjoy a full day of music, food, and nonstop vibes on the main stages.',
+      image: manPerformingImg,
+      badgeText: 'GENERAL ADMISSION',
+      time: '11 AM – Midnight',
+      date: formatStubDate(date1),
+      fullDate: formatFullDate(date1),
+      serial: '*816108004027145*',
+      admitText: 'ADMIT ONE',
+      staggerClass: 'ticket-stagger-left'
+    },
+    {
+      id: 'vip-pass',
+      tier: 'WEEKEND VIP PASS',
+      price: 'LKR 6,500',
+      priceNum: 6500,
+      description: "Double the fun with two days of festival magic. Ideal for those who don't want to miss a single drop or headliner.",
+      image: smokioPortraitImg,
+      badgeText: 'VIP PASS',
+      time: '1 PM – 2 AM',
+      date: formatStubDate(date2),
+      fullDate: formatFullDate(date2),
+      serial: '*93821049281734*',
+      admitText: 'ADMIT TWO DAYS',
+      staggerClass: 'ticket-stagger-right'
+    },
+    {
+      id: 'all-access-pass',
+      tier: 'ALL ACCESS BACKSTAGE',
+      price: 'LKR 12,000',
+      priceNum: 12000,
+      description: 'Full festival access, VIP lounge, side-stage soundcheck viewing, express entry, and exclusive official 44 Kalliya merchandise kit.',
+      image: blueStageImg,
+      badgeText: 'ALL ACCESS',
+      time: 'All Weekend',
+      date: formatStubDate(date3),
+      fullDate: formatFullDate(date3),
+      serial: '*44109283746192*',
+      admitText: 'VIP ALL ACCESS',
+      staggerClass: 'ticket-stagger-center'
+    }
+  ];
+};
 
 const Contact = () => {
+  const sectionRef = useRef(null);
+  const tickets = useMemo(() => generateDynamicTickets(), []);
+  const currentYear = new Date().getFullYear();
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [ticketQuantity, setTicketQuantity] = useState(1);
   const [buyerInfo, setBuyerInfo] = useState({ fullName: '', email: '', phone: '' });
@@ -96,8 +135,80 @@ const Contact = () => {
     }, 700);
   };
 
+  useEffect(() => {
+    let ctx;
+
+    const initAnimation = () => {
+      ctx = gsap.context(() => {
+        ScrollTrigger.sort();
+
+        // Animate Section Header
+        gsap.fromTo(
+          '.festival-tickets-header',
+          { opacity: 0, y: 45 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: '.festival-tickets-header',
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+
+        // Animate Each Ticket Card with visible cascading entrance
+        const cards = gsap.utils.toArray('.festival-ticket-card');
+        const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+
+        cards.forEach((card, idx) => {
+          const isLeft = card.classList.contains('ticket-stagger-left');
+          const isRight = card.classList.contains('ticket-stagger-right');
+          const xOffset = isMobile ? 0 : (isLeft ? -120 : isRight ? 120 : 0);
+          const yOffset = isMobile ? 55 : (isLeft || isRight ? 40 : 80);
+
+          gsap.fromTo(
+            card,
+            {
+              opacity: 0,
+              x: xOffset,
+              y: yOffset,
+              scale: 0.92
+            },
+            {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              scale: 1,
+              duration: 1.1,
+              delay: idx * 0.18,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: '.festival-tickets-list',
+                start: 'top 82%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
+
+        ScrollTrigger.refresh();
+      }, sectionRef);
+    };
+
+    // Delay slightly to ensure pinned sections above (gallery) have calculated spacing
+    const timer = setTimeout(initAnimation, 120);
+
+    return () => {
+      clearTimeout(timer);
+      if (ctx) ctx.revert();
+    };
+  }, []);
+
   return (
-    <section id="contact" className="festival-tickets-section">
+    <section id="contact" className="festival-tickets-section" ref={sectionRef}>
       {/* Top Brand Green & Black Checkerboard Ribbon Strip */}
       <div className="ticket-checkerboard-tape"></div>
 
@@ -120,13 +231,13 @@ const Contact = () => {
 
         {/* Section Header */}
         <div className="festival-tickets-header">
-          <span className="tickets-micro-tag">OFFICIAL TOUR PASSES // 2026 - 2027</span>
+          <span className="tickets-micro-tag">OFFICIAL TOUR PASSES // {currentYear} - {currentYear + 1}</span>
           <h2 className="tickets-main-heading">SECURE YOUR PASS</h2>
         </div>
 
         {/* Staggered Concert Tickets Showcase */}
         <div className="festival-tickets-list">
-          {TICKETS.map((ticket) => (
+          {tickets.map((ticket) => (
             <div 
               key={ticket.id} 
               className={`festival-ticket-card ${ticket.staggerClass}`}
@@ -199,7 +310,7 @@ const Contact = () => {
                   <span className="modal-tier-tag">{selectedTicket.badgeText}</span>
                   <h3 className="modal-title">{selectedTicket.tier}</h3>
                   <div className="modal-event-meta">
-                    <span><FiCalendar /> {selectedTicket.date}</span>
+                    <span><FiCalendar /> {selectedTicket.fullDate || selectedTicket.date}</span>
                     <span><FiClock /> {selectedTicket.time}</span>
                   </div>
                 </div>
@@ -304,7 +415,7 @@ const Contact = () => {
                   </div>
                   <div className="issued-pass-body">
                     <h4>{confirmedOrder?.ticket?.tier}</h4>
-                    <p>{confirmedOrder?.quantity}x Admission · {confirmedOrder?.ticket?.date}</p>
+                    <p>{confirmedOrder?.quantity}x Admission · {confirmedOrder?.ticket?.fullDate || confirmedOrder?.ticket?.date}</p>
                     <div className="issued-total-badge">LKR {confirmedOrder?.total}</div>
                   </div>
                   <div className="issued-pass-barcode">

@@ -302,24 +302,18 @@
 .noctra-stat-item {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 8px;
   flex: 1;
 }
 
-.noctra-stat-item:nth-child(1) {
-  align-items: flex-start;
-  text-align: left;
-}
-
-.noctra-stat-item:nth-child(3) {
+.noctra-stat-item:nth-child(1),
+.noctra-stat-item:nth-child(3),
+.noctra-stat-item:nth-child(5) {
   align-items: center;
   text-align: center;
-  flex: 1.35; /* Generous space so "PEOPLE THROUGH THE DOOR" never cramps or clips */
-}
-
-.noctra-stat-item:nth-child(5) {
-  align-items: flex-end;
-  text-align: right;
+  flex: 1;
 }
 
 .stat-big-number {
@@ -413,24 +407,65 @@
   .noctra-about-section {
     min-height: auto;
     padding-bottom: 45px;
+    text-align: center;
   }
 
   .noctra-content-wrapper {
     padding: 65px 20px 30px;
     min-height: auto;
+    align-items: center;
+    text-align: center;
+  }
+
+  .noctra-top-tag {
+    align-self: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    text-align: center;
   }
 
   .noctra-main-grid {
     grid-template-columns: 1fr;
     gap: 32px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .noctra-left-col {
+    align-items: center;
+    text-align: center;
+  }
+
+  .noctra-giant-heading {
+    align-items: center;
+    text-align: center;
   }
 
   .noctra-paragraphs {
-    max-width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .noctra-p-lead,
+  .noctra-p-sub {
+    text-align: center;
+  }
+
+  .noctra-right-col {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
 
   .noctra-slogan-block {
-    text-align: left;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .slogan-line {
+    text-align: center;
   }
 
   .noctra-stats-row {
@@ -465,8 +500,8 @@
   .noctra-stat-item:nth-child(1),
   .noctra-stat-item:nth-child(3),
   .noctra-stat-item:nth-child(5) {
-    align-items: flex-start;
-    text-align: left;
+    align-items: center;
+    text-align: center;
   }
 
   .stat-big-number {
